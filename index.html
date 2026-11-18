@@ -1113,8 +1113,8 @@ function render(anim){
   const keep={}; $app.querySelectorAll('[data-k]').forEach(e=>keep[e.dataset.k]=[e.scrollTop,e.scrollLeft]);
   const ae=document.activeElement, fid=ae&&ae.id&&$app.contains(ae)?ae.id:null; let sel=null; try{sel=ae.selectionStart}catch(e){}
   $app.innerHTML=view()+sheetView()+viewerView();
-  // Keep the app's header and sponsor logos visible while the page body scrolls.
-  // Flex siblings reserve real space for both strips, avoiding content overlap.
+  // Keep page headers visible while the page body scrolls.
+  // Pin sponsor logos only on inner app screens, not the event list or Home dashboard.
   if(S.phase==='app'||S.phase==='events'){
     const root=$app.querySelector('.screen');
     const pageScroll=root?.querySelector(':scope > .scroll');
@@ -1124,12 +1124,15 @@ function render(anim){
         root.insertBefore(header,pageScroll);
         root.classList.add('fixed-top-header');
       }
-      const sponsorContainer=document.createElement('div');
-      sponsorContainer.className='fixed-sponsor-strip';
-      sponsorContainer.innerHTML=sponsorStripV();
-      const nav=root.querySelector(':scope > nav.bnav');
-      root.insertBefore(sponsorContainer,nav||null);
-      root.classList.add('has-fixed-sponsors');
+      const isInnerPage=S.phase==='app' && (S.stack.length>0 || S.tab!=='home');
+      if(isInnerPage){
+        const sponsorContainer=document.createElement('div');
+        sponsorContainer.className='fixed-sponsor-strip';
+        sponsorContainer.innerHTML=sponsorStripV();
+        const nav=root.querySelector(':scope > nav.bnav');
+        root.insertBefore(sponsorContainer,nav||null);
+        root.classList.add('has-fixed-sponsors');
+      }
     }
   }
   const scr=$app.querySelector('.screen');
