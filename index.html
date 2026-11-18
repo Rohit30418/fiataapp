@@ -639,6 +639,13 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 @media(min-width:861px) and (max-height:900px){.device{height:min(844px,calc(100vh - 52px))}}
 @media(max-width:359px){.home-feature-line h1{font-size:17px}.home-event-meta{font-size:11px}.home-actions,.home-meeting-section,.home-discover-section{padding:0 16px}.home-event-section{margin-left:16px;margin-right:16px}.home-action-card{padding:12px}.home-action-card strong{font-size:14px}.bn{font-size:10px}}
 
+
+/* Sponsor footer: in normal page flow, appears only after inner-page content. */
+.inner-page-scroll{display:flex;flex-direction:column;}
+.inner-page-scroll > :not(.page-sponsor-footer){flex-shrink:0;}
+.page-sponsor-footer{flex:none;margin-top:auto;padding-top:26px;background:var(--bg);}
+.page-sponsor-footer .sponsor-dock{height:62px;min-height:62px;width:100%;position:static;z-index:auto;box-shadow:none;border-top:1px solid #E1EAF2;background:#fff;}
+@media(max-width:860px){.page-sponsor-footer .sponsor-dock{height:58px;min-height:58px;}}
 </style>
 <style>
 /* FIATA home and events-list refresh — 18 November 2026 */
@@ -1007,13 +1014,18 @@ function render(anim){
   const keep={}; $app.querySelectorAll('[data-k]').forEach(e=>keep[e.dataset.k]=[e.scrollTop,e.scrollLeft]);
   const ae=document.activeElement, fid=ae&&ae.id&&$app.contains(ae)?ae.id:null; let sel=null; try{sel=ae.selectionStart}catch(e){}
   $app.innerHTML=view()+sheetView()+viewerView();
-  // Keep the sponsor logos visible while scrolling every app screen.
-  if(S.phase==='app'){
+  // Sponsors are part of the page CONTENT, never a fixed dock.
+  // Show them only on inner event pages (including tab destinations and details),
+  // not Home, the Events list, or Splash. The strip sits after all page content.
+  if(S.phase==='app' && (S.stack.length>0 || S.tab!=='home')){
     const root=$app.querySelector('.screen');
-    if(root){
-      const anchor=root.querySelector(':scope > .bnav')||root.querySelector(':scope > .foot');
-      if(anchor) anchor.insertAdjacentHTML('beforebegin',sponsorStripV());
-      else root.insertAdjacentHTML('beforeend',sponsorStripV());
+    const pageScroll=root?.querySelector(':scope > .scroll');
+    if(pageScroll){
+      pageScroll.classList.add('inner-page-scroll');
+      const sponsorFooter=document.createElement('footer');
+      sponsorFooter.className='page-sponsor-footer';
+      sponsorFooter.innerHTML=sponsorStripV();
+      pageScroll.appendChild(sponsorFooter);
     }
   }
   const scr=$app.querySelector('.screen');
