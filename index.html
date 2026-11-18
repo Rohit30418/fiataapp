@@ -870,6 +870,32 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
   .events-list-head{padding-top:calc(var(--sat) + 14px);min-height:calc(var(--sat) + 72px)}
 }
 
+
+/* Persistent inner-page headers + pinned sponsor ribbon (Nov 18, 2026) */
+.screen{min-height:0;overflow:hidden}
+.screen > .scroll{min-height:0;flex:1 1 0;overscroll-behavior:contain}
+.screen > .phdr,.screen > .ttl,.screen > .events-list-head,.screen > .home-top,
+.screen > .evhead,.screen > .events-clean-head{flex:0 0 auto;z-index:7}
+.screen > .phdr,.screen > .ttl,.screen > .events-list-head{background:var(--fiata-top-gradient);color:#fff}
+.screen > .phdr h2,.screen > .ttl h1,.screen > .events-list-head h1{color:#fff}
+.device.sb-light .sbar{color:#fff}
+.fixed-sponsor-strip{flex:0 0 52px;height:52px;min-height:52px;background:#fff;position:relative;z-index:8;box-shadow:0 -4px 16px rgba(9,43,72,.07)}
+.fixed-sponsor-strip .sponsor-dock{height:52px;min-height:52px;width:100%;border-top:1px solid #DDE7F1;box-shadow:none;background:#fff}
+.fixed-sponsor-strip .sponsor-dock-label{color:#526D83}
+.screen.has-fixed-sponsors > .bnav{flex:0 0 auto;z-index:9}
+.screen.fixed-top-header > .home-top{padding-bottom:14px}
+.screen.fixed-top-header > .home-scroll .home-event-section{margin-top:14px}
+.screen.fixed-top-header > .home-scroll{padding-top:0}
+.screen.fixed-top-header > .events-list-head{min-height:calc(var(--sat) + 72px)}
+.screen > .evhead,.screen > .events-clean-head{background:var(--fiata-top-gradient);color:#fff}
+.screen > .evhead h1,.screen > .evhead p,.screen > .evhead .brand,
+.screen > .events-clean-head strong,.screen > .events-clean-head small{color:#fff}
+@media(max-width:860px){
+  .fixed-sponsor-strip{height:48px;min-height:48px;flex-basis:48px}
+  .fixed-sponsor-strip .sponsor-dock{height:48px;min-height:48px}
+  .screen > .ttl,.screen > .phdr,.screen > .events-list-head{padding-top:calc(var(--sat) + 14px)}
+}
+
 </style>
 </head>
 <body>
@@ -1076,18 +1102,23 @@ function render(anim){
   const keep={}; $app.querySelectorAll('[data-k]').forEach(e=>keep[e.dataset.k]=[e.scrollTop,e.scrollLeft]);
   const ae=document.activeElement, fid=ae&&ae.id&&$app.contains(ae)?ae.id:null; let sel=null; try{sel=ae.selectionStart}catch(e){}
   $app.innerHTML=view()+sheetView()+viewerView();
-  // Sponsors are part of the page CONTENT, never a fixed dock.
-  // Show them only on inner event pages (including tab destinations and details),
-  // not Home, the Events list, or Splash. The strip sits after all page content.
-  if(S.phase==='app' && (S.stack.length>0 || S.tab!=='home')){
+  // Keep the app's header and sponsor logos visible while the page body scrolls.
+  // Flex siblings reserve real space for both strips, avoiding content overlap.
+  if(S.phase==='app'||S.phase==='events'){
     const root=$app.querySelector('.screen');
     const pageScroll=root?.querySelector(':scope > .scroll');
-    if(pageScroll){
-      pageScroll.classList.add('inner-page-scroll');
-      const sponsorFooter=document.createElement('footer');
-      sponsorFooter.className='page-sponsor-footer';
-      sponsorFooter.innerHTML=sponsorStripV();
-      pageScroll.appendChild(sponsorFooter);
+    if(root && pageScroll){
+      const header=pageScroll.querySelector(':scope > .ttl, :scope > .events-list-head, :scope > .home-top, :scope > .evhead, :scope > .events-clean-head');
+      if(header){
+        root.insertBefore(header,pageScroll);
+        root.classList.add('fixed-top-header');
+      }
+      const sponsorContainer=document.createElement('div');
+      sponsorContainer.className='fixed-sponsor-strip';
+      sponsorContainer.innerHTML=sponsorStripV();
+      const nav=root.querySelector(':scope > nav.bnav');
+      root.insertBefore(sponsorContainer,nav||null);
+      root.classList.add('has-fixed-sponsors');
     }
   }
   const scr=$app.querySelector('.screen');
@@ -1098,7 +1129,7 @@ function render(anim){
   lastScreen=sk; lastSheet=shk;
   const b=$app.querySelector('.bind'); if(b){ const to=b.dataset.to; requestAnimationFrame(()=>requestAnimationFrame(()=>b.style.setProperty('--i',to))); S._pt=+to; }
   if(fid){const el=document.getElementById(fid); if(el){el.focus({preventScroll:true}); if(sel!=null) try{el.setSelectionRange(sel,sel)}catch(e){}}}
-  $dev.classList.toggle('sb-light', !!(S.viewer || (S.phase==='app' && !S.stack.length && S.tab==='home') || (S.phase==='app' && ['speaker','about'].includes(topS()?.n))));
+  $dev.classList.toggle('sb-light', !!(S.viewer || S.phase==='app' || S.phase==='events'));
   const pend=$app.querySelector('[data-autofocus]'); if(pend && !fid && shk!==''){ setTimeout(()=>pend.focus({preventScroll:true}),380); pend.removeAttribute('data-autofocus'); }
 }
 const topS=()=>S.stack[S.stack.length-1];
