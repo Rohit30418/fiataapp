@@ -1668,7 +1668,6 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
       }).join('')}</div>`:
       `<button class="home-meeting-row home-meeting-guest press" data-a="goNet" data-p="people"><span class="meeting-icon">${ic('calPlus',20,1.9)}</span><span class="home-meeting-copy"><strong>No meetings scheduled</strong><small>Find a delegate to request a meeting</small></span><span class="more-arrow">${ic('right',19,2)}</span></button>`;
     const menus=[
-      ['','calendar','Agenda','Conference sessions & schedule','openAgenda'],
       ['about','info','About Event','Overview, brochure & registration links','push'],
       ['vote','vote','Vote','Take part in event polls','push'],
       ['sponsors','award','Sponsors & Partners','Event sponsors by category','push']
@@ -1686,7 +1685,20 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
          </div>
          <div class="home-hints" aria-label="Banner position">${EVENTS.map((item,i)=>`<button class="rail-dot ${i===0?'active':''}" data-dot-rail="hero" data-a="railJump" data-p="hero:${i}" aria-label="Show banner ${i+1}" aria-current="${i===0?'true':'false'}"></button>`).join('')}<small data-counter-rail="hero">1 of ${EVENTS.length}</small></div>
        </section>
-<section class="home-meeting-section"><div class="home-section-head"><h2>1 × 1 Meetings</h2><button class="home-text-action" data-a="goNet" data-p="meetings">View all ${ic('right',15,2)}</button></div>
+       <section class="home-actions" aria-label="Quick access">
+         <div class="home-section-head"><h2>Quick Access</h2></div>
+         <div class="home-action-grid">
+           <button class="home-action-card primary press" data-a="openAgenda" aria-label="Open Agenda">
+             <span class="action-icon">${ic('calendar',23,1.9)}</span><span class="action-arrow">${ic('arrowUR',18,2)}</span>
+             <span><strong>Agenda</strong><small>Sessions & schedule</small></span>
+           </button>
+           <button class="home-action-card secondary press" data-a="goNet" data-p="people" aria-label="Find Delegates">
+             <span class="action-icon">${ic('users',23,1.9)}</span><span class="action-arrow">${ic('arrowUR',18,2)}</span>
+             <span><strong>Find Delegates</strong><small>Connect & meet</small></span>
+           </button>
+         </div>
+       </section>
+       <section class="home-meeting-section"><div class="home-section-head"><h2>1 × 1 Meetings</h2><button class="home-text-action" data-a="goNet" data-p="meetings">View all ${ic('right',15,2)}</button></div>
         ${u&&mine.length? meetingPreview:
           `<div style="padding:0 20px">${meetingPreview}</div>`}
         ${u&&mine.length>1?`<div class="home-meeting-foot"><span>Swipe for more · Latest first</span><strong data-counter-rail="meetings">1 of ${mine.length}</strong></div>`:''}
