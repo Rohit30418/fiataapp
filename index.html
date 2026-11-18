@@ -4,7 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#092C4B">
-<title>FIATA Events — Navigation Refinement</title>
+<title>FIATA Events</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FIATA Events">
+<meta name="mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -907,22 +911,56 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 .fiata-nav .bn-label{display:block;position:relative;z-index:1;color:inherit}
 .fiata-nav .bn.on:not(.bn-network) .bn-label{color:#0878BD}
 
+
+/* Full-screen responsive FIATA web app — no prototype side panel or phone frame. */
+html,body{width:100%;height:100%;overflow:hidden}
+body{background:var(--bg);overscroll-behavior:none}
+.stage{
+  position:fixed;inset:0;display:block;width:100%;height:100vh;height:100dvh;
+  min-height:0;max-height:none;margin:0;padding:0;gap:0;background:var(--bg);
+}
+.device{
+  --sat:env(safe-area-inset-top, 0px);
+  --sab:env(safe-area-inset-bottom, 0px);
+  display:block;width:100%;max-width:none;min-width:0;
+  height:100vh;height:100dvh;max-height:none;min-height:0;
+  padding:0;margin:0;border:0;border-radius:0;box-shadow:none;
+  background:var(--bg);overflow:hidden;position:relative;
+}
+.sbar,.side,.flows{display:none}
+#app{position:absolute;inset:0;overflow:hidden}
+.screen{width:100%;height:100%;max-height:100%;border-radius:0}
+.screen>.scroll{min-height:0;-webkit-overflow-scrolling:touch}
+.screen>.bnav{padding-bottom:calc(5px + var(--sab))}
+@supports(height:100svh){
+  .stage,.device{height:100svh}
+}
+@supports(height:100dvh){
+  .stage,.device{height:100dvh}
+}
+@media(min-width:861px){
+  /* Maintain readable mobile-first proportions when opened in a wide browser. */
+  .screen>.scroll>.pad,
+  .screen>.scroll>.home-actions,
+  .screen>.scroll>.home-meeting-section,
+  .screen>.scroll>.home-discover-section,
+  .screen>.scroll>.home-event-section,
+  .screen>.scroll>.home-bottom-note,
+  .screen>.scroll>.inner-intro,
+  .screen>.scroll>.home-hints{
+    width:min(100% - 32px,720px);margin-left:auto;margin-right:auto;
+  }
+  .screen>.bnav.fiata-nav{padding-left:max(16px,calc((100% - 720px)/2));padding-right:max(16px,calc((100% - 720px)/2))}
+}
+
 </style>
 </head>
 <body>
 <div class="stage">
-  <aside class="side">
-    <div class="k">Redesign prototype</div>
-    <h1>FIATA Events<br>Conference Companion</h1>
-    <p>Interactive mobile prototype. Tap through the phone, or jump straight to a journey.</p>
-    <div class="flows" id="flows"></div>
-    <small>Sample data is marked <span class="demo dk">Demo</span>. Real event content, dates, sponsors and photos come from the FIATA event record. Login is simulated — no emails are sent and nothing is deleted.</small>
-  </aside>
-  <div class="device" id="device">
-    <div class="sbar"><span>9:41</span><span class="isl"></span><span style="display:flex;gap:5px;align-items:center"><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x=".5" y=".5" width="22" height="11" rx="3.5" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="18" height="8" rx="2" fill="currentColor"/><rect x="24" y="4" width="1.5" height="4" rx=".75" fill="currentColor" opacity=".4"/></svg></span></div>
+  <main class="device" id="device" role="application" aria-label="FIATA Events">
     <div id="app"></div>
     <div id="toast"></div>
-  </div>
+  </main>
 </div>
 
 <script>
@@ -1143,7 +1181,7 @@ function render(anim){
   lastScreen=sk; lastSheet=shk;
   const b=$app.querySelector('.bind'); if(b){ const to=b.dataset.to; requestAnimationFrame(()=>requestAnimationFrame(()=>b.style.setProperty('--i',to))); S._pt=+to; }
   if(fid){const el=document.getElementById(fid); if(el){el.focus({preventScroll:true}); if(sel!=null) try{el.setSelectionRange(sel,sel)}catch(e){}}}
-  $dev.classList.toggle('sb-light', !!(S.viewer || S.phase==='app' || S.phase==='events'));
+  // The device's simulated status bar has been removed; use the OS/browser status bar.
   const pend=$app.querySelector('[data-autofocus]'); if(pend && !fid && shk!==''){ setTimeout(()=>pend.focus({preventScroll:true}),380); pend.removeAttribute('data-autofocus'); }
 }
 const topS=()=>S.stack[S.stack.length-1];
@@ -1657,7 +1695,7 @@ const IN={
  code(v){ const c=v.replace(/\D/g,'').slice(0,6); S.login.code=c; const el=document.getElementById('code'); if(el&&el.value!==c) el.value=c; if(S.login.err){S.login.err='';const m=$app.querySelector('.sbody .msg.e'); m&&m.remove(); el?.classList.remove('err');} },
 };
 document.addEventListener('click',e=>{
-  const el=e.target.closest('[data-a]'); if(!el||!$dev.contains(el)&&!el.closest('#flows')) return;
+  const el=e.target.closest('[data-a]'); if(!el||!$dev.contains(el)) return;
   const fn=A[el.dataset.a]; if(!fn) return;
   if(el.tagName!=='A') e.preventDefault();
   e.stopPropagation();
@@ -1671,23 +1709,7 @@ document.addEventListener('keydown',e=>{
   if(S.viewer && (e.key==='ArrowRight'||e.key==='ArrowLeft')) A.vNav(e.key==='ArrowRight'?1:-1);
 });
 
-/* ---------- desktop flow shortcuts ---------- */
-const FLOWS=[
- ['A','Explore conference',()=>{reset();S.phase='events';}],
- ['B','Browse agenda & rate',()=>{reset();enter();S.tab='home';S.stack=[{n:'agenda'}];}],
- ['C','Find a delegate',()=>{reset();enter();S.tab='network';S.net='people';}],
- ['D','Schedule a meeting',()=>{reset();enter();demoLogin();S.tab='network';S.net='people';S.req={to:'a4',day:null,time:null,loc:null,note:'',err:'',busy:false};S.stack=[{n:'request',p:'a4'}];}],
- ['E','Manage meetings',()=>{reset();enter();demoLogin();S.tab='network';S.net='meetings';}],
- ['F','Manage connections',()=>{reset();enter();demoLogin();S.tab='network';S.net='conns';}],
- ['G','Explore event content',()=>{reset();enter();S.tab='home';}],
- ['H','Profile & event pass',()=>{reset();enter();demoLogin();S.tab='profile';}],
-];
-function reset(){ S.sheet=null;S.viewer=null;S.stack=[];S.hl=null; }
-function enter(){ S.phase='app'; S.eventId=S.eventId||EVENTS[0].id; setEventContext(S.eventId); }
-function demoLogin(){ if(!S.user) S.user={n:'Demo Delegate',c:'Sample Forwarding Co.',co:'India',reg:'FWC-104582',em:'delegate@example.com',ph:'+91 00000 00000'}; }
-document.getElementById('flows').innerHTML=FLOWS.map((f,i)=>`<button data-a="flow" data-p="${i}"><b>${f[0]}</b>${f[1]}</button>`).join('');
-A.flow=i=>{ clearTimeout(splashT); FLOWS[+i][2](); lastScreen=''; render('fade'); };
-
+/* Start the real event journey without desktop prototype shortcuts. */
 render();
 const splashT=setTimeout(()=>A.toEvents(),2200);
 </script>
