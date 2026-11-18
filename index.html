@@ -823,6 +823,53 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 @keyframes fiata-network-wave{0%{opacity:0;transform:scale(.92)}15%{opacity:.56}75%{opacity:0;transform:scale(1.28)}100%{opacity:0;transform:scale(1.28)}}
 @media(prefers-reduced-motion:reduce){.fiata-nav .bn-network .bn-icon:before,.fiata-nav .bn-network .bn-icon:after{animation:none;opacity:0}}
 @media(max-width:359px){.fiata-nav .bn{font-size:9.5px}.fiata-nav .bn-network .bn-icon{width:51px;height:51px}.events-list-bottom .events-list-meta.venue{font-size:10.5px}}
+
+/* Consistent FIATA inner-page headers and speaker profile — Nov 2026 */
+:root{--fiata-top-gradient:linear-gradient(115deg,#0A294A 0%,#124E7E 58%,#087BB4 100%)}
+.ttl,.phdr,.events-list-head{
+  background:var(--fiata-top-gradient);color:#fff;border-bottom:1px solid rgba(255,255,255,.13);
+  box-shadow:0 4px 18px rgba(12,56,93,.11);position:relative;z-index:5;
+}
+.ttl{
+  padding:calc(var(--sat) + 14px) 20px 15px;
+  min-height:calc(var(--sat) + 78px);align-items:center;gap:12px;
+}
+.ttl h1{font-size:19px;font-weight:760;letter-spacing:-.025em;line-height:1.3;color:#fff}
+.ttl .ctx{color:#C7E4F5;font-size:11.5px;line-height:1.35;margin-top:3px;max-width:265px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ttl .ibtn,.phdr .ibtn{color:#fff;background:rgba(255,255,255,.11);border-radius:12px}
+.ttl .ibtn:hover,.phdr .ibtn:hover{background:rgba(255,255,255,.2)}
+.phdr,.phdr.dk{
+  padding:calc(var(--sat) + 14px) 12px 12px;min-height:calc(var(--sat) + 76px);
+  align-items:center;gap:6px;position:relative;inset:auto;color:#fff;
+  background:var(--fiata-top-gradient);backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+.phdr h2{font-size:18px;font-weight:750;letter-spacing:-.02em;color:#fff}
+.phdr.dk h2{display:block}
+.events-list-head{padding:calc(var(--sat) + 14px) 20px 14px;min-height:calc(var(--sat) + 72px)}
+.events-list-head h1{font-size:19px;color:#fff}
+.home-top{background:var(--fiata-top-gradient)}
+.home-top .home-toolbar{position:relative;z-index:1}
+.inner-intro{margin:16px 0 8px}
+.inner-page-top-gap{height:16px}
+.av{position:relative;overflow:hidden;isolation:isolate}
+.av-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%;background:#E4EAF2}
+.prof{
+  padding:26px 20px 27px;
+  background:linear-gradient(160deg,#103D67,#0B2E52);color:#fff;text-align:center;
+}
+.prof .av{margin:0 auto}
+.prof h1{margin:16px auto 0;font-size:23px;line-height:1.3;max-width:320px}
+.prof .rl{max-width:315px;margin:7px auto 0;line-height:1.55;color:#C3DEEE}
+.speaker-actions{padding:0 20px;margin-top:16px;position:relative;z-index:1}
+.speaker-actions .btn{display:flex;width:100%;justify-content:center;min-height:48px}
+.speaker-bio{padding:24px 20px 4px}
+.speaker-bio p{margin-top:12px;line-height:1.7;overflow-wrap:anywhere}
+@media(max-width:860px){
+  .ttl{padding-top:calc(var(--sat) + 14px)}
+  .phdr,.phdr.dk{padding-top:calc(var(--sat) + 14px)}
+  .events-list-head{padding-top:calc(var(--sat) + 14px);min-height:calc(var(--sat) + 72px)}
+}
+
 </style>
 </head>
 <body>
@@ -957,7 +1004,22 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
 const PAL=[['#0A2540','#0077C8'],['#0077C8','#22B8F0'],['#0b3a6c','#2BC4C9'],['#1E3A5F','#4F7CAC'],['#0A2540','#0891B2'],['#334E68','#0077C8']];
 const initials=n=>n.split(' ').filter(Boolean).map(w=>w[0]).slice(0,2).join('').toUpperCase();
-const av=(n,s=44,x='')=>{const p=PAL[hash(n)%PAL.length];return `<span class="av" style="${x}width:${s}px;height:${s}px;font-size:${Math.round(s*.36)}px;background:linear-gradient(140deg,${p[0]},${p[1]})">${esc(initials(n))}</span>`};
+const DEMO_FACE_PHOTOS=[
+  'photo-1494790108377-be9c29b29330', // sample woman portrait
+  'photo-1500648767791-00dcc994a43e', // sample man portrait
+  'photo-1534528741775-53994a69daeb',
+  'photo-1507003211169-0a1dd7228f2d',
+  'photo-1544005313-94ddf0286df2',
+  'photo-1506794778202-cad84cf45f1d',
+  'photo-1531123897727-8f129e1688ce',
+  'photo-1504257432389-52343af06ae3'
+];
+const DEMO_FACE_BY_NAME={'Elena Marković':0,'Rahul Menon':1,'Amara Okafor':2,'Lucas Ferreira':3,'Mei Tanaka':4,'Johan de Vries':5,'Fatima Al Hashimi':6,'David Mensah':7};
+const av=(n,s=44,x='')=>{
+  const p=PAL[hash(n)%PAL.length],photo=DEMO_FACE_PHOTOS[DEMO_FACE_BY_NAME[n]??(hash(n)%DEMO_FACE_PHOTOS.length)];
+  const src='https://images.unsplash.com/'+photo+'?auto=format&fit=crop&w=240&q=80';
+  return `<span class="av" style="${x}width:${s}px;height:${s}px;font-size:${Math.round(s*.36)}px;background:linear-gradient(140deg,${p[0]},${p[1]})">${esc(initials(n))}<img class="av-photo" src="${src}" alt="" loading="lazy" onerror="this.remove()"></span>`;
+};
 const byId=(arr,id)=>arr.find(x=>x.id===id);
 const ev=()=>byId(EVENTS,S.eventId)||EVENTS[0];
 
@@ -1052,7 +1114,7 @@ function view(){
 }
 function tabFromDetail(name,title){
   // Preserve the original content and actions, but replace its back header with persistent footer navigation.
-  return PV[name]().replace(phdr(title),'').replace(/<\/div>\s*$/,`${navV()}</div>`);
+  return PV[name]().replace(phdr(title),tabTitle(title,esc(ev().short))).replace(/<\/div>\s*$/,`${navV()}</div>`);
 }
 let toastT;
 function toast(m,kind='ok'){
@@ -1275,7 +1337,7 @@ function profileV(){
 
 /* ---------- pushed screens ---------- */
 const PV={
- about(){ const e=ev(); return `<div class="screen">${phdr('About','',true)}<div class="scroll" data-k="about">
+ about(){ const e=ev(); return `<div class="screen">${phdr('About Event')}<div class="scroll" data-k="about">
    <div class="abt-hero">${art(e.art)}<div class="ov"><span class="demo dk" style="align-self:flex-start;margin-bottom:10px">Event artwork</span><h1>${esc(e.name)}</h1><div class="meta">${e.date?`<span class="glass">${esc(e.date)}</span>`:`<span class="glass">${ic('calendar',13,2)} Date from event record</span>`}${e.venue?`<span class="glass">${esc(e.venue)}</span>`:''}</div></div></div>
    <div class="prose"><div class="fl" style="display:flex;gap:8px;align-items:center">About the Event <span class="demo">Sample text</span></div>
     <p class="lead">The event description from the FIATA event record is shown here, set for comfortable long-form reading.</p>
@@ -1283,24 +1345,24 @@ const PV={
    <section class="sec" id="resources" style="margin-bottom:28px"><div class="sech"><h3>Resources & Registration</h3></div><div class="pad">${resList()}</div>
    <p class="tiny pad" style="margin-top:6px">Links and documents open the URLs from the event record.</p></section></div></div>`; },
  speakers(){ return `<div class="screen">${phdr('Speakers')}<div class="scroll" data-k="spk">
-   <div class="pad" style="margin:4px 0 4px"><h1 style="font-size:24px;font-weight:700;letter-spacing:-.02em">Speakers</h1><p class="tiny" style="margin-top:2px"><span class="demo">Demo</span> &nbsp;Sample speakers — replace with event data</p></div>
+   <div class="pad inner-intro"><p class="tiny"><span class="demo">Demo</span> &nbsp;Sample speakers — replace with event data</p></div>
    <div class="srow" style="margin-top:12px"><label class="search">${ic('search',18,2)}<input id="qs" data-in="qspk" placeholder="Search speakers" value="${esc(S.q.spk)}" autocomplete="off" aria-label="Search speakers"></label></div>
    <div class="pad" data-region="list" style="margin-top:6px">${spkList()}</div></div></div>`; },
  speaker(id){ const s=byId(SPEAKERS,id), ses=SESSIONS.filter(x=>(x.sp||[]).includes(id));
-   return `<div class="screen">${phdr('', '', true)}<div class="scroll" data-k="sp1">
+   return `<div class="screen">${phdr('Speaker Profile')}<div class="scroll" data-k="sp1">
    <div class="prof">${av(s.n,96,'margin:0 auto;box-shadow:0 0 0 4px rgba(255,255,255,.15);')}<h1>${esc(s.n)}</h1><div class="rl">${esc(s.r)} · ${esc(s.c)}</div></div>
-   <div class="pad" style="margin-top:-18px"><button class="btn p" data-a="sheet" data-p="pdf:Speaker profile — ${esc(s.n)}">${ic('fileText',18,2)} View Profile</button></div>
-   <div class="prose"><div class="fl" style="display:flex;gap:8px;align-items:center">Biography <span class="demo">Sample</span></div><p>${esc(s.bio)}</p></div>
+   <div class="speaker-actions"><button class="btn p" data-a="sheet" data-p="pdf:Speaker profile — ${esc(s.n)}">${ic('fileText',18,2)} View Profile</button></div>
+   <div class="prose speaker-bio"><div class="fl" style="display:flex;gap:8px;align-items:center">Biography <span class="demo">Sample</span></div><p>${esc(s.bio)}</p></div>
    ${ses.length?`<section class="sec" style="margin-bottom:28px"><div class="sech"><h3>Sessions</h3></div><div class="glist">${ses.map(x=>`<button class="gi" data-a="sesFromSpk" data-p="${x.id}"><span class="tint t-blue">${ic('calendar',18)}</span><span class="grow"><div class="t">${esc(x.ti)}</div><div class="s">${DAYS[x.d].label} · ${x.t} · ${esc(x.rm)}</div></span><span class="chev">${ic('right',18,2)}</span></button>`).join('')}</div></section>`:''}
    </div></div>`; },
  request(id){ return requestV(id); },
  vote(){ return voteV(); },
  sponsors(){ return `<div class="screen">${phdr('Sponsors & Partners')}<div class="scroll" data-k="sps">
-   <div class="pad" style="margin:4px 0 16px"><h1 style="font-size:24px;font-weight:700;letter-spacing:-.02em">Sponsors & Partners</h1><p class="tiny" style="margin-top:4px"><span class="demo">Placeholder</span> &nbsp;Categories & logos come from the event's sponsor list</p></div>
+   <div class="pad inner-intro"><p class="tiny"><span class="demo">Placeholder</span> &nbsp;Categories & logos come from the event's sponsor list</p></div>
    ${SPONSOR_CATS.map((c,i)=>{const o=!!S.openCats[i]; return `<div class="scat ${o?'open':''}"><button data-a="cat" data-p="${i}" aria-expanded="${o}"><div><h4>${esc(c.n)}</h4><div class="tiny">${c.k} logos</div></div><span class="cv">${ic('down',20,2)}</span></button>
      ${o?`<div class="lgs ${c.big?'big':''}">${Array.from({length:c.k},(_,j)=>`<div class="logo">${ic('image',18,1.5)}<span>Sponsor logo</span></div>`).join('')}</div>`:''}</div>`}).join('')}<div style="height:20px"></div></div></div>`; },
  gallery(){ return `<div class="screen">${phdr('Photo Gallery')}<div class="scroll" data-k="gal">
-   <div class="pad" style="margin:4px 0 4px"><h1 style="font-size:24px;font-weight:700;letter-spacing:-.02em">Photo Gallery</h1><p class="tiny" style="margin-top:4px"><span class="demo">Placeholder</span> &nbsp;Tiles stand in for official event photos</p></div>
+   <div class="pad inner-intro"><p class="tiny"><span class="demo">Placeholder</span> &nbsp;Tiles stand in for official event photos</p></div>
    ${GALLERY.map((g,gi)=>{const more=S.galMore[gi], n=more?g.k:Math.min(g.k,5); const pat=['w2 h2','','','','w2','','','h2',''];
      return `<section class="sec" style="margin-top:20px"><div class="sech"><h3>${g.d}</h3><span class="tiny">${g.k} photos</span></div>
      <div class="gal">${Array.from({length:n},(_,i)=>`<button class="${pat[i%pat.length]}" data-a="view" data-p="${gi}:${i}" aria-label="Open photo ${i+1}" style="border-radius:12px">${phImg(gi+'-'+i)}</button>`).join('')}</div>
@@ -1350,7 +1412,7 @@ function voteV(){
   else body=`<div class="pad"><span class="demo">Demo placeholder</span><div class="qh">${esc(POLL.q)}</div>
      ${POLL.opts.map((o,i)=>`<button class="opt ${v.sel===i?'on':''} ${v.done?'lock':''}" data-a="opt" data-p="${i}" role="radio" aria-checked="${v.sel===i}"><span class="rd"></span><span style="font-weight:600;font-size:15px;flex:1">${o}</span>${v.done&&v.sel===i?ic('check',18,2.4):''}</button>`).join('')}
      ${v.done?`<div class="msg o">${ic('check',16,2.4)}<span>Your vote has been recorded. Thank you for taking part.</span></div>`: v.err?`<div class="msg e">${ic('alert',16,2)}<span>${esc(v.err)}</span></div>`:''}</div>`;
-  return `<div class="screen">${phdr('Vote')}<div class="scroll" data-k="vote"><div class="pad" style="margin:4px 0 14px"><h1 style="font-size:24px;font-weight:700;letter-spacing:-.02em">Vote</h1><p class="tiny" style="margin-top:2px">${esc(ev().short)}</p></div>${body}</div>
+  return `<div class="screen">${phdr('Vote')}<div class="scroll" data-k="vote"><div class="pad inner-intro"><p class="tiny">${esc(ev().short)}</p></div>${body}</div>
    ${S.user&&!v.done?`<div class="foot"><button class="btn p" data-a="submitVote" ${v.busy?'disabled':''}>${v.busy?'<span class="spin"></span>':'Submit Vote'}</button></div>`:''}</div>`;
 }
 function notifV(){
@@ -1358,7 +1420,7 @@ function notifV(){
   const today=S.notifs.filter(n=>Date.now()-n.t<864e5), older=S.notifs.filter(n=>Date.now()-n.t>=864e5);
   const item=n=>`<div class="ntf"><span class="tint t-blue">${ic('bell',18)}</span><div class="grow"><p>${esc(n.m)}</p><small>${ago(n.t)}</small></div><button class="ibtn" style="width:40px;height:40px;color:var(--tx3)" aria-label="Delete notification" data-a="delNotif" data-p="${n.id}">${ic('trash',17)}</button></div>`;
   return `<div class="screen">${phdr('Notifications')}<div class="scroll" data-k="nt">
-   <div class="pad" style="margin:4px 0 14px"><h1 style="font-size:24px;font-weight:700;letter-spacing:-.02em">Notifications</h1></div>
+   <div class="inner-page-top-gap" aria-hidden="true"></div>
    <div class="glist">
      <button class="gi" data-a="pref" data-p="push" role="switch" aria-checked="${S.prefs.push}"><span class="tint t-blue">${ic(S.prefs.push?'bell':'bellOff',18)}</span><span class="grow"><div class="t">Notifications</div><div class="s">Alerts on this device</div></span><span class="tgl ${S.prefs.push?'on':''}"></span></button>
      <button class="gi" data-a="pref" data-p="email" role="switch" aria-checked="${S.prefs.email}"><span class="tint t-navy">${ic('mail',18)}</span><span class="grow"><div class="t">Email Notifications</div><div class="s">Copies to your registered email</div></span><span class="tgl ${S.prefs.email?'on':''}"></span></button>
@@ -1619,6 +1681,21 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
     const i=Math.min(Math.max(0,Number(indexText)),slides.length-1);
     if(slides[i]) rail.scrollTo({left:slides[i].offsetLeft-slides[0].offsetLeft,behavior:'smooth'});
   };
+  // Automatically advance the official image banners while Home is visible.
+  // Pause after manual interaction, when hidden or when reduced motion is requested.
+  let lastBannerInteraction=0;
+  document.addEventListener('pointerdown',e=>{if(e.target.closest?.('[data-rail="hero"], [data-dot-rail="hero"]'))lastBannerInteraction=Date.now();},true);
+  document.addEventListener('wheel',e=>{if(e.target.closest?.('[data-rail="hero"]'))lastBannerInteraction=Date.now();},{capture:true,passive:true});
+  setInterval(()=>{
+    if(S.phase!=='app'||S.tab!=='home'||S.stack.length||S.sheet||S.viewer||document.hidden||
+       matchMedia('(prefers-reduced-motion: reduce)').matches||Date.now()-lastBannerInteraction<7000)return;
+    const rail=$app.querySelector('[data-rail="hero"]');if(!rail)return;
+    const slides=[...rail.querySelectorAll('[data-slide]')];if(slides.length<2)return;
+    const left=rail.scrollLeft,first=slides[0].offsetLeft;
+    const current=slides.reduce((best,item,i)=>Math.abs(item.offsetLeft-first-left)<Math.abs(slides[best].offsetLeft-first-left)?i:best,0);
+    const next=slides[(current+1)%slides.length];
+    rail.scrollTo({left:next.offsetLeft-first,behavior:'smooth'});
+  },4200);
   document.addEventListener('scroll',function(e){
     const rail=e.target?.closest?.('[data-rail]');
     if(!rail) return;
