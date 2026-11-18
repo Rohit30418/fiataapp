@@ -640,6 +640,112 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 @media(max-width:359px){.home-feature-line h1{font-size:17px}.home-event-meta{font-size:11px}.home-actions,.home-meeting-section,.home-discover-section{padding:0 16px}.home-event-section{margin-left:16px;margin-right:16px}.home-action-card{padding:12px}.home-action-card strong{font-size:14px}.bn{font-size:10px}}
 
 </style>
+<style>
+/* FIATA home and events-list refresh — 18 November 2026 */
+.events-clean-head{padding:calc(var(--sat) + 13px) 20px 15px;background:#fff;border-bottom:1px solid #E8EEF5;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.events-clean-brand{display:flex;gap:11px;align-items:center}
+.events-clean-brand strong{font-size:19px;font-weight:760;letter-spacing:-.035em;color:#102B44;line-height:1.2}
+.events-clean-brand small{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#69849A;font-weight:730;margin-bottom:2px}
+.events-clean-hint{font-size:11px;color:#8296A8;margin:14px 20px 9px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.events-clean-hint strong{font-size:12px;color:#526B7F}
+.events-rail{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:20px;scrollbar-width:none;padding:0 20px 22px;touch-action:pan-x pan-y}
+.events-rail::-webkit-scrollbar,.home-banner-rail::-webkit-scrollbar,.home-meetings-rail::-webkit-scrollbar{display:none}
+.events-rail-card{flex:0 0 calc(100% - 44px);min-width:0;border:1px solid #DEE8F2;background:#fff;border-radius:19px;overflow:hidden;box-shadow:0 9px 26px rgba(11,42,66,.065);scroll-snap-align:start;display:flex;flex-direction:column;text-align:left;position:relative}
+.events-rail-image{height:183px;background:#fff;display:block;position:relative;border-bottom:1px solid #EAF0F5}
+.events-rail-image .fiata-source-art{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+.events-rail-image .event-ribbon{position:absolute;top:12px;left:12px;background:rgba(7,38,67,.88);color:#fff;border-radius:7px;font-size:10px;font-weight:700;padding:6px 9px;letter-spacing:.045em}
+.events-rail-body{padding:15px 16px 16px;display:flex;flex-direction:column;gap:9px;flex:1}
+.events-rail-body h2{font-size:17px;line-height:1.25;letter-spacing:-.02em;font-weight:750}
+.events-rail-meta{display:flex;gap:7px;align-items:flex-start;color:#667C91;font-size:11.5px;line-height:1.4;font-weight:590}
+.events-rail-meta svg{flex:none;color:#0878BD}
+.events-rail-enter{margin-top:auto;padding-top:7px;display:flex;align-items:center;justify-content:space-between;color:#0878BD;font-size:12.5px;font-weight:760}
+.events-hints{display:flex;align-items:center;justify-content:center;gap:7px;padding:4px 0 16px}
+.events-hints .rail-dot,.home-hints .rail-dot{width:7px;height:7px;display:block;border-radius:20px;background:#C7D7E4;transition:width .2s,background .2s}
+.events-hints .rail-dot.active,.home-hints .rail-dot.active{width:21px;background:#057BBE}
+.events-none{margin:14px 20px;padding:24px;border:1px solid #E4EBF3;background:#fff;border-radius:17px}
+.events-none h3{font-size:15px;margin:10px 0 5px}
+.events-none p{font-size:12px;color:#60778A;line-height:1.5}
+/* Event switch is a direct navigation link, not a sheet. */
+.home-top{padding-bottom:64px}
+.home-switch{margin-top:15px;display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;flex-direction:row;padding:0;text-align:left;min-height:38px}
+.home-switch-label{min-width:0;display:flex;flex-direction:column;gap:3px}
+.home-switch-label>span{font-size:10px;letter-spacing:.11em;font-weight:750;color:#AFD1E5}
+.home-switch-label strong{font-size:15px;font-weight:720;letter-spacing:-.015em;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:240px;display:block}
+.home-switch-link{display:flex;gap:4px;align-items:center;font-size:11.5px;white-space:nowrap;font-weight:720;color:#BCE9FF}
+/* Horizontal promotional swiper, with visible peek of the following banner. */
+.home-event-section{margin:-44px 0 0 20px;z-index:2}
+.home-banner-rail{display:flex;gap:11px;scroll-snap-type:x mandatory;scroll-padding-left:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:1px 20px 13px 0;touch-action:pan-x pan-y}
+.home-banner-slide{flex:0 0 calc(100% - 52px);min-width:0;scroll-snap-align:start;min-height:242px;display:flex;flex-direction:column}
+.home-banner-slide.home-feature{width:auto;box-shadow:0 6px 23px rgba(11,40,68,.10);border-radius:18px}
+.home-banner-slide .home-feature-image{height:148px;flex:none}
+.home-banner-slide .home-feature-body{padding:12px 13px 14px;flex:1}
+.home-banner-slide .home-feature-line h1{font-size:16.5px;line-height:1.25;max-width:none}
+.home-banner-slide .home-event-meta{font-size:10.7px;margin-top:10px;gap:5px 12px}
+.home-banner-slide .home-feature-label{font-size:9.3px;margin-bottom:4px}
+.home-banner-slide .home-event-arrow{width:28px;height:28px}
+.home-promo-slide{border-radius:18px;padding:17px;position:relative;overflow:hidden;justify-content:space-between;text-align:left;box-shadow:0 6px 23px rgba(11,40,68,.10)}
+.home-promo-slide:before{content:"";position:absolute;right:-62px;top:-65px;width:198px;height:198px;border-radius:50%;border:1px solid rgba(255,255,255,.17);box-shadow:0 0 0 35px rgba(255,255,255,.045),0 0 0 68px rgba(255,255,255,.035);pointer-events:none}
+.home-promo-agenda{background:linear-gradient(145deg,#082F50,#0B75A8);color:#fff}
+.home-promo-network{background:linear-gradient(145deg,#E8F7FF,#CCEEFA);color:#0A3452;border:1px solid #B4E1F5}
+.home-promo-kicker{font-size:10px;font-weight:760;letter-spacing:.12em;text-transform:uppercase;opacity:.74;position:relative}
+.home-promo-icon{height:43px;width:43px;border-radius:13px;background:rgba(255,255,255,.15);display:grid;place-items:center;position:relative}
+.home-promo-network .home-promo-icon{background:#fff;color:#0878BD}
+.home-promo-slide h2{font-size:23px;font-weight:780;line-height:1.17;letter-spacing:-.035em;max-width:210px;position:relative;margin-bottom:7px}
+.home-promo-slide p{font-size:11.5px;line-height:1.45;max-width:220px;opacity:.84;position:relative}
+.home-promo-go{font-size:11.5px;font-weight:750;display:flex;align-items:center;gap:6px;margin-top:12px;position:relative}
+.home-hints{display:flex;align-items:center;gap:7px;margin:0 20px 1px 0;min-height:13px}
+.home-hints small{font-size:10.3px;color:#7B91A5;margin-left:auto;font-weight:640}
+/* Shorter quick-access cards without shrinking touch targets. */
+.home-actions{margin-top:15px}
+.home-actions .home-section-head{margin-bottom:8px}
+.home-action-grid{gap:9px}
+.home-action-card{min-height:84px;display:grid;grid-template-columns:31px minmax(0,1fr);align-items:center;justify-content:start;gap:10px;padding:11px 12px;border-radius:15px}
+.home-action-card .action-icon{width:32px;height:32px;border-radius:9px}
+.home-action-card .action-icon svg{width:19px;height:19px}
+.home-action-card strong{font-size:13px;line-height:1.2;letter-spacing:-.018em}
+.home-action-card small{font-size:10.4px;margin-top:4px;line-height:1.35}
+.home-action-card .action-arrow{right:8px;top:9px}
+.home-action-card .action-arrow svg{width:13px;height:13px}
+/* Horizontal latest-first 1x1 meeting cards. */
+.home-meeting-section{margin-top:18px;padding:0}
+.home-meeting-section .home-section-head{padding:0 20px;margin-bottom:9px}
+.home-meetings-rail{display:flex;overflow-x:auto;gap:10px;scroll-snap-type:x mandatory;scroll-padding-left:20px;scrollbar-width:none;overscroll-behavior-x:contain;padding:1px 20px 12px;touch-action:pan-x pan-y}
+.home-meeting-swipe-card{flex:0 0 calc(100% - 64px);min-width:0;scroll-snap-align:start;border:1px solid #E0EAF2;border-radius:15px;background:#fff;padding:13px;box-shadow:0 3px 12px rgba(20,52,78,.055);text-align:left;min-height:135px;display:flex;flex-direction:column;gap:10px}
+.home-meeting-card-top{display:flex;align-items:center;gap:10px}
+.home-meeting-card-top .av{flex:none}
+.home-meeting-card-name{min-width:0;flex:1}
+.home-meeting-card-name strong{font-size:13.5px;line-height:1.25;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.home-meeting-card-name small{font-size:10.8px;color:#7A8FA0;line-height:1.3;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px}
+.home-meeting-swipe-card .st{max-width:100%;font-size:10px;padding:5px 7px}
+.home-meeting-card-bottom{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto}
+.home-meeting-pill{display:inline-flex;align-items:center;gap:5px;background:#F1F6FA;color:#566F83;border-radius:7px;padding:6px 7px;font-size:10.6px;font-weight:660;line-height:1.3}
+.home-meeting-pill svg{color:#0878BD}
+.home-meeting-note{font-size:10.5px;color:#6F8598;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.home-meeting-guest{flex:0 0 calc(100% - 40px);min-height:98px;display:flex;align-items:center}
+.home-meeting-guest .home-meeting-copy{gap:4px}
+.home-meeting-guest .home-meeting-copy strong{font-size:13px}
+.home-meeting-foot{display:flex;align-items:center;justify-content:space-between;padding:0 20px;margin-top:0;min-height:15px;font-size:10px;color:#748CA0}
+.home-meeting-foot strong{color:#0A6EAC;font-weight:740}
+/* Preserve exact Explore group as a compact, polished list. */
+.home-discover-section{margin-top:20px}
+.home-discover-section .home-section-head{margin-bottom:9px}
+.home-menu-list{background:#fff;border:1px solid #DFE8F1;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(12,46,74,.035)}
+.home-menu-item{width:100%;display:flex;align-items:center;gap:12px;min-height:57px;padding:9px 12px;text-align:left;background:#fff}
+.home-menu-item+.home-menu-item{border-top:1px solid #E9EEF3}
+.home-menu-item:active{background:#F5FAFD}
+.home-menu-icon{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:#EAF4FC;color:#1688CC;flex:none}
+.home-menu-item:nth-child(2) .home-menu-icon{background:#E5F8FF;color:#1AA8CB}
+.home-menu-item:nth-child(3) .home-menu-icon{background:#E9F7EF;color:#1C9B60}
+.home-menu-item:nth-child(4) .home-menu-icon{background:#EDF2F8;color:#476987}
+.home-menu-item:nth-child(5) .home-menu-icon{background:#FFF4E5;color:#CF8B32}
+.home-menu-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.home-menu-copy strong{font-size:13px;font-weight:710;color:#102A45;line-height:1.3}
+.home-menu-copy small{font-size:10.7px;font-weight:460;color:#7A8FA2;line-height:1.3}
+.home-menu-item>svg{color:#9DB0C2}
+@media(max-width:360px){.events-rail-card{flex-basis:calc(100% - 32px)}.home-banner-slide{flex-basis:calc(100% - 40px)}.home-action-card{padding:10px 9px;gap:8px}.home-action-card small{font-size:9.8px}.home-switch-label strong{max-width:184px}}
+@media(prefers-reduced-motion:reduce){.events-rail,.home-banner-rail,.home-meetings-rail{scroll-behavior:auto}}
+
+</style>
 </head>
 <body>
 <div class="stage">
@@ -1356,6 +1462,138 @@ A.flow=i=>{ clearTimeout(splashT); FLOWS[+i][2](); lastScreen=''; render('fade')
 
 render();
 const splashT=setTimeout(()=>A.toEvents(),2200);
+</script>
+<script>
+/* Refined navigation, swipeable banners and latest-first meeting previews. */
+(function(){
+  // These are visibly labelled prototype records; real delegate data stays behind login.
+  if(!S.meetings.some(m=>m.id==='m-demo-recent-1')){
+    S.meetings.push({id:'m-demo-recent-1',with:'a12',day:0,time:'14:00',loc:'Meeting Room 1',note:'Demo confirmed meeting',status:'accepted',dir:'in',demo:1});
+    S.meetings.push({id:'m-demo-recent-2',with:'a8',day:1,time:'15:30',loc:'Table 03',note:'Demo meeting request',status:'pending',dir:'out',demo:1});
+  }
+  A.openEventList=function(){
+    S.sheet=null; S.viewer=null; S.stack=[]; S.eventsTab='active'; S.phase='events';
+    render('pop');
+  };
+  A.homeMeeting=function(id){
+    S.hl=id; S.net='meetings'; S.tab='network'; S.stack=[]; render('fade');
+    setTimeout(()=>{
+      const el=$app.querySelector('[data-mid="'+id+'"]');
+      if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
+    },260);
+  };
+  A.railJump=function(p){
+    const [key,indexText]=p.split(':');
+    const rail=$app.querySelector('[data-rail="'+key+'"]');
+    if(!rail) return;
+    const slides=rail.querySelectorAll('[data-slide]');
+    const i=Math.min(Math.max(0,Number(indexText)),slides.length-1);
+    if(slides[i]) rail.scrollTo({left:slides[i].offsetLeft-slides[0].offsetLeft,behavior:'smooth'});
+  };
+  document.addEventListener('scroll',function(e){
+    const rail=e.target?.closest?.('[data-rail]');
+    if(!rail) return;
+    const key=rail.dataset.rail;
+    const slides=[...rail.querySelectorAll('[data-slide]')];
+    if(!slides.length)return;
+    const index=slides.reduce((best,slide,i)=>Math.abs(slide.offsetLeft-slides[0].offsetLeft-rail.scrollLeft)<Math.abs(slides[best].offsetLeft-slides[0].offsetLeft-rail.scrollLeft)?i:best,0);
+    $app.querySelectorAll('[data-dot-rail="'+key+'"]').forEach((dot,i)=>{
+      dot.classList.toggle('active',i===index);
+      dot.setAttribute('aria-current',i===index?'true':'false');
+    });
+    const counter=$app.querySelector('[data-counter-rail="'+key+'"]');
+    if(counter)counter.textContent=(index+1)+' of '+slides.length;
+  },true);
+  eventsV=function(){
+    const list=EVENTS.filter(e=>e.status===S.eventsTab);
+    return `<div class="screen"><div class="scroll" data-k="ev">
+      <header class="events-clean-head"><div class="events-clean-brand">${brandLogo(39)}<div><small>FIATA</small><strong>Events</strong></div></div>
+        <span style="font-size:11px;font-weight:650;color:#8095A5">Select an event</span>
+      </header>
+      <div class="seg" role="tablist" aria-label="Event status" style="margin-top:16px;margin-bottom:13px">
+        ${['active','past'].map(k=>`<button role="tab" aria-selected="${S.eventsTab===k?'true':'false'}" class="${S.eventsTab===k?'on':''}" data-a="evTab" data-p="${k}">${k==='active'?'Active Events':'Past Events'}</button>`).join('')}
+      </div>
+      ${list.length? `<div class="events-clean-hint"><strong>${S.eventsTab==='active'?'Available FIATA events':'Previous FIATA events'}</strong><span>Swipe to browse ${ic('arrow',13)}</span></div>
+        <div class="events-rail" data-k="events-carousel" data-rail="events" role="region" aria-label="Swipeable event banners">
+          ${list.map((e,i)=>`<button data-slide class="events-rail-card press" data-a="pickEvent" data-p="${e.id}" aria-label="Open ${esc(e.name)}">
+            <div class="events-rail-image">${art(e.art)}<span class="event-ribbon">${S.eventsTab==='active'?'FIATA EVENT':'PAST EVENT'}</span></div>
+            <div class="events-rail-body"><h2>${esc(e.name)}</h2>
+              ${e.date?`<div class="events-rail-meta">${ic('calendar',14)} <span>${esc(e.date)}</span></div>`:''}
+              ${e.venue?`<div class="events-rail-meta">${ic('pin',14)} <span>${esc(e.venue)}</span></div>`:''}
+              <div class="events-rail-enter"><span>Open event</span>${ic('arrow',18,2)}</div>
+            </div></button>`).join('')}
+        </div>
+        <div class="events-hints" aria-label="Event carousel position">${list.map((_,i)=>`<button class="rail-dot ${i===0?'active':''}" aria-label="Show event ${i+1}" data-dot-rail="events" data-a="railJump" data-p="events:${i}" aria-current="${i===0?'true':'false'}"></button>`).join('')}</div>`:
+        `<div class="events-none"><div class="eic">${ic('calendar',23)}</div><h3>No past events available</h3><p>Past events will appear here when they are added to the event list.</p><button class="btn s sm" style="margin-top:16px" data-a="evTab" data-p="active">View active events</button></div>`}
+    </div></div>`;
+  };
+  homeV=function(){
+    const e=ev(),u=S.user;
+    const mine=u?S.meetings.slice().reverse().filter(m=>m.status!=='rejected'):[];
+    const meetingPreview = !u ?
+      `<button class="home-meeting-row home-meeting-guest press" data-a="login"><span class="meeting-icon">${ic('lock',20,1.9)}</span><span class="home-meeting-copy"><strong>Sign in to view 1 × 1 meetings</strong><small>Your requests, confirmations and latest meetings</small></span><span class="more-arrow">${ic('right',19,2)}</span></button>`:
+      mine.length? `<div class="home-meetings-rail" data-k="home-meetings" data-rail="meetings" role="region" aria-label="Recent meetings, newest first">${mine.map(m=>{
+       const person=byId(ATTENDEES,m.with),day=DAYS[m.day];
+       return `<button data-slide class="home-meeting-swipe-card press" data-mid="${m.id}" data-a="homeMeeting" data-p="${m.id}" aria-label="View meeting with ${esc(person?.n||'Delegate')}">
+         <div class="home-meeting-card-top">${av(person?.n||'Delegate',35)}<span class="home-meeting-card-name"><strong>${esc(person?.n||'Delegate')}</strong><small>${esc(person?.c||'')} ${m.demo?'· Demo':''}</small></span></div>
+         ${stPill(m.status)}
+         <div class="home-meeting-card-bottom"><span class="home-meeting-pill">${ic('calendar',12)} ${esc(day?.label||'Event day')}</span><span class="home-meeting-pill">${ic('clock',12)} ${esc(m.time)}</span><span class="home-meeting-pill">${ic('pin',12)} ${esc(m.loc)}</span></div>
+       </button>`;
+      }).join('')}</div>`:
+      `<button class="home-meeting-row home-meeting-guest press" data-a="goNet" data-p="people"><span class="meeting-icon">${ic('calPlus',20,1.9)}</span><span class="home-meeting-copy"><strong>No meetings scheduled</strong><small>Find a delegate to request a meeting</small></span><span class="more-arrow">${ic('right',19,2)}</span></button>`;
+    const menus=[
+      ['about','info','About Event','Overview, brochure & registration links','push'],
+      ['speakers','mic','Speakers','Profiles of conference speakers','push'],
+      ['vote','vote','Vote','Take part in event polls','push'],
+      ['conns','contact','My Connection','Delegates you have connected with','goNet'],
+      ['sponsors','award','Sponsors & Partners','Event sponsors by category','push'],
+      ['gallery','image','Photo Gallery','Event photography by day','push']
+    ];
+    return tabbed(`<div class="scroll home-scroll" data-k="home">
+      <div class="home-top"><div class="home-toolbar">
+        <div class="home-identity">${brandLogo(39)}<div><span class="home-eyebrow">FIATA</span><strong>Events</strong></div></div>
+        <div class="home-tools"><button class="home-tool" aria-label="Notifications" data-a="push" data-p="notifs">${ic('bell',21,1.8)}</button><button class="home-tool" data-a="tab" data-p="profile" aria-label="Profile">${u?av(u.n,31):ic('user',21,1.8)}</button></div>
+      </div>
+      <button class="home-switch" data-a="openEventList" aria-label="Change event, opens event list"><span class="home-switch-label"><span>SELECTED EVENT</span><strong>${esc(e.short)}</strong></span><span class="home-switch-link">Change ${ic('arrow',15,2)}</span></button>
+      </div>
+      <section class="home-event-section" aria-label="Event information banners">
+        <div class="home-banner-rail" data-k="home-banner" data-rail="hero" role="region" aria-label="Swipeable event information banners">
+          <button data-slide class="home-banner-slide home-feature press" data-a="push" data-p="about" aria-label="About ${esc(e.name)}">
+            <div class="home-feature-image">${art(e.art)}<span class="poster-caption">OFFICIAL EVENT</span></div>
+            <div class="home-feature-body"><div class="home-feature-label">YOUR EVENT</div><div class="home-feature-line"><h1>${esc(e.name)}</h1><span class="home-event-arrow">${ic('arrowUR',17,2)}</span></div>
+              <div class="home-event-meta">${e.date?`<span>${ic('calendar',13)} ${esc(e.date)}</span>`:''}${e.venue?`<span>${ic('pin',13)} ${esc(e.venue)}</span>`:''}</div>
+            </div>
+          </button>
+          <button data-slide class="home-banner-slide home-promo-slide home-promo-agenda press" data-a="tab" data-p="agenda" aria-label="Browse conference agenda">
+            <div class="home-promo-kicker">PLAN YOUR CONFERENCE</div><div class="home-promo-icon">${ic('calendar',24,1.8)}</div>
+            <div><h2>Every session.<br>One clear plan.</h2><p>Browse event dates, session rooms and speaker details.</p><div class="home-promo-go">Browse agenda ${ic('arrow',16,2)}</div></div>
+          </button>
+          <button data-slide class="home-banner-slide home-promo-slide home-promo-network press" data-a="goNet" data-p="people" aria-label="Find delegates to connect with">
+            <div class="home-promo-kicker">BUILD CONNECTIONS</div><div class="home-promo-icon">${ic('users',24,1.8)}</div>
+            <div><h2>Meet the people<br>behind the event.</h2><p>Find delegates and request a 1 × 1 meeting.</p><div class="home-promo-go">Find delegates ${ic('arrow',16,2)}</div></div>
+          </button>
+        </div>
+        <div class="home-hints" aria-label="Banner carousel position">${[0,1,2].map(i=>`<button class="rail-dot ${i===0?'active':''}" data-dot-rail="hero" data-a="railJump" data-p="hero:${i}" aria-label="Show banner ${i+1}" aria-current="${i===0?'true':'false'}"></button>`).join('')}<small data-counter-rail="hero">1 of 3</small></div>
+      </section>
+      <section class="home-actions"><div class="home-section-head"><h2>Quick access</h2></div>
+        <div class="home-action-grid">
+          <button class="home-action-card primary press" data-a="tab" data-p="agenda"><div class="action-icon">${ic('calendar',20,1.9)}</div><span class="action-arrow">${ic('arrowUR',15,2)}</span><div><strong>Explore Agenda</strong><small>Sessions & schedule</small></div></button>
+          <button class="home-action-card secondary press" data-a="goNet" data-p="people"><div class="action-icon">${ic('users',20,1.9)}</div><span class="action-arrow">${ic('arrowUR',15,2)}</span><div><strong>Find Delegates</strong><small>Connect & meet</small></div></button>
+        </div>
+      </section>
+      <section class="home-meeting-section"><div class="home-section-head"><h2>1 × 1 Meetings</h2><button class="home-text-action" data-a="goNet" data-p="meetings">View all ${ic('right',15,2)}</button></div>
+        ${u&&mine.length? meetingPreview:
+          `<div style="padding:0 20px">${meetingPreview}</div>`}
+        ${u&&mine.length>1?`<div class="home-meeting-foot"><span>Swipe for more · Latest first</span><strong data-counter-rail="meetings">1 of ${mine.length}</strong></div>`:''}
+      </section>
+      <section class="home-discover-section"><div class="home-section-head"><h2>Explore the event</h2><button class="home-text-action" data-a="tab" data-p="explore">All ${ic('right',15,2)}</button></div>
+        <div class="home-menu-list">${menus.map(([key,icon,title,subtitle,action])=>`<button class="home-menu-item press" data-a="${action}" data-p="${key}"><span class="home-menu-icon">${ic(icon,18,1.85)}</span><span class="home-menu-copy"><strong>${title}</strong><small>${subtitle}</small></span>${ic('right',17,2)}</button>`).join('')}</div>
+      </section>
+      <div class="home-bottom-note">FIATA Events · Powered by n-Gauge</div>
+    </div>`);
+  };
+})();
+
 </script>
 </body>
 </html>
