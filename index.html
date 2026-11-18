@@ -815,14 +815,14 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 .fiata-nav .bn.on:not(.bn-network) .bn-icon{background:#EAF5FC;color:#0878BD}
 .fiata-nav .bn-network{color:#46758D;justify-content:flex-end;gap:0;padding-bottom:3px}
 .fiata-nav .bn-network .bn-label{position:relative;z-index:2}
-.fiata-nav .bn-network .bn-icon{position:absolute;top:-23px;left:50%;transform:translateX(-50%);width:55px;height:55px;border-radius:50%;background:linear-gradient(140deg,#43D6F7 0%,#0A95D2 45%,#075BBD 100%);color:#fff;box-shadow:0 0 0 5px #fff,0 9px 19px rgba(0,119,200,.30);z-index:2}
+.fiata-nav .bn-network .bn-icon{position:absolute;top:2px;left:50%;transform:translateX(-50%);width:42px;height:42px;border-radius:50%;background:linear-gradient(140deg,#43D6F7 0%,#0A95D2 45%,#075BBD 100%);color:#fff;box-shadow:0 0 0 5px #fff,0 9px 19px rgba(0,119,200,.30);z-index:2}
 .fiata-nav .bn-network .bn-icon:before,.fiata-nav .bn-network .bn-icon:after{content:'';position:absolute;inset:-8px;border:1.5px solid rgba(37,187,232,.33);border-radius:50%;opacity:0;pointer-events:none;animation:fiata-network-wave 3.6s ease-out infinite;z-index:-1}
 .fiata-nav .bn-network .bn-icon:after{animation-delay:1.8s}
 .fiata-nav .bn-network.on .bn-icon{background:linear-gradient(140deg,#35D9F0 0%,#047FC7 46%,#062F82 100%);box-shadow:0 0 0 5px #fff,0 10px 24px rgba(0,115,210,.44)}
 .fiata-nav .bn-network.on .bn-label{color:#056FAB}
 @keyframes fiata-network-wave{0%{opacity:0;transform:scale(.92)}15%{opacity:.56}75%{opacity:0;transform:scale(1.28)}100%{opacity:0;transform:scale(1.28)}}
 @media(prefers-reduced-motion:reduce){.fiata-nav .bn-network .bn-icon:before,.fiata-nav .bn-network .bn-icon:after{animation:none;opacity:0}}
-@media(max-width:359px){.fiata-nav .bn{font-size:9.5px}.fiata-nav .bn-network .bn-icon{width:51px;height:51px}.events-list-bottom .events-list-meta.venue{font-size:10.5px}}
+@media(max-width:359px){.fiata-nav .bn{font-size:9.5px}.fiata-nav .bn-network .bn-icon{width:40px;height:40px;top:3px}.events-list-bottom .events-list-meta.venue{font-size:10.5px}}
 
 /* Consistent FIATA inner-page headers and speaker profile — Nov 2026 */
 :root{--fiata-top-gradient:linear-gradient(115deg,#0A294A 0%,#124E7E 58%,#087BB4 100%)}
@@ -895,6 +895,17 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
   .fixed-sponsor-strip .sponsor-dock{height:48px;min-height:48px}
   .screen > .ttl,.screen > .phdr,.screen > .events-list-head{padding-top:calc(var(--sat) + 14px)}
 }
+
+
+/* Keep every footer icon within the navigation rail — no sponsor overlay. */
+.fiata-nav{overflow:hidden}
+.fiata-nav .bn{min-width:0}
+.fiata-nav .bn-network{padding-bottom:3px}
+.fiata-nav .bn-network .bn-icon{box-shadow:0 0 0 3px #fff,0 4px 9px rgba(0,119,200,.18)}
+.fiata-nav .bn-network.on .bn-icon{box-shadow:0 0 0 3px #fff,0 5px 12px rgba(0,115,210,.25)}
+.fiata-nav .bn-network .bn-icon::before,.fiata-nav .bn-network .bn-icon::after{inset:-4px}
+.fiata-nav .bn-label{display:block;position:relative;z-index:1;color:inherit}
+.fiata-nav .bn.on:not(.bn-network) .bn-label{color:#0878BD}
 
 </style>
 </head>
