@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#092C4B">
-<title>FIATA Events — Refined Interactive Mobile App</title>
+<title>FIATA Events — Navigation Refinement</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -777,6 +777,45 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 @keyframes sponsor-logo-flow{to{transform:translateX(-50%)}}
 @media(max-width:860px){.events-list-head{padding-top:16px;min-height:64px}.sponsor-dock{height:57px;min-height:57px}.image-banner-rail .image-banner-card{aspect-ratio:2.12/1}}
 @media(prefers-reduced-motion:reduce){.sponsor-track{animation:none}.sponsor-window{overflow-x:auto;scrollbar-width:none}}
+
+/* FIATA navigation refinement: distinct routes, compact Home, centered Network action */
+.events-list-tabs{background:#EBF2F8;border:1px solid #E4EDF5;padding:4px;border-radius:14px}
+.events-list-tabs button{color:#557085;min-height:42px;border-radius:11px;transition:background .2s ease,color .2s ease,box-shadow .2s ease}
+.events-list-tabs button.on{background:linear-gradient(115deg,#087AC8 0%,#29B9E6 100%);color:#fff;box-shadow:0 4px 13px rgba(0,119,200,.24)}
+.events-list-bottom{margin-top:9px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.events-list-bottom .events-list-open{margin:0;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.events-list-bottom .events-list-meta.venue{font-size:11px;justify-content:flex-end;white-space:nowrap}
+.home-top{padding:calc(var(--sat) + 10px) 20px 60px}
+.simple-home-toolbar{min-height:42px;display:flex;justify-content:space-between;align-items:center}
+.home-change-button{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 13px;border-radius:12px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:13.5px;font-weight:710;letter-spacing:-.015em}
+.home-change-button:hover,.home-change-button:active{background:rgba(255,255,255,.20)}
+.home-change-button svg:last-child{opacity:.72}
+.home-notification{flex:none;background:rgba(255,255,255,.11)}
+.home-event-section{margin-top:-44px}
+.home-meeting-section{margin-top:21px}
+.home-discover-section{margin-top:23px;margin-bottom:20px}
+.home-discover-section .home-section-head{margin-bottom:12px}
+.home-menu-item{min-height:60px}
+.home-menu-item:nth-child(1) .home-menu-icon{background:#EAF4FC;color:#087BC3}
+.home-menu-item:nth-child(2) .home-menu-icon{background:#E8F5FC;color:#1C85C7}
+.home-menu-item:nth-child(3) .home-menu-icon{background:#E8F6EE;color:#119F67}
+.home-menu-item:nth-child(4) .home-menu-icon{background:#FFF2E2;color:#CF8B32}
+.fiata-nav{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));height:calc(65px + var(--sab));padding:5px 11px calc(5px + var(--sab));overflow:visible;isolation:isolate;border-top:1px solid #E2EAF2;background:#fff;align-items:end;box-shadow:0 -6px 22px rgba(9,39,66,.035)}
+.fiata-nav .bn{height:54px;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:2px 0 0;position:relative;color:#8194A8;font-size:10.2px;font-weight:670;text-align:center}
+.fiata-nav .bn-icon{width:38px;height:29px;display:grid;place-items:center;border-radius:12px;transition:color .2s,background .2s,transform .2s;flex:none}
+.fiata-nav .bn-label{line-height:1.2;white-space:nowrap}
+.fiata-nav .bn.on{color:#0878BD}
+.fiata-nav .bn.on:not(.bn-network) .bn-icon{background:#EAF5FC;color:#0878BD}
+.fiata-nav .bn-network{color:#46758D;justify-content:flex-end;gap:0;padding-bottom:3px}
+.fiata-nav .bn-network .bn-label{position:relative;z-index:2}
+.fiata-nav .bn-network .bn-icon{position:absolute;top:-23px;left:50%;transform:translateX(-50%);width:55px;height:55px;border-radius:50%;background:linear-gradient(140deg,#43D6F7 0%,#0A95D2 45%,#075BBD 100%);color:#fff;box-shadow:0 0 0 5px #fff,0 9px 19px rgba(0,119,200,.30);z-index:2}
+.fiata-nav .bn-network .bn-icon:before,.fiata-nav .bn-network .bn-icon:after{content:'';position:absolute;inset:-8px;border:1.5px solid rgba(37,187,232,.33);border-radius:50%;opacity:0;pointer-events:none;animation:fiata-network-wave 3.6s ease-out infinite;z-index:-1}
+.fiata-nav .bn-network .bn-icon:after{animation-delay:1.8s}
+.fiata-nav .bn-network.on .bn-icon{background:linear-gradient(140deg,#35D9F0 0%,#047FC7 46%,#062F82 100%);box-shadow:0 0 0 5px #fff,0 10px 24px rgba(0,115,210,.44)}
+.fiata-nav .bn-network.on .bn-label{color:#056FAB}
+@keyframes fiata-network-wave{0%{opacity:0;transform:scale(.92)}15%{opacity:.56}75%{opacity:0;transform:scale(1.28)}100%{opacity:0;transform:scale(1.28)}}
+@media(prefers-reduced-motion:reduce){.fiata-nav .bn-network .bn-icon:before,.fiata-nav .bn-network .bn-icon:after{animation:none;opacity:0}}
+@media(max-width:359px){.fiata-nav .bn{font-size:9.5px}.fiata-nav .bn-network .bn-icon{width:51px;height:51px}.events-list-bottom .events-list-meta.venue{font-size:10.5px}}
 </style>
 </head>
 <body>
@@ -969,7 +1008,7 @@ function render(anim){
   const ae=document.activeElement, fid=ae&&ae.id&&$app.contains(ae)?ae.id:null; let sel=null; try{sel=ae.selectionStart}catch(e){}
   $app.innerHTML=view()+sheetView()+viewerView();
   // Keep the sponsor logos visible while scrolling every app screen.
-  if(S.phase!=='splash'){
+  if(S.phase==='app'){
     const root=$app.querySelector('.screen');
     if(root){
       const anchor=root.querySelector(':scope > .bnav')||root.querySelector(':scope > .foot');
@@ -995,7 +1034,13 @@ function view(){
   if(S.phase==='events') return eventsV();
   const t=topS();
   if(t){ const f=PV[t.n]; return f? f(t.p):''; }
+  if(S.tab==='speakers') return tabFromDetail('speakers','Speakers');
+  if(S.tab==='gallery') return tabFromDetail('gallery','Photo Gallery');
   return ({home:homeV,agenda:agendaV,network:networkV,explore:exploreV,profile:profileV})[S.tab]();
+}
+function tabFromDetail(name,title){
+  // Preserve the original content and actions, but replace its back header with persistent footer navigation.
+  return PV[name]().replace(phdr(title),'').replace(/<\/div>\s*$/,`${navV()}</div>`);
 }
 let toastT;
 function toast(m,kind='ok'){
@@ -1005,9 +1050,9 @@ function toast(m,kind='ok'){
 }
 const tabbed=(inner)=>`<div class="screen">${inner}${navV()}</div>`;
 function navV(){
-  const T=[['home','home','Home'],['agenda','calendar','Agenda'],['network','users','Network'],['explore','compass','Explore'],['profile','user','Profile']];
-  const i=T.findIndex(t=>t[0]===S.tab), from=S._pt??i;
-  return `<nav class="bnav" aria-label="Main"><span class="bind" style="--i:${from}" data-to="${i}"></span>${T.map(([k,icn,l])=>`<button class="bn ${S.tab===k?'on':''}" data-a="tab" data-p="${k}" aria-current="${S.tab===k?'page':'false'}">${ic(icn,22,S.tab===k?2.1:1.8)}<span>${l}</span></button>`).join('')}</nav>`;
+  // Each destination appears once; Agenda lives in the Home event menu.
+  const T=[['home','home','Home'],['speakers','mic','Speakers'],['network','users','Network'],['gallery','image','Gallery'],['profile','user','Profile']];
+  return `<nav class="bnav fiata-nav" aria-label="Main navigation">${T.map(([k,icn,l])=>`<button class="bn ${S.tab===k?'on':''} ${k==='network'?'bn-network':''}" data-a="tab" data-p="${k}" aria-label="${l}" aria-current="${S.tab===k?'page':'false'}"><span class="bn-icon">${ic(icn,k==='network'?25:22,k==='network'?2:1.9)}</span><span class="bn-label">${l}</span></button>`).join('')}</nav>`;
 }
 const phdr=(title,right='',dk=false)=>`<header class="phdr ${dk?'dk':''}"><button class="ibtn" data-a="back" aria-label="Back">${ic('left',24,2)}</button><h2>${dk?'':esc(title)}</h2>${right}</header>`;
 const bell=()=>`<button class="ibtn" data-a="push" data-p="notifs" aria-label="Notifications">${ic('bell',22)}</button>`;
@@ -1250,6 +1295,11 @@ const PV={
      ${g.k>5?`<div class="pad" style="margin-top:10px"><button class="btn g" data-a="galMore" data-p="${gi}">${more?'Show less':'View More'} ${ic(more?'down':'right',16,2).replace('<svg',more?'<svg style="transform:rotate(180deg)"':'<svg')}</button></div>`:''}</section>`}).join('')}<div style="height:28px"></div></div></div>`; },
  notifs(){ return notifV(); },
 };
+// Agenda has one entry point on Home. This full-screen route returns to Home via Back.
+PV.agenda=()=>agendaV()
+  .replace(tabTitle('Agenda',esc(ev().name)),'')
+  .replace('<div class="screen"><div class="scroll"',`<div class="screen">${phdr('Agenda')}<div class="scroll"`)
+  .replace(navV(),'');
 function spkList(){
   const q=S.q.spk.trim().toLowerCase(), L=SPEAKERS.filter(s=>!q||(s.n+' '+s.c+' '+s.r).toLowerCase().includes(q));
   return L.length? L.map(s=>`<button class="spk" data-a="push" data-p="speaker:${s.id}">${av(s.n,56)}<span class="pm"><div class="pn">${esc(s.n)}</div><div class="rl">${esc(s.r)}, ${esc(s.c)}</div><div class="bio">${esc(s.bio)}</div><span class="vp">View Profile ${ic('right',14,2.2)}</span></span></button>`).join('')
@@ -1505,12 +1555,12 @@ document.addEventListener('keydown',e=>{
 /* ---------- desktop flow shortcuts ---------- */
 const FLOWS=[
  ['A','Explore conference',()=>{reset();S.phase='events';}],
- ['B','Browse agenda & rate',()=>{reset();enter();S.tab='agenda';}],
+ ['B','Browse agenda & rate',()=>{reset();enter();S.tab='home';S.stack=[{n:'agenda'}];}],
  ['C','Find a delegate',()=>{reset();enter();S.tab='network';S.net='people';}],
  ['D','Schedule a meeting',()=>{reset();enter();demoLogin();S.tab='network';S.net='people';S.req={to:'a4',day:null,time:null,loc:null,note:'',err:'',busy:false};S.stack=[{n:'request',p:'a4'}];}],
  ['E','Manage meetings',()=>{reset();enter();demoLogin();S.tab='network';S.net='meetings';}],
  ['F','Manage connections',()=>{reset();enter();demoLogin();S.tab='network';S.net='conns';}],
- ['G','Explore event content',()=>{reset();enter();S.tab='explore';}],
+ ['G','Explore event content',()=>{reset();enter();S.tab='home';}],
  ['H','Profile & event pass',()=>{reset();enter();demoLogin();S.tab='profile';}],
 ];
 function reset(){ S.sheet=null;S.viewer=null;S.stack=[];S.hl=null; }
@@ -1530,6 +1580,9 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
     S.meetings.push({id:'m-demo-recent-1',with:'a12',day:0,time:'14:00',loc:'Meeting Room 1',note:'Demo confirmed meeting',status:'accepted',dir:'in',demo:1});
     S.meetings.push({id:'m-demo-recent-2',with:'a8',day:1,time:'15:30',loc:'Table 03',note:'Demo meeting request',status:'pending',dir:'out',demo:1});
   }
+  A.openAgenda=function(){
+    S.tab='home';S.stack=[];push('agenda');
+  };
   A.openEventList=function(){
     S.sheet=null; S.viewer=null; S.stack=[]; S.eventsTab='active'; S.phase='events';
     render('pop');
@@ -1580,8 +1633,8 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
           <div class="events-list-art">${officialEventImage(e)}</div>
           <div class="events-list-info"><div class="events-list-title">${esc(e.name)}</div>
             ${e.date?`<div class="events-list-meta">${ic('calendar',14)} ${esc(e.date)}</div>`:''}
-            ${e.venue?`<div class="events-list-meta">${ic('pin',14)} ${esc(e.venue)}</div>`:''}
-            <div class="events-list-open">View event ${ic('arrow',17,2)}</div>
+            <div class="events-list-bottom"><span class="events-list-open">View event ${ic('arrow',17,2)}</span>
+              ${e.venue?`<span class="events-list-meta venue">${ic('pin',14)} ${esc(e.venue)}</span>`:''}</div>
           </div>
         </button>`).join('')}
       </div>`:
@@ -1603,20 +1656,16 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
       }).join('')}</div>`:
       `<button class="home-meeting-row home-meeting-guest press" data-a="goNet" data-p="people"><span class="meeting-icon">${ic('calPlus',20,1.9)}</span><span class="home-meeting-copy"><strong>No meetings scheduled</strong><small>Find a delegate to request a meeting</small></span><span class="more-arrow">${ic('right',19,2)}</span></button>`;
     const menus=[
+      ['','calendar','Agenda','Conference sessions & schedule','openAgenda'],
       ['about','info','About Event','Overview, brochure & registration links','push'],
-      ['speakers','mic','Speakers','Profiles of conference speakers','push'],
       ['vote','vote','Vote','Take part in event polls','push'],
-      ['conns','contact','My Connection','Delegates you have connected with','goNet'],
-      ['sponsors','award','Sponsors & Partners','Event sponsors by category','push'],
-      ['gallery','image','Photo Gallery','Event photography by day','push']
+      ['sponsors','award','Sponsors & Partners','Event sponsors by category','push']
     ];
     return tabbed(`<div class="scroll home-scroll" data-k="home">
-      <div class="home-top"><div class="home-toolbar">
-        <div class="home-identity">${brandLogo(39)}<span class="home-brand-caption">Conference companion</span></div>
-        <div class="home-tools"><button class="home-tool" aria-label="Notifications" data-a="push" data-p="notifs">${ic('bell',21,1.8)}</button><button class="home-tool" data-a="tab" data-p="profile" aria-label="Profile">${u?av(u.n,31):ic('user',21,1.8)}</button></div>
-      </div>
-      <button class="home-switch" data-a="openEventList" aria-label="Change event, opens event list"><span class="home-switch-label"><span>SELECTED EVENT</span><strong>${esc(e.short)}</strong></span><span class="home-switch-link">Change ${ic('arrow',15,2)}</span></button>
-      </div>
+      <div class="home-top"><div class="home-toolbar simple-home-toolbar">
+        <button class="home-change-button" data-a="openEventList" aria-label="Change event, opens event list">${ic('swap',18,2)}<span>Change Event</span>${ic('right',15,2)}</button>
+        <button class="home-tool home-notification" aria-label="Notifications" data-a="push" data-p="notifs">${ic('bell',21,1.8)}</button>
+      </div></div>
              <section class="home-event-section" aria-label="Event banner gallery">
          <div class="home-banner-rail image-banner-rail" data-k="home-banner" data-rail="hero" role="region" aria-label="Swipeable official event banners">
            ${EVENTS.map(item=>`<button data-slide class="home-banner-slide image-banner-card press" data-a="bannerEvent" data-p="${item.id}" aria-label="View ${esc(item.name)} banner and event information">
@@ -1625,21 +1674,15 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
          </div>
          <div class="home-hints" aria-label="Banner position">${EVENTS.map((item,i)=>`<button class="rail-dot ${i===0?'active':''}" data-dot-rail="hero" data-a="railJump" data-p="hero:${i}" aria-label="Show banner ${i+1}" aria-current="${i===0?'true':'false'}"></button>`).join('')}<small data-counter-rail="hero">1 of ${EVENTS.length}</small></div>
        </section>
-<section class="home-actions"><div class="home-section-head"><h2>Quick access</h2></div>
-        <div class="home-action-grid">
-          <button class="home-action-card primary press" data-a="tab" data-p="agenda"><div class="action-icon">${ic('calendar',20,1.9)}</div><span class="action-arrow">${ic('arrowUR',15,2)}</span><div><strong>Explore Agenda</strong><small>Sessions & schedule</small></div></button>
-          <button class="home-action-card secondary press" data-a="goNet" data-p="people"><div class="action-icon">${ic('users',20,1.9)}</div><span class="action-arrow">${ic('arrowUR',15,2)}</span><div><strong>Find Delegates</strong><small>Connect & meet</small></div></button>
-        </div>
-      </section>
-      <section class="home-meeting-section"><div class="home-section-head"><h2>1 × 1 Meetings</h2><button class="home-text-action" data-a="goNet" data-p="meetings">View all ${ic('right',15,2)}</button></div>
+<section class="home-meeting-section"><div class="home-section-head"><h2>1 × 1 Meetings</h2><button class="home-text-action" data-a="goNet" data-p="meetings">View all ${ic('right',15,2)}</button></div>
         ${u&&mine.length? meetingPreview:
           `<div style="padding:0 20px">${meetingPreview}</div>`}
         ${u&&mine.length>1?`<div class="home-meeting-foot"><span>Swipe for more · Latest first</span><strong data-counter-rail="meetings">1 of ${mine.length}</strong></div>`:''}
       </section>
-      <section class="home-discover-section"><div class="home-section-head"><h2>Explore the event</h2><button class="home-text-action" data-a="tab" data-p="explore">All ${ic('right',15,2)}</button></div>
+      <section class="home-discover-section"><div class="home-section-head"><h2>Explore the event</h2></div>
         <div class="home-menu-list">${menus.map(([key,icon,title,subtitle,action])=>`<button class="home-menu-item press" data-a="${action}" data-p="${key}"><span class="home-menu-icon">${ic(icon,18,1.85)}</span><span class="home-menu-copy"><strong>${title}</strong><small>${subtitle}</small></span>${ic('right',17,2)}</button>`).join('')}</div>
       </section>
-      <div class="home-bottom-note">FIATA Events · Powered by n-Gauge</div>
+      
     </div>`);
   };
 })();
