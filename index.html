@@ -1241,6 +1241,29 @@ body{background:var(--bg);overscroll-behavior:none}
 .faq-disclaimer{flex:none;text-align:center;color:#8295A8;font-size:10px;padding:8px 10px;border-top:1px solid #EFF3F7}
 @media(max-width:370px){.faq-panel{max-height:59dvh}.faq-widget{right:12px}.header-logout{padding-left:7px;padding-right:7px;gap:4px}}
 
+
+.gallery-album{padding:20px 16px 32px}
+.gallery-album-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:15px}
+.gallery-album-head h3{font-size:18px;font-weight:780;color:var(--tx)}
+.gallery-album-head p{font-size:12px;color:var(--tx2);margin-top:4px}
+.gallery-album-head>span{font-size:11px;color:var(--tx2);white-space:nowrap;background:#E8F3FA;border-radius:18px;padding:7px 10px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.gallery-tile{aspect-ratio:1;overflow:hidden;position:relative;background:#E5EEF6;border-radius:11px;border:1px solid var(--bd);display:block;padding:0}
+.gallery-tile img{display:block;width:100%;height:100%;object-fit:cover}
+.gallery-tile:active{transform:scale(.98)}
+.gallery-unavailable{display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:5px;color:#69849A;font-size:10px}
+.gallery-image-unavailable .gallery-unavailable{display:flex}
+.gallery-more{display:flex;flex-direction:column;align-items:center;gap:10px;margin:19px 0 6px}
+.gallery-more span{font-size:12px;color:var(--tx2)}
+.gallery-more .btn{width:100%;max-width:320px;display:flex;justify-content:center;align-items:center;gap:8px}
+.gallery-photo-full img{display:block;width:100%;height:100%;object-fit:contain;max-height:100%}
+.gallery-large-fallback{color:#fff;font-size:14px}
+.gallery-view-arrow{position:absolute;z-index:4;top:50%;transform:translateY(-50%);width:41px;height:47px;display:grid;place-items:center;color:#fff;background:rgba(0,0,0,.44);border-radius:12px}
+.gallery-view-arrow.left{left:7px}.gallery-view-arrow.right{right:7px}
+.gallery-viewer .vfoot{display:flex;gap:12px;padding:14px 18px calc(16px + var(--sab))}
+.gallery-viewer .vfoot .btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:#fff}
+@media(max-width:365px){.gallery-grid{gap:5px}.gallery-album{padding-left:12px;padding-right:12px}}
+
 </style>
 </head>
 <body>
@@ -1311,7 +1334,9 @@ const TIMES = ['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','
 const ROOMS = ['Meeting Room 1','Meeting Room 2'];
 const TABLES = Array.from({length:12},(_,i)=>'Table '+String(i+1).padStart(2,'0'));
 const SPONSOR_CATS = [ {n:'Sponsor Category A',k:2,big:1}, {n:'Sponsor Category B',k:4}, {n:'Sponsor Category C',k:6} ]; // placeholder hierarchy
-const GALLERY = [ {d:'Day 1',k:9}, {d:'Day 2',k:7} ]; // placeholder images
+// Filenames 711–1875 are all present in the supplied HTML gallery table.
+const GALLERY=[{d:'FIATA 2026 Photo Gallery',k:1165,start:711,base:'https://fiata.ngauge.co.in/Files/Gallery/'}];
+const galleryPhoto=(album,index)=>album.base+'Fiata2026_'+(album.start+index)+'.jpg';
 const POLL = { q:'Which topic interests you most for future sessions?', opts:['Digital freight solutions','Sustainable logistics','Trade facilitation'] };
 
 /* ===================================================================== */
@@ -1784,11 +1809,17 @@ const PV={
  sponsors(){ return `<div class="screen">${phdr('Sponsors & Partners')}<div class="scroll" data-k="sps"><section class="partner-section"><h3>Our Partners</h3><div class="partner-logo-grid">
    ${SOURCE_SPONSOR_LOGOS.map(l=>`<div class="partner-logo-card"><img src="${l.image}" alt="${esc(l.name)}" loading="lazy"></div>`).join('')}
   </div></section></div></div>`; },
-  gallery(){ return `<div class="screen">${phdr('Photo Gallery')}<div class="scroll" data-k="gal">
-   ${GALLERY.map((g,gi)=>{const more=S.galMore[gi], n=more?g.k:Math.min(g.k,5); const pat=['w2 h2','','','','w2','','','h2',''];
-     return `<section class="sec" style="margin-top:20px"><div class="sech"><h3>${g.d}</h3><span class="tiny">${g.k} photos</span></div>
-     <div class="gal">${Array.from({length:n},(_,i)=>`<button class="${pat[i%pat.length]}" data-a="view" data-p="${gi}:${i}" aria-label="Open photo ${i+1}" style="border-radius:12px">${phImg(gi+'-'+i)}</button>`).join('')}</div>
-     ${g.k>5?`<div class="pad" style="margin-top:10px"><button class="btn g" data-a="galMore" data-p="${gi}">${more?'Show less':'View More'} ${ic(more?'down':'right',16,2).replace('<svg',more?'<svg style="transform:rotate(180deg)"':'<svg')}</button></div>`:''}</section>`}).join('')}<div style="height:28px"></div></div></div>`; },
+  gallery(){
+ return `<div class="screen">${phdr('Photo Gallery')}<div class="scroll" data-k="gal">
+  ${GALLERY.map((g,gi)=>{const n=Math.min(g.k,S.galMore[gi]||24);return `
+   <section class="gallery-album"><div class="gallery-album-head"><div><h3>${esc(g.d)}</h3><p>Photos from the FIATA gallery</p></div><span>${g.k} photos</span></div>
+   <div class="gallery-grid">${Array.from({length:n},(_,i)=>`<button class="gallery-tile" data-a="view" data-p="${gi}:${i}" aria-label="Open gallery photo ${i+1}">
+     <img src="${galleryPhoto(g,i)}" alt="FIATA 2026 photo ${i+1}" loading="lazy" decoding="async" onerror="this.hidden=true;this.parentElement.classList.add('gallery-image-unavailable')">
+     <span class="gallery-unavailable">${ic('image',22)} Photo unavailable</span></button>`).join('')}</div>
+   ${n<g.k?`<div class="gallery-more"><span>Showing ${n} of ${g.k}</span><button class="btn s" data-a="galMore" data-p="${gi}">Load more photos ${ic('down',17,2)}</button></div>`:''}
+   </section>`;}).join('')}</div></div>`;
+ },
+
  notifs(){ return notifV(); },
 };
 // Agenda has one entry point on Home. This full-screen route returns to Home via Back.
@@ -1946,11 +1977,16 @@ function confirmSheet(p){
   <div class="sfoot" style="border:0"><button class="btn g" data-a="closeSheet">Cancel</button><button class="btn ${C[5]}" data-a="doConfirm" data-p="${p}">${C[4]}</button></div>`;
 }
 function viewerView(){
-  if(!S.viewer) return '';
-  const [g,i]=S.viewer;
-  return `<div class="viewer" role="dialog" aria-label="Photo viewer"><div class="vbar"><button class="ibtn" data-a="closeViewer" aria-label="Close">${ic('x',24,2)}</button><span style="font-weight:600;font-size:14px">${GALLERY[g].d} · ${i+1} / ${GALLERY[g].k}</span><span style="width:44px"></span></div>
-   <div class="vimg"><button class="ibtn" style="position:absolute;left:6px;z-index:2;color:#fff" data-a="vNav" data-p="-1" aria-label="Previous">${ic('left',26,2)}</button>${phImg(g+'-'+i)}<button class="ibtn" style="position:absolute;right:6px;z-index:2;color:#fff" data-a="vNav" data-p="1" aria-label="Next">${ic('right',26,2)}</button></div>
-   <div class="vfoot"><button class="btn" data-a="toastInfo" data-p="Photo download is not available yet">${ic('download',18,2)} Download</button><button class="btn" data-a="share">${ic('share',18,2)} Share</button></div></div>`;
+ if(!S.viewer)return '';
+ const [g,i]=S.viewer,album=GALLERY[g],url=galleryPhoto(album,i);
+ return `<div class="viewer gallery-viewer" role="dialog" aria-label="Photo viewer">
+  <div class="vbar"><button class="ibtn" data-a="closeViewer" aria-label="Close">${ic('x',24,2)}</button><span>${esc(album.d)} · ${i+1} / ${album.k}</span><span style="width:44px"></span></div>
+  <div class="vimg gallery-photo-full"><button class="gallery-view-arrow left" data-a="vNav" data-p="-1" aria-label="Previous photo">${ic('left',24,2)}</button>
+   <img src="${url}" alt="FIATA 2026 photo ${i+1}" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+   <div class="gallery-large-fallback" hidden>Photo could not be loaded</div>
+   <button class="gallery-view-arrow right" data-a="vNav" data-p="1" aria-label="Next photo">${ic('right',24,2)}</button></div>
+  <div class="vfoot"><a class="btn" href="${url}" target="_blank" rel="noopener noreferrer">${ic('ext',17,2)} Open original</a>
+  <button class="btn" data-a="share">${ic('share',17,2)} Share</button></div></div>`;
 }
 
 /* ===================================================================== ACTIONS */
@@ -2084,11 +2120,17 @@ const A={
  opt(i){ S.vote.sel=+i; S.vote.err=''; render(); },
  submitVote(){ const v=S.vote; if(v.sel==null){v.err='Select an option before submitting your vote.';return render();} v.busy=true;render(); setTimeout(()=>{v.busy=false;v.done=true;render();toast('Response saved in preview');},800); },
  cat(i){ S.openCats[i]=!S.openCats[i]; render(); },
- galMore(i){ S.galMore[i]=!S.galMore[i]; render(); },
+ galMore(i){ S.galMore[i]=Math.min(GALLERY[+i].k,(S.galMore[i]||24)+24); render(); },
  view(p){ S.viewer=p.split(':').map(Number); render(); },
  vNav(d){ const [g,i]=S.viewer, k=GALLERY[g].k; S.viewer=[g,(i+(+d)+k)%k]; render(); },
  closeViewer(){ S.viewer=null; render(); },
- share(){ if(navigator.share){ navigator.share({title:'FIATA Events photo',text:'Photo from '+ev().name}).catch(()=>{}); } else toast('Share sheet opens with the original photo in the live app','info'); },
+ share(){
+   if(!S.viewer)return;
+   const [g,i]=S.viewer,url=galleryPhoto(GALLERY[g],i);
+   if(navigator.share)navigator.share({title:'FIATA gallery photo',url}).catch(()=>{});
+   else if(navigator.clipboard?.writeText)navigator.clipboard.writeText(url).then(()=>toast('Photo link copied')).catch(()=>toast('Open original to share','info'));
+   else window.open(url,'_blank','noopener,noreferrer');
+ },
  res(id){ const r=byId(RESOURCES,id); if(r.url){ if(r.kind==='pdf') openSheet('pdf',r.t); else window.open(r.url,'_blank','noopener'); return; }
    if(r.kind==='pdf') openSheet('pdf',r.t); else toast('This resource is not available yet','info'); },
  toastInfo(m){ toast(m,'info'); },
