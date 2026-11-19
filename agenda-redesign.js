@@ -54,6 +54,15 @@
       </section>
     </div>`);
   };
+  // Open Agenda as the real FIATA full-screen page: one date selector and
+  // ordinary session cards only. The date tabs aren't search/filter controls.
+  PV.agenda=function(){
+    return agendaV()
+      .replace(tabTitle('Agenda',esc(ev().name)),'')
+      .replace('<div class="screen"><div class="scroll agenda-scroll"',
+        `<div class="screen">${phdr('Agenda')}<div class="scroll agenda-scroll"`)
+      .replace(navV(),'');
+  };
   PV.sessionDetail=function(id){
     const s=byId(SESSIONS,id);
     if(!s)return `<div class="screen">${phdr('Session Details')}<div class="scroll agenda-detail"><p>Session not found.</p></div></div>`;
