@@ -1264,6 +1264,27 @@ body{background:var(--bg);overscroll-behavior:none}
 .gallery-viewer .vfoot .btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;color:#fff}
 @media(max-width:365px){.gallery-grid{gap:5px}.gallery-album{padding-left:12px;padding-right:12px}}
 
+
+/* Dedicated FIATA Help page */
+.faq-page-scroll{padding-bottom:12px}
+.faq-welcome{display:flex;align-items:center;gap:13px;margin:19px 16px 17px;padding:14px;background:linear-gradient(120deg,#E8F5FD,#F5FAFE);border:1px solid #D4EAF7;border-radius:16px}
+.faq-page-logo{height:43px;width:43px;display:grid;place-items:center;color:#0E83BF;background:#D7EFFA;border-radius:13px;flex:none}
+.faq-welcome h2{font-size:17px;font-weight:780;color:#113C5E}
+.faq-welcome p{font-size:12px;line-height:1.5;color:#54758B;margin-top:4px}
+.faq-page-chat{display:flex;flex-direction:column;gap:10px;padding:5px 16px 14px}
+.faq-msg{max-width:89%;border-radius:14px;padding:11px 13px;line-height:1.55;font-size:12.5px;white-space:pre-wrap}
+.faq-msg-user{align-self:flex-end;color:#fff;background:#087CBB;border-bottom-right-radius:4px}
+.faq-msg-answer{align-self:flex-start;color:var(--tx);background:#fff;border:1px solid var(--bd);border-bottom-left-radius:4px}
+.faq-page-topics{margin:5px 16px 16px;display:flex;flex-direction:column;gap:7px}
+.faq-page-topics h3{font-size:13px;color:var(--tx2);margin:6px 0;font-weight:740}
+.faq-page-topic{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:45px;text-align:left;font-size:12px;color:var(--tx);font-weight:650;padding:11px 12px;border:1px solid var(--bd);background:#fff;border-radius:12px}
+.faq-page-topic svg{flex:none;color:#168BC3}
+.faq-page-note{font-size:11px;color:var(--tx2);text-align:center;margin:15px 18px}
+.faq-page-composer{display:flex;align-items:center;gap:9px;background:#fff;border-top:1px solid var(--bd);padding:11px 15px calc(11px + var(--sab));flex:none;z-index:4}
+.faq-page-composer input{flex:1;min-width:0;height:44px;border:1px solid #D5E3EE;border-radius:22px;padding:0 15px;font-size:13px;outline:none}
+.faq-page-composer input:focus{border-color:#087FBE}
+.faq-page-composer button{display:grid;place-items:center;flex:none;width:44px;height:44px;background:linear-gradient(125deg,#0AB2E6,#0864AD);color:#fff;border-radius:50%}
+
 </style>
 </head>
 <body>
@@ -1455,7 +1476,7 @@ const phImg=(k)=>{const p=PHG[hash('img'+k)%PHG.length];return `<span class="ph-
 const now=Date.now();
 const S={
   phase:'splash', eventsTab:'active', eventId:null, tab:'home', stack:[], sheet:null, viewer:null,
-  user:null, afterLogin:null, authOpen:false, faqOpen:false, faqHistory:[],
+  user:null, afterLogin:null, authOpen:false, faqOpen:false, faqHistory:[], faqDraft:'',
   login:{stage:1,reg:'',code:'',err:'',busy:false,resend:0},
   day:0, net:'people', q:{people:'',spk:'',co:'',add:''}, countries:[], draft:[],
   meetings:[{id:'m0',with:'a10',day:1,time:'11:00',loc:'Table 04',note:'Please confirm your availability for this meeting.',status:'pending',dir:'in',demo:1}],
@@ -1515,7 +1536,7 @@ function render(anim){
       const foot=root.querySelector(':scope > .foot');
       const safeBottom=(nav?.offsetHeight||0)+(logos?.offsetHeight||0)+(foot?.offsetHeight||0);
       root.style.setProperty('--faq-clearance',`${safeBottom+14}px`);
-      root.insertAdjacentHTML('beforeend',faqWidgetV());
+      if(topS()?.n!=='help')root.insertAdjacentHTML('beforeend',faqWidgetV());
     }
   }
   const scr=$app.querySelector('.screen');
@@ -1531,21 +1552,21 @@ function render(anim){
 }
 const FAQ_ENTRIES=[{"q":"How do I find delegates?","a":"Open Network and choose Delegates. Search by name or company, then open a delegate profile to view available actions."},{"q":"How do I request a 1 × 1 meeting?","a":"Go to Network → Delegates, select a person and tap Request Meeting. Choose an event date, time and a room or table, then submit."},{"q":"Where can I manage meetings?","a":"Open Network → 1 × 1 Meetings. Incoming requests have Accept and Reject actions; outgoing requests have Delete."},{"q":"Where are my connections?","a":"Choose Network → My Connection to see saved delegates. You can email them, request a meeting or remove a connection."},{"q":"How do I find my agenda?","a":"On Home, tap Explore Agenda to browse sessions by date and view session details."},{"q":"Where is my event pass?","a":"After signing in, select Profile in the bottom navigation to see your registration details and preview pass."},{"q":"How do I change events?","a":"On the Home page, tap Change Event to return to the event list."}];
 function faqWidgetV(){
-  const entries=S.faqHistory||[];
-  const messages=entries.length?entries.map(item=>`<div class="faq-bubble faq-user">${esc(item.q)}</div><div class="faq-bubble faq-answer">${esc(item.a)}</div>`).join(''):
-    `<div class="faq-bubble faq-answer">Hello! I can help you use FIATA Events. Select one of the common questions below.</div>`;
-  return `<div class="faq-widget ${S.faqOpen?'faq-open':''}">
-    ${S.faqOpen?`<section class="faq-panel" role="dialog" aria-label="FIATA help and frequently asked questions">
-      <header class="faq-panel-header"><span class="faq-assistant-mark">${ic('chat',20,2)}</span><span><strong>FIATA Help</strong><small>Frequently asked questions</small></span><button class="faq-close" data-a="faqToggle" aria-label="Close help">${ic('x',18,2)}</button></header>
-      <div class="faq-conversation" data-k="faq-chat" aria-live="polite">${messages}</div>
-      <div class="faq-questions"><span class="faq-questions-label">Choose a question</span>
-        ${FAQ_ENTRIES.map((item,i)=>`<button class="faq-question" data-a="faqAsk" data-p="${i}"><span>${esc(item.q)}</span>${ic('right',14,2)}</button>`).join('')}
-      </div><div class="faq-disclaimer">FAQ guidance only · No live support chat</div>
-    </section>`:''}
-    <button class="faq-fab" data-a="faqToggle" aria-label="${S.faqOpen?'Close help':'Open FAQ help'}" aria-expanded="${S.faqOpen?'true':'false'}">${ic(S.faqOpen?'x':'chat',24,2)}${S.faqOpen?'':'<span>Help</span>'}</button>
-  </div>`;
+  return `<div class="faq-widget"><button class="faq-fab" data-a="push" data-p="help" aria-label="Open FIATA Help and FAQs">${ic('chat',24,2)}<span>Help</span></button></div>`;
 }
-
+function faqPageV(){
+ const bubbles=(S.faqHistory||[]).map(item=>`<div class="faq-msg faq-msg-user">${esc(item.q)}</div><div class="faq-msg faq-msg-answer">${esc(item.a)}</div>`).join('');
+ return `<div class="screen faq-page">${phdr('Help & FAQs')}<div class="scroll faq-page-scroll" data-k="faq-page">
+  <section class="faq-welcome"><span class="faq-page-logo">${ic('chat',24,2)}</span><div><h2>How can we help?</h2><p>Find answers about event features, networking and meetings.</p></div></section>
+  <div class="faq-page-chat" role="log" aria-label="Help conversation" aria-live="polite">
+    <div class="faq-msg faq-msg-answer">Hi! Ask me about FIATA Events or choose a question below.</div>${bubbles}</div>
+  <section class="faq-page-topics"><h3>Frequently asked questions</h3>
+    ${FAQ_ENTRIES.map((faq,i)=>`<button class="faq-page-topic" data-a="faqAsk" data-p="${i}"><span>${esc(faq.q)}</span>${ic('right',16,2)}</button>`).join('')}
+  </section><p class="faq-page-note">FAQ guidance only · No live support chat.</p>
+ </div>
+ <form class="faq-page-composer" data-faq-form><input id="faq-text" data-in="faqDraft" aria-label="Type a help question" placeholder="Type your question…" value="${esc(S.faqDraft||'')}" autocomplete="off">
+   <button type="submit" aria-label="Send question">${ic('send',19,2)}</button></form></div>`;
+}
 const topS=()=>S.stack[S.stack.length-1];
 function patch(region,html){const el=$app.querySelector(`[data-region="${region}"]`); if(el) el.innerHTML=html;}
 function view(){
@@ -1787,6 +1808,7 @@ function profileV(){
 
 /* ---------- pushed screens ---------- */
 const PV={
+ help(){return faqPageV();},
  about(){ const e=ev(); return `<div class="screen">${phdr('About Event')}<div class="scroll" data-k="about">
    <div class="abt-hero">${art(e.art)}<div class="ov"><h1>${esc(e.name)}</h1><div class="meta">${e.date?`<span class="glass">${esc(e.date)}</span>`:`<span class="glass">${ic('calendar',13,2)} Date from event record</span>`}${e.venue?`<span class="glass">${esc(e.venue)}</span>`:''}</div></div></div>
    <div class="prose"><div class="fl" style="display:flex;gap:8px;align-items:center">About the Event</div>
@@ -2014,14 +2036,20 @@ function requireLogin(fn,destination){
 function notify(m){ S.notifs.unshift({id:'n'+Date.now(),m,t:Date.now()}); }
 let resendTimer;
 const A={
-  faqToggle(){S.faqOpen=!S.faqOpen;render();},
+  faqToggle(){push('help');},
   faqAsk(p){
-    const item=FAQ_ENTRIES[Number(p)];
-    if(!item)return;
-    S.faqHistory.push({q:item.q,a:item.a});
-    S.faqOpen=true;render();
-    const list=$app.querySelector('.faq-conversation');
-    if(list)list.scrollTop=list.scrollHeight;
+    const item=FAQ_ENTRIES[Number(p)];if(!item)return;
+    S.faqHistory.push({q:item.q,a:item.a});S.faqDraft='';
+    render();const log=$app.querySelector('.faq-page-chat');if(log)log.scrollTop=log.scrollHeight;
+  },
+  faqSend(){
+    const q=(S.faqDraft||'').trim().slice(0,240);if(!q)return;
+    const t=q.toLowerCase();
+    const keys=[['delegate','attendee','people','find','search'],['request','book','schedule meeting','meeting time'],['accept','reject','manage meeting','cancel meeting'],['connection','contact','email'],['agenda','session'],['profile','pass','qr','ticket'],['change event','switch event','different event']];
+    let best=-1,score=0;keys.forEach((words,i)=>{const n=words.filter(w=>t.includes(w)).length;if(n>score){score=n;best=i;}});
+    const answer=best<0?'I can help with delegates, meetings, connections, agenda, event passes and changing events. Select a topic below for guidance.':FAQ_ENTRIES[best].a;
+    S.faqHistory.push({q,a:answer});S.faqDraft='';render();
+    const log=$app.querySelector('.faq-page-chat');if(log)log.scrollTop=log.scrollHeight;
   },
  toEvents(){ if(S.phase==='splash'){S.phase='events';render('fade');} },
  evTab(p){ S.eventsTab=p; render(); },
@@ -2149,6 +2177,7 @@ function startResend(){
 }
 
 const IN={
+ faqDraft(v){S.faqDraft=v;},
  qpeople(v){ S.q.people=v; patch('list',peopleList()); },
  qspk(v){ S.q.spk=v; patch('list',spkList()); },
  qco(v){ S.q.co=v; patch('co',coList()); },
@@ -2172,6 +2201,7 @@ document.addEventListener('change',e=>{
   if(select.dataset.meetingSelect==='date') A.rDay(select.value);
   else if(select.dataset.meetingSelect==='time') A.rTime(select.value);
 });
+document.addEventListener('submit',e=>{if(e.target.matches('[data-faq-form]')){e.preventDefault();A.faqSend();}});
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){ if(S.viewer) return A.closeViewer(); if(S.sheet) return closeSheet(); if(S.authOpen) return A.cancelLogin(); }
   if(e.key==='Enter' && e.target.id==='reg') A.getCode();
@@ -2307,7 +2337,8 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
     const menus=[
       ['about','info','About Event','Overview, brochure & registration links','push'],
       ['vote','vote','Vote','Take part in event polls','push'],
-      ['sponsors','award','Sponsors & Partners','Event sponsors by category','push']
+      ['sponsors','award','Sponsors & Partners','Event sponsors by category','push'],
+      ['help','chat','Help & FAQs','Answers to common questions','push']
     ];
     return tabbed(`<div class="scroll home-scroll" data-k="home">
       <div class="home-top"><div class="home-toolbar simple-home-toolbar">
