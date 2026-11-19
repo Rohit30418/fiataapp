@@ -650,6 +650,30 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 .page-sponsor-footer{flex:none;margin-top:auto;padding-top:26px;background:var(--bg);}
 .page-sponsor-footer .sponsor-dock{height:62px;min-height:62px;width:100%;position:static;z-index:auto;box-shadow:none;border-top:1px solid #E1EAF2;background:#fff;}
 @media(max-width:860px){.page-sponsor-footer .sponsor-dock{height:58px;min-height:58px;}}
+
+/* Gallery album navigation — two full-width folders on the overview screen. */
+.gallery-folder-intro,.partner-page-intro{padding:24px 20px 12px}
+.gallery-folder-intro h2,.partner-page-intro h2{font-size:23px;font-weight:800;letter-spacing:-.025em;color:var(--tx)}
+.gallery-folder-intro p,.partner-page-intro p{font-size:12px;color:var(--tx2);margin-top:6px}
+.gallery-folder-list{display:flex;flex-direction:column;gap:14px;padding:12px 18px 32px}
+.gallery-folder-card{display:flex;align-items:stretch;width:100%;min-height:134px;overflow:hidden;background:var(--card);border:1px solid var(--bd);border-radius:18px;box-shadow:var(--sh);text-align:left;transition:transform .2s,border-color .2s}
+.gallery-folder-card:active{transform:scale(.99)}
+.gallery-folder-card:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.gallery-folder-cover{width:36%;min-width:114px;max-width:175px;background:linear-gradient(140deg,#103E63,#1E88C5);overflow:hidden;flex:none}
+.gallery-folder-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.gallery-folder-info{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px;padding:14px 8px 14px 16px}
+.gallery-folder-label{font-size:10px;color:var(--blue);font-weight:800;letter-spacing:.07em}
+.gallery-folder-info strong{font-size:15px;color:var(--tx);line-height:1.4}
+.gallery-folder-info small{font-size:12px;color:var(--tx2)}
+.gallery-folder-arrow{align-self:center;color:var(--blue);padding:0 13px 0 4px}
+.sponsor-category-section{margin-top:10px}
+.sponsor-category-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.sponsor-category-heading h3{margin:0}
+.sponsor-category-heading span{font-size:11px;color:var(--tx2);white-space:nowrap}
+.sponsor-category-section .partner-logo-card{gap:10px;grid-template-rows:1fr auto}
+.sponsor-logo-name{font-size:11px;color:#466277;font-weight:700;text-align:center;line-height:1.35}
+html[data-fiata-theme="dark"] .sponsor-category-section .partner-logo-card{background:#fff}
+@media(max-width:370px){.gallery-folder-cover{min-width:100px}.gallery-folder-info{padding-left:12px}.gallery-folder-info strong{font-size:13px}}
 </style>
 <style>
 /* FIATA home and events-list refresh — 18 November 2026 */
@@ -1456,7 +1480,12 @@ const ROOMS = ['Meeting Room 1','Meeting Room 2'];
 const TABLES = Array.from({length:12},(_,i)=>'Table '+String(i+1).padStart(2,'0'));
 const SPONSOR_CATS = [ {n:'Sponsor Category A',k:2,big:1}, {n:'Sponsor Category B',k:4}, {n:'Sponsor Category C',k:6} ]; // placeholder hierarchy
 // Filenames 711–1875 are all present in the supplied HTML gallery table.
-const GALLERY=[{d:'FIATA 2026 Photo Gallery',k:1165,start:711,base:'https://fiata.ngauge.co.in/Files/Gallery/'}];
+// The source provides a continuous photo sequence without verified day labels.
+// Divide it into two browsable folders without changing any source image URL.
+const GALLERY=[
+  {d:'FIATA 2026 — Collection 1',k:583,start:711,base:'https://fiata.ngauge.co.in/Files/Gallery/'},
+  {d:'FIATA 2026 — Collection 2',k:582,start:1294,base:'https://fiata.ngauge.co.in/Files/Gallery/'}
+];
 const galleryPhoto=(album,index)=>album.base+'Fiata2026_'+(album.start+index)+'.jpg';
 const POLL = { q:'Which topic interests you most for future sessions?', opts:['Digital freight solutions','Sustainable logistics','Trade facilitation'] };
 
@@ -2036,18 +2065,49 @@ const PV={
    </div></div>`; },
  request(id){ return requestV(id); },
  vote(){ return voteV(); },
- sponsors(){ return `<div class="screen">${phdr('Sponsors & Partners')}<div class="scroll" data-k="sps"><section class="partner-section"><h3>Our Partners</h3><div class="partner-logo-grid">
-   ${SOURCE_SPONSOR_LOGOS.map(l=>`<div class="partner-logo-card"><img src="${l.image}" alt="${esc(l.name)}" loading="lazy"></div>`).join('')}
-  </div></section></div></div>`; },
-  gallery(){
- return `<div class="screen">${phdr('Photo Gallery')}<div class="scroll" data-k="gal">
-  ${GALLERY.map((g,gi)=>{const n=Math.min(g.k,S.galMore[gi]||24);return `
-   <section class="gallery-album"><div class="gallery-album-head"><div><h3>${esc(g.d)}</h3><p>Photos from the FIATA gallery</p></div><span>${g.k} photos</span></div>
-   <div class="gallery-grid">${Array.from({length:n},(_,i)=>`<button class="gallery-tile" data-a="view" data-p="${gi}:${i}" aria-label="Open gallery photo ${i+1}">
-     <img src="${galleryPhoto(g,i)}" alt="FIATA 2026 photo ${i+1}" loading="lazy" decoding="async" onerror="this.hidden=true;this.parentElement.classList.add('gallery-image-unavailable')">
-     <span class="gallery-unavailable">${ic('image',22)} Photo unavailable</span></button>`).join('')}</div>
-   ${n<g.k?`<div class="gallery-more"><span>Showing ${n} of ${g.k}</span><button class="btn s" data-a="galMore" data-p="${gi}">Load more photos ${ic('down',17,2)}</button></div>`:''}
-   </section>`;}).join('')}</div></div>`;
+ sponsors(){
+  // Add a "category" field to an entry in SOURCE_SPONSOR_LOGOS to place it
+  // under its verified sponsor category. Existing pasted logos are kept intact.
+  const groups=new Map();
+  SOURCE_SPONSOR_LOGOS.forEach(l=>{
+    const category=(l.category||'Category to be confirmed').trim()||'Category to be confirmed';
+    if(!groups.has(category))groups.set(category,[]);
+    groups.get(category).push(l);
+  });
+  return `<div class="screen">${phdr('Sponsors & Partners')}<div class="scroll" data-k="sps">
+    <div class="partner-page-intro"><h2>Sponsors & Partners</h2><p>Browse logos by sponsor category</p></div>
+    ${Array.from(groups,([category,logos])=>`<section class="partner-section sponsor-category-section">
+      <div class="sponsor-category-heading"><h3>${esc(category)}</h3><span>${logos.length} ${logos.length===1?'partner':'partners'}</span></div>
+      <div class="partner-logo-grid">${logos.map(l=>`<div class="partner-logo-card">
+        <img src="${l.image}" alt="${esc(l.name)}" loading="lazy">
+        <span class="sponsor-logo-name">${esc(l.name)}</span>
+      </div>`).join('')}</div></section>`).join('')}
+  </div></div>`;
+ },
+ gallery(){
+  return `<div class="screen">${phdr('Photo Gallery')}<div class="scroll" data-k="gal">
+    <div class="gallery-folder-intro"><h2>Photo Gallery</h2><p>Select a collection to see all photos.</p></div>
+    <div class="gallery-folder-list">${GALLERY.map((g,gi)=>`<button class="gallery-folder-card" data-a="push" data-p="galleryFolder:${gi}" aria-label="Open ${esc(g.d)}, ${g.k} photos">
+       <span class="gallery-folder-cover"><img src="${galleryPhoto(g,0)}" loading="lazy" alt="" onerror="this.hidden=true"></span>
+       <span class="gallery-folder-info"><span class="gallery-folder-label">PHOTO COLLECTION ${gi+1}</span>
+         <strong>${esc(g.d)}</strong><small>${g.k} photos</small></span>
+       <span class="gallery-folder-arrow">${ic('right',22,2)}</span>
+    </button>`).join('')}</div>
+   </div></div>`;
+ },
+ galleryFolder(p){
+  const gi=Number(p),g=GALLERY[gi];
+  if(!g)return `<div class="screen">${phdr('Photo Gallery')}<div class="scroll"><p class="pad">Collection not found.</p></div></div>`;
+  const n=Math.min(g.k,S.galMore[gi]||24);
+  return `<div class="screen">${phdr(g.d)}<div class="scroll" data-k="gal-folder-${gi}">
+     <section class="gallery-album"><div class="gallery-album-head"><div>
+       <h3>${esc(g.d)}</h3><p>Photos from the FIATA gallery</p></div><span>${g.k} photos</span></div>
+       <div class="gallery-grid">${Array.from({length:n},(_,i)=>`<button class="gallery-tile" data-a="view" data-p="${gi}:${i}" aria-label="Open photo ${i+1} from ${esc(g.d)}">
+         <img src="${galleryPhoto(g,i)}" alt="FIATA 2026 photo ${g.start+i}" loading="lazy" decoding="async" onerror="this.hidden=true;this.parentElement.classList.add('gallery-image-unavailable')">
+         <span class="gallery-unavailable">${ic('image',22)} Photo unavailable</span></button>`).join('')}</div>
+       ${n<g.k?`<div class="gallery-more"><span>Showing ${n} of ${g.k}</span><button class="btn s" data-a="galMore" data-p="${gi}">Load more photos ${ic('down',17,2)}</button></div>`:''}
+     </section>
+  </div></div>`;
  },
 
  notifs(){ return notifV(); },
