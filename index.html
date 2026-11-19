@@ -1163,6 +1163,38 @@ body{background:var(--bg);overscroll-behavior:none}
 .partner-logo-card img{width:100%;max-height:76px;object-fit:contain;display:block}
 @media(max-width:345px){.partner-logo-grid{grid-template-columns:1fr}}
 
+
+/* Request Meeting: native mobile-friendly date/time selectors */
+.meeting-datetime{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;
+  margin:20px 16px 6px;padding:16px;border:1px solid #DCE8F3;
+  border-radius:18px;background:#fff;box-shadow:0 4px 18px rgba(17,57,88,.045)
+}
+.meeting-field{display:flex;flex-direction:column;gap:9px;min-width:0}
+.meeting-field label{
+  display:flex;align-items:center;gap:7px;white-space:nowrap;
+  font-size:12px;font-weight:750;color:#254760
+}
+.meeting-field label svg{color:#1689C5}
+.meeting-required{color:#D24B4B;font-weight:750}
+.meeting-select-wrap{position:relative;min-width:0}
+.meeting-select{
+  -webkit-appearance:none;appearance:none;display:block;width:100%;height:50px;min-width:0;
+  border:1px solid #CFDCE9;background:#F8FAFD;border-radius:12px;padding:0 30px 0 12px;
+  outline:0;font-family:inherit;font-weight:650;font-size:12.5px;color:#173A56;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  cursor:pointer;transition:border-color .18s,box-shadow .18s
+}
+.meeting-select-placeholder{color:#8396A8;font-weight:500}
+.meeting-select:focus-visible{border-color:#0782C3;box-shadow:0 0 0 3px rgba(7,130,195,.13)}
+.meeting-select-wrap>.ic{position:absolute;right:9px;top:50%;transform:translateY(-50%);color:#6A8CA4;pointer-events:none}
+.meeting-field-help{grid-column:1 / -1;margin:0;color:#73899E;font-size:11px;line-height:1.4}
+@media(max-width:370px){
+  .meeting-datetime{grid-template-columns:1fr;gap:13px}
+  .meeting-field-help{grid-column:1}
+  .meeting-select{font-size:13px}
+}
+
 </style>
 </head>
 <body>
@@ -1681,21 +1713,42 @@ function spkList(){
 
 function requestV(id){
   const a=byId(ATTENDEES,id), r=S.req;
+  const eventYear=(ev().date.match(/20\\d{2}/)||['2026'])[0];
+  const formatMeetingTime=t=>{const [h,m]=t.split(':').map(Number);return `${h%12||12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`;};
   const step=(n,t,ok,sub='')=>`<div class="step"><b class="${ok?'ok':''}">${ok?ic('check',13,3):n}</b><h4>${t}</h4><span>${sub}</span></div>`;
   const locs=(arr)=>arr.map(l=>{const un=r.day==null||!r.time?false:!avail(r.day,r.time,l), on=r.loc===l;
     return `<button class="lchip ${un?'off':''} ${on?'on':''}" ${un?'aria-disabled="true"':''} data-a="loc" data-p="${l}" aria-label="${l}, ${un?'unavailable':'available'}"><b>${l.replace('Meeting ','')}</b><small><i></i>${un?'Unavailable':on?'Selected':'Available'}</small></button>`}).join('');
   return `<div class="screen">${phdr('Request Meeting')}<div class="scroll" data-k="req">
    <div class="who">${av(a.n,48)}<div style="flex:1;min-width:0"><div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#7fb0dc;font-weight:700">Meeting with</div><div style="font-weight:700;font-size:17px">${esc(a.n)}</div><div class="pc">${esc(a.c)} · ${esc(a.co)}</div></div></div>
-   ${step(1,'Select date',r.day!=null)}
-   <div class="hs" data-k="rd">${DAYS.map((d,i)=>`<button class="dchip ${r.day===i?'on':''}" data-a="rDay" data-p="${i}"><div class="w">${d.dow}</div><div class="n">${d.num}</div><div class="l">${d.label}</div></button>`).join('')}</div>
-   ${step(2,'Select time',!!r.time)}
-   <div class="tgrid">${TIMES.map(t=>`<button class="tchip ${r.time===t?'on':''}" data-a="rTime" data-p="${t}">${t}</button>`).join('')}</div>
-   ${step(3,'Select room / table',!!r.loc)}
+   <section class="meeting-datetime" aria-label="Meeting date and time">
+     <div class="meeting-field">
+       <label for="meeting-date">${ic('calendar',17,2)} Meeting Date <span class="meeting-required">*</span></label>
+       <div class="meeting-select-wrap">
+         <select class="meeting-select ${r.day==null?'meeting-select-placeholder':''}" id="meeting-date" data-meeting-select="date" required>
+           <option value="" ${r.day==null?'selected':''} disabled>Select a date</option>
+           ${DAYS.map((d,i)=>`<option value="${i}" ${r.day===i?'selected':''}>${d.dow}, ${d.label} ${eventYear}</option>`).join('')}
+         </select>
+         ${ic('down',19,2)}
+       </div>
+     </div>
+     <div class="meeting-field">
+       <label for="meeting-time">${ic('clock',17,2)} Meeting Time <span class="meeting-required">*</span></label>
+       <div class="meeting-select-wrap">
+         <select class="meeting-select ${!r.time?'meeting-select-placeholder':''}" id="meeting-time" data-meeting-select="time" required>
+           <option value="" ${!r.time?'selected':''} disabled>Select a time</option>
+           ${TIMES.map(t=>`<option value="${t}" ${r.time===t?'selected':''}>${formatMeetingTime(t)}</option>`).join('')}
+         </select>
+         ${ic('down',19,2)}
+       </div>
+     </div>
+     <p class="meeting-field-help">Choose a suitable date and time for your meeting.</p>
+   </section>
+   ${step(3,'Meeting Location',!!r.loc,'Choose a room or table')}
    ${r.day==null||!r.time? `<div class="hint">${ic('info',16).replace('<svg','<svg style="display:inline;vertical-align:-3px;margin-right:6px"')}Choose a date and time to see available locations</div>`
      : `<div class="legend"><span><i style="background:#F3FBF6;border:1.5px solid #CFE8D8"></i>Available</span><span><i style="background:#F3F5F8;border:1.5px solid #E4EAF2"></i>Unavailable</span><span><i style="background:var(--blue)"></i>Selected</span></div>
        <div class="lgrp"><h5>Rooms</h5><div class="lgrid rooms">${locs(ROOMS)}</div><h5>Tables</h5><div class="lgrid">${locs(TABLES)}</div></div>`}
-   ${step(4,'Add a note','',`Optional`)}
-   <div class="pad"><textarea id="rnote" class="inp" data-in="rnote" maxlength="250" placeholder="Add context for ${esc(a.n.split(' ')[0])} (optional)">${esc(r.note)}</textarea></div>
+   ${step(4,'Message',false,'Optional')}
+   <div class="pad"><textarea id="rnote" class="inp" data-in="rnote" maxlength="250" placeholder="e.g. I'd like to discuss potential collaboration.">${esc(r.note)}</textarea></div>
    ${r.err?`<div class="pad"><div class="msg e" role="alert">${ic('alert',16,2)}<span>${esc(r.err)}</span></div></div>`:''}
    <div style="height:24px"></div></div>
    <div class="foot">${r.day!=null&&r.time&&r.loc?`<div class="summary"><b>${DAYS[r.day].label}</b>·<b>${r.time}</b>·<b>${esc(r.loc)}</b></div>`:''}<button class="btn p" data-a="submitReq" ${r.busy?'disabled':''}>${r.busy?'<span class="spin"></span> Sending request…':`${ic('send',17,2)} Request Meeting`}</button></div></div>`;
@@ -1971,6 +2024,12 @@ document.addEventListener('click',e=>{
   fn(el.dataset.p, el);
 });
 document.addEventListener('input',e=>{ const k=e.target.dataset&&e.target.dataset.in; if(k&&IN[k]) IN[k](e.target.value); });
+document.addEventListener('change',e=>{
+  const select=e.target.closest?.('select[data-meeting-select]');
+  if(!select || !$dev.contains(select) || !S.req) return;
+  if(select.dataset.meetingSelect==='date') A.rDay(select.value);
+  else if(select.dataset.meetingSelect==='time') A.rTime(select.value);
+});
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){ if(S.viewer) return A.closeViewer(); if(S.sheet) return closeSheet(); if(S.authOpen) return A.cancelLogin(); }
   if(e.key==='Enter' && e.target.id==='reg') A.getCode();
