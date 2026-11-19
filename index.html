@@ -2577,7 +2577,6 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
             </a>
           </nav>
         </div>
-        <h1>Events</h1>
       </header>
       <div class="seg events-list-tabs" role="tablist" aria-label="Event status">
         ${['active','past'].map(k=>`<button role="tab" aria-selected="${S.eventsTab===k?'true':'false'}" class="${S.eventsTab===k?'on':''}" data-a="evTab" data-p="${k}">${k==='active'?'Active':'Past'}</button>`).join('')}
