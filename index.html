@@ -1151,6 +1151,18 @@ body{background:var(--bg);overscroll-behavior:none}
 .auth-powered{text-align:center;color:#9AAAB8;font-size:11px;margin:20px auto 0}
 @media(max-width:360px){.auth-scroll{padding:16px 13px calc(24px + var(--sab))}.auth-card{padding:16px}.auth-identity h1{font-size:22px}}
 
+
+/* Streamlined registration and sponsor grids */
+.auth-event-poster{margin-top:0}
+.auth-event-name{margin-bottom:17px}
+.auth-card{padding-top:22px}
+.partner-section{margin:20px 18px 36px}
+.partner-section h3{font-size:17px;font-weight:750;color:#0F3554;margin:0 0 15px}
+.partner-logo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.partner-logo-card{min-height:116px;display:grid;place-items:center;background:#fff;padding:16px;border:1px solid #DDE8F2;border-radius:16px;box-shadow:0 3px 12px rgba(9,47,78,.05)}
+.partner-logo-card img{width:100%;max-height:76px;object-fit:contain;display:block}
+@media(max-width:345px){.partner-logo-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -1185,44 +1197,44 @@ const EVENT_DAYS = {
 let DAYS = EVENT_DAYS.wc26;
 function setEventContext(id){DAYS=EVENT_DAYS[id]||EVENT_DAYS.wc26;S.day=0;}
 const SPEAKERS = [ // demo; country/flags are illustrative, not real verified speaker nationalities
-  {id:'s1',n:'Elena Marković',country:'Croatia',iso:'hr',r:'President',c:'Sample Freight Association'},
-  {id:'s2',n:'Rahul Menon',country:'India',iso:'in',r:'Chief Executive Officer',c:'Sample Logistics Pvt Ltd'},
-  {id:'s3',n:'Amara Okafor',country:'Nigeria',iso:'ng',r:'Director',c:'Sample Shipping Group'},
-  {id:'s4',n:'Lucas Ferreira',country:'Brazil',iso:'br',r:'Head of Customs',c:'Sample Forwarding SA'},
-  {id:'s5',n:'Mei Tanaka',country:'Japan',iso:'jp',r:'Digital Lead',c:'Sample Supply Chain KK'},
-  {id:'s6',n:'Johan de Vries',country:'Netherlands',iso:'nl',r:'Managing Director',c:'Sample Air Cargo BV'},
-  {id:'s7',n:'Fatima Al Hashimi',country:'United Arab Emirates',iso:'ae',r:'VP Operations',c:'Sample Gulf Logistics'},
-  {id:'s8',n:'David Mensah',country:'Ghana',iso:'gh',r:'Founder',c:'Sample Trade Solutions'},
-].map(s=>({...s,bio:`Sample biography. ${s.n.split(' ')[0]}'s biography and profile document load from the FIATA event record; this text only demonstrates the reading layout across two or more lines.`}));
+  {id:'s1',n:'Elena Marković',country:'Croatia',iso:'hr',r:'President',c:'Freight Association'},
+  {id:'s2',n:'Rahul Menon',country:'India',iso:'in',r:'Chief Executive Officer',c:'Logistics Pvt Ltd'},
+  {id:'s3',n:'Amara Okafor',country:'Nigeria',iso:'ng',r:'Director',c:'Shipping Group'},
+  {id:'s4',n:'Lucas Ferreira',country:'Brazil',iso:'br',r:'Head of Customs',c:'Forwarding SA'},
+  {id:'s5',n:'Mei Tanaka',country:'Japan',iso:'jp',r:'Digital Lead',c:'Supply Chain KK'},
+  {id:'s6',n:'Johan de Vries',country:'Netherlands',iso:'nl',r:'Managing Director',c:'Air Cargo BV'},
+  {id:'s7',n:'Fatima Al Hashimi',country:'United Arab Emirates',iso:'ae',r:'VP Operations',c:'Gulf Logistics'},
+  {id:'s8',n:'David Mensah',country:'Ghana',iso:'gh',r:'Founder',c:'Trade Solutions'},
+].map(s=>({...s,bio:`${s.n} is listed as ${s.r.toLowerCase()} at ${s.c}. See the sessions below to explore the topics in which ${s.n.split(' ')[0]} is participating.`}));
 const SESSIONS = [ // demo
   {id:'x1',d:0,t:'08:30',e:'09:30',ti:'Registration & Welcome Coffee',rm:'Foyer',brk:1},
-  {id:'x2',d:0,t:'09:30',e:'11:00',ti:'Opening Plenary',rm:'Main Hall',sp:['s1','s2'],ds:'Sample description. Session abstracts come from the event agenda and are shown here in full on the session detail sheet.'},
-  {id:'x3',d:0,t:'11:00',e:'12:30',ti:'Panel Session',rm:'Main Hall',sp:['s3','s4','s7'],ds:'Sample description for a panel discussion with multiple speakers.'},
+  {id:'x2',d:0,t:'09:30',e:'11:00',ti:'Opening Plenary',rm:'Main Hall',sp:['s1','s2'],ds:'Opening discussion on global freight priorities and opportunities for industry collaboration.'},
+  {id:'x3',d:0,t:'11:00',e:'12:30',ti:'Panel Session',rm:'Main Hall',sp:['s3','s4','s7'],ds:'A panel conversation on current developments in freight forwarding and international trade.'},
   {id:'x4',d:0,t:'12:30',e:'14:00',ti:'Networking Lunch',rm:'Terrace',brk:1},
-  {id:'x5',d:0,t:'14:00',e:'15:30',ti:'Workshop',rm:'Room 2',sp:['s5'],ds:'Sample description for a hands-on workshop session.'},
+  {id:'x5',d:0,t:'14:00',e:'15:30',ti:'Workshop',rm:'Room 2',sp:['s5'],ds:'An interactive workshop covering practical logistics tools and operations.'},
   {id:'x6',d:0,t:'16:00',e:'18:00',ti:'1 × 1 Meetings',rm:'Meeting Area',ds:'Pre-booked delegate meetings. Use Network → Request Meeting to book a slot.'},
-  {id:'y1',d:1,t:'09:00',e:'10:30',ti:'Keynote Session',rm:'Main Hall',sp:['s6'],ds:'Sample description for a keynote address.'},
-  {id:'y2',d:1,t:'10:30',e:'12:00',ti:'Panel Session',rm:'Main Hall',sp:['s2','s8'],ds:'Sample description for a second-day panel.'},
+  {id:'y1',d:1,t:'09:00',e:'10:30',ti:'Keynote Session',rm:'Main Hall',sp:['s6'],ds:'Key perspectives on the evolving international logistics landscape.'},
+  {id:'y2',d:1,t:'10:30',e:'12:00',ti:'Panel Session',rm:'Main Hall',sp:['s2','s8'],ds:'Industry perspectives on cross-border trade and global supply chains.'},
   {id:'y3',d:1,t:'12:00',e:'13:30',ti:'Lunch Break',rm:'Terrace',brk:1},
-  {id:'y4',d:1,t:'13:30',e:'15:00',ti:'Breakout Session',rm:'Room 1',sp:['s4','s5'],ds:'Sample description for parallel breakout sessions.'},
-  {id:'z1',d:2,t:'09:30',e:'11:00',ti:'Plenary Session',rm:'Main Hall',sp:['s1','s7'],ds:'Sample description for the final-day plenary.'},
-  {id:'z2',d:2,t:'11:30',e:'12:30',ti:'Closing Session',rm:'Main Hall',sp:['s3'],ds:'Sample description for the closing session.'},
+  {id:'y4',d:1,t:'13:30',e:'15:00',ti:'Breakout Session',rm:'Room 1',sp:['s4','s5'],ds:'Focused breakout conversations and opportunities to exchange ideas.'},
+  {id:'z1',d:2,t:'09:30',e:'11:00',ti:'Plenary Session',rm:'Main Hall',sp:['s1','s7'],ds:'A review of emerging priorities and key conference discussions.'},
+  {id:'z2',d:2,t:'11:30',e:'12:30',ti:'Closing Session',rm:'Main Hall',sp:['s3'],ds:'Closing remarks and a summary of the conference programme.'},
 ];
 const ATTENDEES = [ // demo
-  ['Arjun Shah','Sample Cargo Movers','India','IN'],['Priya Nair','Sample Freight Systems','India','IN'],['Vikram Rao','Sample Ocean Lines','India','IN'],
-  ['Katrin Weber','Sample Spedition GmbH','Germany','DE'],['Felix Braun','Sample Logistik AG','Germany','DE'],
-  ['Wei Lin Tan','Sample Asia Pacific Pte','Singapore','SG'],['Nur Aisyah','Sample Port Services','Singapore','SG'],
-  ['Omar Haddad','Sample Gulf Freight LLC','United Arab Emirates','AE'],['Layla Mansour','Sample Air Logistics','United Arab Emirates','AE'],
-  ['Carlos Ruiz','Sample Canal Logistics','Panama','PA'],['Ana Souza','Sample Transportes Ltda','Brazil','BR'],['Grace Wanjiru','Sample East Africa Cargo','Kenya','KE'],
-  ['Sanne Bakker','Sample Forwarding BV','Netherlands','NL'],['Pieter Jansen','Sample Rail Freight BV','Netherlands','NL'],
-  ['Michael Brooks','Sample Global Logistics Inc','United States','US'],['Haruto Sato','Sample Express KK','Japan','JP'],
+  ['Arjun Shah','Cargo Movers','India','IN'],['Priya Nair','Freight Systems','India','IN'],['Vikram Rao','Ocean Lines','India','IN'],
+  ['Katrin Weber','Spedition GmbH','Germany','DE'],['Felix Braun','Logistik AG','Germany','DE'],
+  ['Wei Lin Tan','Asia Pacific Pte','Singapore','SG'],['Nur Aisyah','Port Services','Singapore','SG'],
+  ['Omar Haddad','Gulf Freight LLC','United Arab Emirates','AE'],['Layla Mansour','Air Logistics','United Arab Emirates','AE'],
+  ['Carlos Ruiz','Canal Logistics','Panama','PA'],['Ana Souza','Transportes Ltda','Brazil','BR'],['Grace Wanjiru','East Africa Cargo','Kenya','KE'],
+  ['Sanne Bakker','Forwarding BV','Netherlands','NL'],['Pieter Jansen','Rail Freight BV','Netherlands','NL'],
+  ['Michael Brooks','Global Logistics Inc','United States','US'],['Haruto Sato','Express KK','Japan','JP'],
 ].map((a,i)=>({id:'a'+(i+1),n:a[0],c:a[1],co:a[2],cc:a[3],em:a[0].toLowerCase().replace(/[^a-z ]/g,'').replace(' ','.')+'@example.com'}));
 const TIMES = ['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30']; // demo
 const ROOMS = ['Meeting Room 1','Meeting Room 2'];
 const TABLES = Array.from({length:12},(_,i)=>'Table '+String(i+1).padStart(2,'0'));
 const SPONSOR_CATS = [ {n:'Sponsor Category A',k:2,big:1}, {n:'Sponsor Category B',k:4}, {n:'Sponsor Category C',k:6} ]; // placeholder hierarchy
 const GALLERY = [ {d:'Day 1',k:9}, {d:'Day 2',k:7} ]; // placeholder images
-const POLL = { q:'Demo question — the live poll question from the event appears here.', opts:['Option A','Option B','Option C'] };
+const POLL = { q:'Which topic interests you most for future sessions?', opts:['Digital freight solutions','Sustainable logistics','Trade facilitation'] };
 
 /* ===================================================================== */
 const I = {
@@ -1342,8 +1354,8 @@ const S={
   user:null, afterLogin:null, authOpen:false,
   login:{stage:1,reg:'',code:'',err:'',busy:false,resend:0},
   day:0, net:'people', q:{people:'',spk:'',co:'',add:''}, countries:[], draft:[],
-  meetings:[{id:'m0',with:'a10',day:1,time:'11:00',loc:'Table 04',note:'Demo incoming request — shows the accept / reject flow.',status:'pending',dir:'in',demo:1}],
-  conns:['a4','a6'], notifs:[{id:'n1',m:'Demo notification — announcements from the event organisers appear here.',t:now-36e5},{id:'n2',m:'Demo notification — meeting confirmations and agenda updates are listed in this centre.',t:now-1.3*864e5}],
+  meetings:[{id:'m0',with:'a10',day:1,time:'11:00',loc:'Table 04',note:'Please confirm your availability for this meeting.',status:'pending',dir:'in',demo:1}],
+  conns:['a4','a6'], notifs:[{id:'n1',m:'Welcome to FIATA Events. Explore the programme and your available event features.',t:now-36e5},{id:'n2',m:'Your meeting requests and schedule updates are available in Network.',t:now-1.3*864e5}],
   prefs:{push:true,email:true}, ratings:{}, vote:{sel:null,done:false,busy:false},
   req:null, openCats:{0:true}, galMore:{}, hl:null,
 };
@@ -1495,7 +1507,7 @@ function agendaV(){
   const list=SESSIONS.filter(s=>s.d===S.day);
   return tabbed(`<div class="scroll" data-k="ag">
    ${tabTitle('Agenda',esc(ev().name))}
-   <div class="demo-bar"><span class="demo">Demo</span> Sample schedule — replace with the event agenda</div>
+   
    <div class="hs" data-k="days" role="tablist">${DAYS.map((d,i)=>`<button role="tab" aria-selected="${S.day===i}" class="dchip ${S.day===i?'on':''}" data-a="day" data-p="${i}"><div class="w">${d.dow}</div><div class="n">${d.num}</div><div class="l">${d.label}</div></button>`).join('')}</div>
    <div class="tl" data-day="${S.day}">${list.map(s=>{const sp=(s.sp||[]).map(id=>byId(SPEAKERS,id)); const r=S.ratings[s.id];
      return `<div class="slot ${s.brk?'brk':''}"><div class="tm">${s.t}<small>${s.e}</small></div><div class="ln"><i></i></div>
@@ -1508,7 +1520,7 @@ function agendaV(){
 }
 function sessionSheet(id){
   const s=byId(SESSIONS,id), sp=(s.sp||[]).map(x=>byId(SPEAKERS,x)), r=S.ratings[id];
-  return sheetShell(`<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="demo">Demo</span><span class="tiny">${DAYS[s.d].label} · ${s.t} – ${s.e}</span></div><h3 style="font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2">${esc(s.ti)}</h3>`,
+  return sheetShell(`<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="tiny">${DAYS[s.d].label} · ${s.t} – ${s.e}</span></div><h3 style="font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2">${esc(s.ti)}</h3>`,
    `<div class="summary" style="margin-top:4px">${ic('pin',15)}<b>${esc(s.rm)}</b></div>
     ${s.ds?`<p style="font-size:15px;line-height:1.65;color:#2a3b52;margin:8px 0 18px">${esc(s.ds)}</p>`:''}
     ${sp.length?`<div class="fl">Speakers</div>${sp.map(x=>`<button class="gi" style="padding:10px 0" data-a="spkFromSheet" data-p="${x.id}">${av(x.n,40)}<span class="grow"><div class="t">${esc(x.n)}</div><div class="s">${esc(x.r)} · ${esc(x.c)}</div></span><span class="chev">${ic('right',18,2)}</span></button>`).join('')}`:''}`,
@@ -1549,7 +1561,7 @@ function filteredPeople(){
 }
 function peopleList(){
   const L=filteredPeople();
-  return `<div class="count"><span class="demo">Demo</span> &nbsp;${L.length} of ${ATTENDEES.length} delegates</div>
+  return `<div class="count">${L.length} delegates</div>
   <div class="plist">${L.length? L.map(a=>`<button class="person press" data-a="sheet" data-p="attendee:${a.id}">${av(a.n,46)}<span class="pm"><div class="pn">${esc(a.n)}</div><div class="pc">${esc(a.c)}</div></span><span class="cc"><b>${a.cc}</b>${esc(a.co)}</span></button>`).join('')
    : `<div class="empty"><div class="eic">${ic('search',22)}</div><h4>No delegates found</h4><p>Try another name, or clear the country filter.</p>${S.countries.length||S.q.people?`<button class="btn s sm" data-a="resetSearch">Reset search</button>`:''}</div>`}</div>`;
 }
@@ -1563,7 +1575,7 @@ function meetingsList(){
 function meetCard(m){
   const a=byId(ATTENDEES,m.with);
   return `<div class="mcard ${m.status==='rejected'?'rej':''}" ${S.hl===m.id?'style="box-shadow:0 0 0 2px var(--blue),var(--sh)"':''}>
-   <button style="width:100%" data-a="sheet" data-p="meeting:${m.id}"><div class="mtop">${av(a.n,44)}<div class="pm"><div class="dir">${m.dir==='in'?'Received':'Sent'}${m.demo?' · <span style="color:#B45309">Demo</span>':''}</div><div style="font-weight:700;font-size:15px">${esc(a.n)}</div><div class="tiny">${esc(a.c)}</div></div></div>
+   <button style="width:100%" data-a="sheet" data-p="meeting:${m.id}"><div class="mtop">${av(a.n,44)}<div class="pm"><div class="dir">${m.dir==='in'?'Received':'Sent'}</div><div style="font-weight:700;font-size:15px">${esc(a.n)}</div><div class="tiny">${esc(a.c)}</div></div></div>
    <div style="margin-top:10px">${stPill(m.status)}</div>
    <div class="mgrid"><div><small>Date</small><b>${DAYS[m.day].label}</b></div><div><small>Time</small><b>${m.time}</b></div><div><small>Location</small><b>${esc(m.loc.replace('Meeting ',''))}</b></div></div>
    ${m.note?`<div class="mnote">${ic('note',14)}<span>${esc(m.note)}</span></div>`:''}</button>
@@ -1613,7 +1625,7 @@ function profileV(){
     <div class="nm"><h2>${esc(u.n)}</h2><p>${esc(u.c)}</p></div>
     <div class="flds"><div><small>Registration No.</small><b>${esc(u.reg)}</b></div><div><small>Country</small><b>${esc(u.co)}</b></div></div>
     <div class="perf"><i></i><i></i></div>
-    <div class="qr"><div class="qrbox">${qr(u.reg)}</div><small>Show at registration & session check-in · <span class="demo dk">Demo QR</span></small></div></div>
+    <div class="qr"><div class="qrbox">${qr(u.reg)}</div><small>Preview pass · Not valid for entry</small></div></div>
    <section class="sec"><div class="sech"><h3>Contact Information</h3></div><div class="glist">
      <div class="gi"><span class="tint t-navy">${ic('mail',18)}</span><span class="grow"><div class="s">Email ID</div><div class="t" style="font-size:14px">${esc(u.em)}</div></span></div>
      <div class="gi"><span class="tint t-navy">${ic('phone',18)}</span><span class="grow"><div class="s">Mobile Number</div><div class="t" style="font-size:14px">${esc(u.ph)}</div></span></div>
@@ -1628,31 +1640,28 @@ function profileV(){
 /* ---------- pushed screens ---------- */
 const PV={
  about(){ const e=ev(); return `<div class="screen">${phdr('About Event')}<div class="scroll" data-k="about">
-   <div class="abt-hero">${art(e.art)}<div class="ov"><span class="demo dk" style="align-self:flex-start;margin-bottom:10px">Event artwork</span><h1>${esc(e.name)}</h1><div class="meta">${e.date?`<span class="glass">${esc(e.date)}</span>`:`<span class="glass">${ic('calendar',13,2)} Date from event record</span>`}${e.venue?`<span class="glass">${esc(e.venue)}</span>`:''}</div></div></div>
-   <div class="prose"><div class="fl" style="display:flex;gap:8px;align-items:center">About the Event <span class="demo">Sample text</span></div>
-    <p class="lead">The event description from the FIATA event record is shown here, set for comfortable long-form reading.</p>
-    <p>This prototype uses placeholder copy to demonstrate typography and spacing only. In the live app, the full About text supplied for ${esc(e.name)} replaces this paragraph, including any multi-paragraph content, without truncation.</p></div>
+   <div class="abt-hero">${art(e.art)}<div class="ov"><h1>${esc(e.name)}</h1><div class="meta">${e.date?`<span class="glass">${esc(e.date)}</span>`:`<span class="glass">${ic('calendar',13,2)} Date from event record</span>`}${e.venue?`<span class="glass">${esc(e.venue)}</span>`:''}</div></div></div>
+   <div class="prose"><div class="fl" style="display:flex;gap:8px;align-items:center">About the Event</div>
+    <p class="lead">Discover ${esc(e.name)} and opportunities to connect with the international freight forwarding community.</p>
+    <p>Explore the event programme, speakers, registration information and networking activities.</p></div>
    <section class="sec" id="resources" style="margin-bottom:28px"><div class="sech"><h3>Resources & Registration</h3></div><div class="pad">${resList()}</div>
-   <p class="tiny pad" style="margin-top:6px">Links and documents open the URLs from the event record.</p></section></div></div>`; },
+   </section></div></div>`; },
  speakers(){ return `<div class="screen">${phdr('Speakers')}<div class="scroll" data-k="spk">
-   <div class="pad inner-intro"><p class="tiny"><span class="demo">Demo</span> &nbsp;Sample speakers — replace with event data</p></div>
    <div class="srow" style="margin-top:12px"><label class="search">${ic('search',18,2)}<input id="qs" data-in="qspk" placeholder="Search speakers" value="${esc(S.q.spk)}" autocomplete="off" aria-label="Search speakers"></label></div>
    <div class="pad" data-region="list" style="margin-top:6px">${spkList()}</div></div></div>`; },
  speaker(id){ const s=byId(SPEAKERS,id), ses=SESSIONS.filter(x=>(x.sp||[]).includes(id));
    return `<div class="screen">${phdr('Speaker Profile')}<div class="scroll" data-k="sp1">
    <div class="prof">${speakerPortrait(s,96,true)}<h1>${esc(s.n)}</h1><div class="rl">${esc(s.r)} · ${esc(s.c)}</div></div>
    <div class="speaker-actions"><button class="btn p" data-a="sheet" data-p="pdf:Speaker profile — ${esc(s.n)}">${ic('fileText',18,2)} View Profile</button></div>
-   <div class="prose speaker-bio"><div class="fl" style="display:flex;gap:8px;align-items:center">Biography <span class="demo">Sample</span></div><p>${esc(s.bio)}</p></div>
+   <div class="prose speaker-bio"><div class="fl" style="display:flex;gap:8px;align-items:center">Biography</div><p>${esc(s.bio)}</p></div>
    ${ses.length?`<section class="sec" style="margin-bottom:28px"><div class="sech"><h3>Sessions</h3></div><div class="glist">${ses.map(x=>`<button class="gi" data-a="sesFromSpk" data-p="${x.id}"><span class="tint t-blue">${ic('calendar',18)}</span><span class="grow"><div class="t">${esc(x.ti)}</div><div class="s">${DAYS[x.d].label} · ${x.t} · ${esc(x.rm)}</div></span><span class="chev">${ic('right',18,2)}</span></button>`).join('')}</div></section>`:''}
    </div></div>`; },
  request(id){ return requestV(id); },
  vote(){ return voteV(); },
- sponsors(){ return `<div class="screen">${phdr('Sponsors & Partners')}<div class="scroll" data-k="sps">
-   <div class="pad inner-intro"><p class="tiny"><span class="demo">Placeholder</span> &nbsp;Categories & logos come from the event's sponsor list</p></div>
-   ${SPONSOR_CATS.map((c,i)=>{const o=!!S.openCats[i]; return `<div class="scat ${o?'open':''}"><button data-a="cat" data-p="${i}" aria-expanded="${o}"><div><h4>${esc(c.n)}</h4><div class="tiny">${c.k} logos</div></div><span class="cv">${ic('down',20,2)}</span></button>
-     ${o?`<div class="lgs ${c.big?'big':''}">${Array.from({length:c.k},(_,j)=>`<div class="logo">${ic('image',18,1.5)}<span>Sponsor logo</span></div>`).join('')}</div>`:''}</div>`}).join('')}<div style="height:20px"></div></div></div>`; },
- gallery(){ return `<div class="screen">${phdr('Photo Gallery')}<div class="scroll" data-k="gal">
-   <div class="pad inner-intro"><p class="tiny"><span class="demo">Placeholder</span> &nbsp;Tiles stand in for official event photos</p></div>
+ sponsors(){ return `<div class="screen">${phdr('Sponsors & Partners')}<div class="scroll" data-k="sps"><section class="partner-section"><h3>Our Partners</h3><div class="partner-logo-grid">
+   ${SOURCE_SPONSOR_LOGOS.map(l=>`<div class="partner-logo-card"><img src="${l.image}" alt="${esc(l.name)}" loading="lazy"></div>`).join('')}
+  </div></section></div></div>`; },
+  gallery(){ return `<div class="screen">${phdr('Photo Gallery')}<div class="scroll" data-k="gal">
    ${GALLERY.map((g,gi)=>{const more=S.galMore[gi], n=more?g.k:Math.min(g.k,5); const pat=['w2 h2','','','','w2','','','h2',''];
      return `<section class="sec" style="margin-top:20px"><div class="sech"><h3>${g.d}</h3><span class="tiny">${g.k} photos</span></div>
      <div class="gal">${Array.from({length:n},(_,i)=>`<button class="${pat[i%pat.length]}" data-a="view" data-p="${gi}:${i}" aria-label="Open photo ${i+1}" style="border-radius:12px">${phImg(gi+'-'+i)}</button>`).join('')}</div>
@@ -1699,7 +1708,7 @@ function voteV(){
   const v=S.vote;
   let body;
   if(!S.user) body=gate('Sign in to vote','Voting is available to registered delegates.');
-  else body=`<div class="pad"><span class="demo">Demo placeholder</span><div class="qh">${esc(POLL.q)}</div>
+  else body=`<div class="pad"><div class="qh">${esc(POLL.q)}</div>
      ${POLL.opts.map((o,i)=>`<button class="opt ${v.sel===i?'on':''} ${v.done?'lock':''}" data-a="opt" data-p="${i}" role="radio" aria-checked="${v.sel===i}"><span class="rd"></span><span style="font-weight:600;font-size:15px;flex:1">${o}</span>${v.done&&v.sel===i?ic('check',18,2.4):''}</button>`).join('')}
      ${v.done?`<div class="msg o">${ic('check',16,2.4)}<span>Your vote has been recorded. Thank you for taking part.</span></div>`: v.err?`<div class="msg e">${ic('alert',16,2)}<span>${esc(v.err)}</span></div>`:''}</div>`;
   return `<div class="screen">${phdr('Vote')}<div class="scroll" data-k="vote"><div class="pad inner-intro"><p class="tiny">${esc(ev().short)}</p></div>${body}</div>
@@ -1762,23 +1771,20 @@ function loginPageV(){
  return `<div class="screen auth-screen" role="main" aria-label="FIATA delegate sign in">
   <header class="auth-top"><button class="auth-back" data-a="cancelLogin" aria-label="Back">${ic('left',22,2)}</button><span>FIATA Event Login</span><span aria-hidden="true"></span></header>
   <div class="scroll auth-scroll" data-k="login">
-   <div class="auth-identity"><div class="auth-brand">${brandLogo(66)}</div><p class="auth-eyebrow">FIATA CONFERENCE COMPANION</p><h1>Welcome to your event</h1><p>Sign in with your event registration number to continue.</p></div>
    <div class="auth-event-poster">${officialEventImage(e)}</div><div class="auth-event-name">${esc(e.name)}</div>
    <section class="auth-card">
-    <div class="auth-card-head"><span class="auth-lock">${ic('lock',20,2)}</span><span><strong>Delegate sign in</strong><small>Access your event features</small></span></div>
-    <div class="auth-destination">${ic('arrow',15,2)} Continue to <strong>${esc(L.destination||'your event')}</strong> after login</div>
+    <div class="auth-card-head"><span class="auth-lock">${ic('lock',20,2)}</span><span><strong>Delegate Login</strong><small>Sign in with your event registration number</small></span></div>
     <label class="auth-label" for="reg">Registration number</label>
     <input id="reg" type="text" class="inp auth-input ${L.err&&L.stage===1?'err':''}" data-in="reg" ${L.stage===1?'data-autofocus':''} value="${esc(L.reg)}" placeholder="Enter registration number" autocomplete="off" autocapitalize="characters" spellcheck="false" ${L.stage===2?'readonly':''}>
     ${L.stage===1?`<p class="auth-hint">Use the number from your FIATA event confirmation.</p>`:`
      <button class="auth-link" data-a="loginBack">Change registration number</button>
      <label class="auth-label" for="code">Verification code</label>
      <input id="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="6" class="inp auth-input auth-code ${L.err?'err':''}" data-in="code" data-autofocus value="${esc(L.code)}" placeholder="6-digit code">
-     <p class="auth-hint">Demo only: no code is sent. Enter any six digits to continue.</p>
+     <p class="auth-hint">Preview sign-in: enter any six digits. No code is sent.</p>
      <div class="auth-resend"><button class="auth-link" data-a="resend" data-login-resend ${L.resend>0?'disabled':''}>${L.resend>0?'Resend code in '+L.resend+'s':'Resend code'}</button></div>`}
     ${L.err?`<div class="msg e auth-error" role="alert">${ic('alert',16,2)}<span>${esc(L.err)}</span></div>`:''}
     <button class="btn p auth-submit" data-a="${L.stage===1?'getCode':'doLogin'}" ${L.busy?'disabled':''}>${L.busy?'<span class="spin"></span> Please wait…':L.stage===1?`Continue ${ic('right',18,2)}`:`Sign in & continue ${ic('right',18,2)}`}</button>
    </section>
-   <p class="auth-notice">${ic('info',16)} Prototype login: registration and codes are not checked by an actual FIATA service.</p>
    <p class="auth-powered">FIATA Events · Powered by n-Gauge</p>
   </div></div>`;
 }
@@ -1979,8 +1985,8 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
 (function(){
   // These are visibly labelled prototype records; real delegate data stays behind login.
   if(!S.meetings.some(m=>m.id==='m-demo-recent-1')){
-    S.meetings.push({id:'m-demo-recent-1',with:'a12',day:0,time:'14:00',loc:'Meeting Room 1',note:'Demo confirmed meeting',status:'accepted',dir:'in',demo:1});
-    S.meetings.push({id:'m-demo-recent-2',with:'a8',day:1,time:'15:30',loc:'Table 03',note:'Demo meeting request',status:'pending',dir:'out',demo:1});
+    S.meetings.push({id:'m-demo-recent-1',with:'a12',day:0,time:'14:00',loc:'Meeting Room 1',note:'Meeting confirmed',status:'accepted',dir:'in',demo:1});
+    S.meetings.push({id:'m-demo-recent-2',with:'a8',day:1,time:'15:30',loc:'Table 03',note:'Awaiting confirmation',status:'pending',dir:'out',demo:1});
   }
   A.openAgenda=function(){
     S.tab='home';S.stack=[];push('agenda');
@@ -2089,7 +2095,7 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
       mine.length? `<div class="home-meetings-rail" data-k="home-meetings" data-rail="meetings" role="region" aria-label="Recent meetings, newest first">${mine.map(m=>{
        const person=byId(ATTENDEES,m.with),day=DAYS[m.day];
        return `<button data-slide class="home-meeting-swipe-card press" data-mid="${m.id}" data-a="homeMeeting" data-p="${m.id}" aria-label="View meeting with ${esc(person?.n||'Delegate')}">
-         <div class="home-meeting-card-top">${av(person?.n||'Delegate',35)}<span class="home-meeting-card-name"><strong>${esc(person?.n||'Delegate')}</strong><small>${esc(person?.c||'')} ${m.demo?'· Demo':''}</small></span></div>
+         <div class="home-meeting-card-top">${av(person?.n||'Delegate',35)}<span class="home-meeting-card-name"><strong>${esc(person?.n||'Delegate')}</strong><small>${esc(person?.c||'')}</small></span></div>
          ${stPill(m.status)}
          <div class="home-meeting-card-bottom"><span class="home-meeting-pill">${ic('calendar',12)} ${esc(day?.label||'Event day')}</span><span class="home-meeting-pill">${ic('clock',12)} ${esc(m.time)}</span><span class="home-meeting-pill">${ic('pin',12)} ${esc(m.loc)}</span></div>
        </button>`;
