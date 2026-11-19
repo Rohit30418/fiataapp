@@ -1713,7 +1713,7 @@ function spkList(){
 
 function requestV(id){
   const a=byId(ATTENDEES,id), r=S.req;
-  const eventYear=(ev().date.match(/20\\d{2}/)||['2026'])[0];
+  const eventYear=(ev().date.match(/20\d{2}/)||['2026'])[0];
   const formatMeetingTime=t=>{const [h,m]=t.split(':').map(Number);return `${h%12||12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`;};
   const step=(n,t,ok,sub='')=>`<div class="step"><b class="${ok?'ok':''}">${ok?ic('check',13,3):n}</b><h4>${t}</h4><span>${sub}</span></div>`;
   const locs=(arr)=>arr.map(l=>{const un=r.day==null||!r.time?false:!avail(r.day,r.time,l), on=r.loc===l;
