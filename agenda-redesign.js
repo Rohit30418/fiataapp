@@ -123,7 +123,7 @@
     }
     const strip=$app.querySelector('.agenda-day-row'),selected=strip?.querySelector('.is-selected');
     if(strip&&selected&&DAYS.length>5){
-      requestAnimationFrame(()=>strip.scrollTo({left:selected.offsetLeft-(strip.clientWidth-selected.offsetWidth)/2,behavior:'smooth'}));
+      requestAnimationFrame(()=>strip.scrollTo({left:strip.scrollLeft + selected.getBoundingClientRect().left - strip.getBoundingClientRect().left - (strip.clientWidth-selected.offsetWidth)/2,behavior:'smooth'}));
     }
   };
   render();
