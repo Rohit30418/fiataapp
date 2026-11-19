@@ -48,10 +48,6 @@
           </button>`;
         }).join(''):`<p class="agenda-empty">No sessions scheduled for this day.</p>`}
       </div>
-      <section class="agenda-sponsor-footer" aria-label="Event sponsors">
-        <h2>Sponsors & Partners</h2>
-        <div class="agenda-sponsor-logos">${SOURCE_SPONSOR_LOGOS.map(l=>`<img src="${l.image}" alt="${esc(l.name)}" loading="lazy">`).join('')}</div>
-      </section>
     </div>`);
   };
   // Open Agenda as the real FIATA full-screen page: one date selector and
@@ -125,7 +121,9 @@
   render=function(anim){
     oldRender(anim);
     const page=topS()?.n;
-    if(page==='agenda'||page==='sessionDetail'||S.tab==='agenda'){
+    // Agenda uses the identical animated sponsor strip as other FIATA pages.
+    // Keep the session detail screen distraction-free as before.
+    if(page==='sessionDetail'){
       const root=$app.querySelector('.screen');
       root?.querySelector('.fixed-sponsor-strip')?.remove();
       root?.classList.remove('has-fixed-sponsors');
