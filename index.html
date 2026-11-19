@@ -1103,6 +1103,17 @@ body{background:var(--bg);overscroll-behavior:none}
   .screen > .bnav.fiata-nav .bn-network .bn-icon::after{animation:none}
 }
 
+
+/* Speaker photo flags: sample demonstration countries, badge outside avatar crop */
+.speaker-portrait{position:relative;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;vertical-align:middle;overflow:visible;isolation:isolate}
+.speaker-portrait>.av{margin:0;display:grid}
+.speaker-flag{position:absolute;right:-5px;bottom:-3px;z-index:2;width:27px;height:21px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid #fff;border-radius:7px;box-shadow:0 2px 7px rgba(6,32,60,.22)}
+.speaker-flag img{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover}
+.speaker-flag-fallback{font-size:16px;line-height:1}
+.speaker-portrait-lg>.av{box-shadow:0 0 0 4px rgba(255,255,255,.17)}
+.speaker-portrait-lg .speaker-flag{width:34px;height:26px;right:-4px;bottom:2px;border-radius:8px}
+.speaker-portrait-lg .speaker-flag-fallback{font-size:21px}
+
 </style>
 </head>
 <body>
@@ -1136,15 +1147,15 @@ const EVENT_DAYS = {
 };
 let DAYS = EVENT_DAYS.wc26;
 function setEventContext(id){DAYS=EVENT_DAYS[id]||EVENT_DAYS.wc26;S.day=0;}
-const SPEAKERS = [ // demo
-  {id:'s1',n:'Elena Marković',r:'President',c:'Sample Freight Association'},
-  {id:'s2',n:'Rahul Menon',r:'Chief Executive Officer',c:'Sample Logistics Pvt Ltd'},
-  {id:'s3',n:'Amara Okafor',r:'Director',c:'Sample Shipping Group'},
-  {id:'s4',n:'Lucas Ferreira',r:'Head of Customs',c:'Sample Forwarding SA'},
-  {id:'s5',n:'Mei Tanaka',r:'Digital Lead',c:'Sample Supply Chain KK'},
-  {id:'s6',n:'Johan de Vries',r:'Managing Director',c:'Sample Air Cargo BV'},
-  {id:'s7',n:'Fatima Al Hashimi',r:'VP Operations',c:'Sample Gulf Logistics'},
-  {id:'s8',n:'David Mensah',r:'Founder',c:'Sample Trade Solutions'},
+const SPEAKERS = [ // demo; country/flags are illustrative, not real verified speaker nationalities
+  {id:'s1',n:'Elena Marković',country:'Croatia',iso:'hr',r:'President',c:'Sample Freight Association'},
+  {id:'s2',n:'Rahul Menon',country:'India',iso:'in',r:'Chief Executive Officer',c:'Sample Logistics Pvt Ltd'},
+  {id:'s3',n:'Amara Okafor',country:'Nigeria',iso:'ng',r:'Director',c:'Sample Shipping Group'},
+  {id:'s4',n:'Lucas Ferreira',country:'Brazil',iso:'br',r:'Head of Customs',c:'Sample Forwarding SA'},
+  {id:'s5',n:'Mei Tanaka',country:'Japan',iso:'jp',r:'Digital Lead',c:'Sample Supply Chain KK'},
+  {id:'s6',n:'Johan de Vries',country:'Netherlands',iso:'nl',r:'Managing Director',c:'Sample Air Cargo BV'},
+  {id:'s7',n:'Fatima Al Hashimi',country:'United Arab Emirates',iso:'ae',r:'VP Operations',c:'Sample Gulf Logistics'},
+  {id:'s8',n:'David Mensah',country:'Ghana',iso:'gh',r:'Founder',c:'Sample Trade Solutions'},
 ].map(s=>({...s,bio:`Sample biography. ${s.n.split(' ')[0]}'s biography and profile document load from the FIATA event record; this text only demonstrates the reading layout across two or more lines.`}));
 const SESSIONS = [ // demo
   {id:'x1',d:0,t:'08:30',e:'09:30',ti:'Registration & Welcome Coffee',rm:'Foyer',brk:1},
@@ -1244,6 +1255,14 @@ const av=(n,s=44,x='')=>{
   const p=PAL[hash(n)%PAL.length],photo=DEMO_FACE_PHOTOS[DEMO_FACE_BY_NAME[n]??(hash(n)%DEMO_FACE_PHOTOS.length)];
   const src='https://images.unsplash.com/'+photo+'?auto=format&fit=crop&w=240&q=80';
   return `<span class="av" style="${x}width:${s}px;height:${s}px;font-size:${Math.round(s*.36)}px;background:linear-gradient(140deg,${p[0]},${p[1]})">${esc(initials(n))}<img class="av-photo" src="${src}" alt="" loading="lazy" onerror="this.remove()"></span>`;
+};
+const speakerPortrait=(speaker,size=56,large=false)=>{
+  const country=speaker.country||'',iso=/^[a-z]{2}$/.test(speaker.iso||'')?speaker.iso:'';
+  const flag=iso?String.fromCodePoint(...iso.toUpperCase().split('').map(c=>c.charCodeAt(0)+127397)):'';
+  return `<span class="speaker-portrait ${large?'speaker-portrait-lg':''}" style="width:${size}px;height:${size}px">
+    ${av(speaker.n,size)}
+    ${iso?`<span class="speaker-flag" title="Sample country: ${esc(country)}" aria-label="Sample ${esc(country)} flag"><span class="speaker-flag-fallback" aria-hidden="true">${flag}</span><img src="https://flagcdn.com/w40/${iso}.png" alt="" loading="lazy" onerror="this.remove()"></span>`:''}
+  </span>`;
 };
 const byId=(arr,id)=>arr.find(x=>x.id===id);
 const ev=()=>byId(EVENTS,S.eventId)||EVENTS[0];
@@ -1583,7 +1602,7 @@ const PV={
    <div class="pad" data-region="list" style="margin-top:6px">${spkList()}</div></div></div>`; },
  speaker(id){ const s=byId(SPEAKERS,id), ses=SESSIONS.filter(x=>(x.sp||[]).includes(id));
    return `<div class="screen">${phdr('Speaker Profile')}<div class="scroll" data-k="sp1">
-   <div class="prof">${av(s.n,96,'margin:0 auto;box-shadow:0 0 0 4px rgba(255,255,255,.15);')}<h1>${esc(s.n)}</h1><div class="rl">${esc(s.r)} · ${esc(s.c)}</div></div>
+   <div class="prof">${speakerPortrait(s,96,true)}<h1>${esc(s.n)}</h1><div class="rl">${esc(s.r)} · ${esc(s.c)}</div></div>
    <div class="speaker-actions"><button class="btn p" data-a="sheet" data-p="pdf:Speaker profile — ${esc(s.n)}">${ic('fileText',18,2)} View Profile</button></div>
    <div class="prose speaker-bio"><div class="fl" style="display:flex;gap:8px;align-items:center">Biography <span class="demo">Sample</span></div><p>${esc(s.bio)}</p></div>
    ${ses.length?`<section class="sec" style="margin-bottom:28px"><div class="sech"><h3>Sessions</h3></div><div class="glist">${ses.map(x=>`<button class="gi" data-a="sesFromSpk" data-p="${x.id}"><span class="tint t-blue">${ic('calendar',18)}</span><span class="grow"><div class="t">${esc(x.ti)}</div><div class="s">${DAYS[x.d].label} · ${x.t} · ${esc(x.rm)}</div></span><span class="chev">${ic('right',18,2)}</span></button>`).join('')}</div></section>`:''}
@@ -1609,7 +1628,7 @@ PV.agenda=()=>agendaV()
   .replace(navV(),'');
 function spkList(){
   const q=S.q.spk.trim().toLowerCase(), L=SPEAKERS.filter(s=>!q||(s.n+' '+s.c+' '+s.r).toLowerCase().includes(q));
-  return L.length? L.map(s=>`<button class="spk" data-a="push" data-p="speaker:${s.id}">${av(s.n,56)}<span class="pm"><div class="pn">${esc(s.n)}</div><div class="rl">${esc(s.r)}, ${esc(s.c)}</div><div class="bio">${esc(s.bio)}</div><span class="vp">View Profile ${ic('right',14,2.2)}</span></span></button>`).join('')
+  return L.length? L.map(s=>`<button class="spk" data-a="push" data-p="speaker:${s.id}">${speakerPortrait(s,56)}<span class="pm"><div class="pn">${esc(s.n)}</div><div class="rl">${esc(s.r)}, ${esc(s.c)}</div><div class="bio">${esc(s.bio)}</div><span class="vp">View Profile ${ic('right',14,2.2)}</span></span></button>`).join('')
    : `<div class="empty"><div class="eic">${ic('search',22)}</div><h4>No speakers match</h4><p>Try a different name or company.</p></div>`;
 }
 
