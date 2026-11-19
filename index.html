@@ -1114,6 +1114,43 @@ body{background:var(--bg);overscroll-behavior:none}
 .speaker-portrait-lg .speaker-flag{width:34px;height:26px;right:-4px;bottom:2px;border-radius:8px}
 .speaker-portrait-lg .speaker-flag-fallback{font-size:21px}
 
+
+/* FIATA single branded login page (registered delegates / demo only) */
+.auth-screen{display:flex;flex-direction:column;background:#F4F8FC;overflow:hidden}
+.auth-top{display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:8px;padding:calc(var(--sat) + 12px) 18px 13px;background:var(--fiata-top-gradient);color:#fff;font-size:16px;font-weight:750;text-align:center;flex:0 0 auto}
+.auth-back{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(255,255,255,.12);color:#fff}
+.auth-scroll{flex:1 1 0;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 18px calc(30px + var(--sab))}
+.auth-identity{text-align:center;max-width:430px;margin:0 auto}
+.auth-brand{width:76px;height:76px;display:grid;place-items:center;margin:0 auto 12px;background:#fff;border:1px solid #DFE9F2;border-radius:22px;box-shadow:0 9px 23px rgba(10,47,81,.06)}
+.auth-identity .auth-eyebrow{color:#197FB3;font-size:10px;font-weight:800;letter-spacing:.12em;margin:0}
+.auth-identity h1{font-size:24px;line-height:1.25;font-weight:800;letter-spacing:-.03em;color:#0D2C4A;margin:7px 0}
+.auth-identity>p:last-child{font-size:13px;color:#698199;line-height:1.55;max-width:320px;margin:0 auto 18px}
+.auth-event-poster{max-width:440px;aspect-ratio:2.35/1;border-radius:15px;margin:0 auto;overflow:hidden;background:#E1EAF2;box-shadow:0 3px 12px rgba(8,48,81,.06)}
+.auth-event-poster img{width:100%;height:100%;object-fit:contain;display:block}
+.auth-event-name{max-width:440px;margin:8px auto 16px;font-size:12px;font-weight:650;color:#58738B;text-align:center}
+.auth-card{max-width:440px;margin:0 auto;padding:20px;background:#fff;border:1px solid #E1EAF2;border-radius:18px;box-shadow:0 8px 28px rgba(8,47,80,.06)}
+.auth-card-head{display:flex;gap:11px;align-items:center;margin-bottom:14px}
+.auth-card-head>span:last-child{display:flex;flex-direction:column;gap:3px}
+.auth-card-head strong{font-size:17px;font-weight:750;color:#153751}
+.auth-card-head small{font-size:12px;color:#7A8D9D}
+.auth-lock{display:grid;place-items:center;flex:none;width:41px;height:41px;background:#E9F5FC;border-radius:12px;color:#0680BA}
+.auth-destination{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:12px;color:#45778E;background:#ECF8FF;padding:10px 12px;border-radius:10px;margin-bottom:17px}
+.auth-destination strong{color:#0B638B}
+.auth-label{display:block;color:#31526A;font-size:12px;font-weight:750;margin:12px 0 8px}
+.auth-input{height:52px;width:100%;border-radius:12px;font-size:15px}
+.auth-input[readonly]{background:#F3F6F9;color:#526C80}
+.auth-code{font-size:22px;letter-spacing:.32em;text-align:center;font-weight:750}
+.auth-hint{color:#768B9F;font-size:12px;line-height:1.5;margin-top:8px}
+.auth-link{background:none;border:0;padding:7px 0;color:#087DB7;font-size:12px;font-weight:750}
+.auth-link[disabled]{color:#859BB0}
+.auth-resend{text-align:right}
+.auth-submit{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;margin-top:18px;border-radius:12px;font-size:15px}
+.auth-error{margin:12px 0 0}
+.auth-notice{max-width:440px;display:flex;align-items:flex-start;gap:8px;color:#778BA0;font-size:11px;line-height:1.5;margin:15px auto 0}
+.auth-notice svg{flex:none}
+.auth-powered{text-align:center;color:#9AAAB8;font-size:11px;margin:20px auto 0}
+@media(max-width:360px){.auth-scroll{padding:16px 13px calc(24px + var(--sab))}.auth-card{padding:16px}.auth-identity h1{font-size:22px}}
+
 </style>
 </head>
 <body>
@@ -1302,7 +1339,7 @@ const phImg=(k,label=true)=>{const p=PHG[hash('img'+k)%PHG.length];return `<span
 const now=Date.now();
 const S={
   phase:'splash', eventsTab:'active', eventId:null, tab:'home', stack:[], sheet:null, viewer:null,
-  user:null, afterLogin:null,
+  user:null, afterLogin:null, authOpen:false,
   login:{stage:1,reg:'',code:'',err:'',busy:false,resend:0},
   day:0, net:'people', q:{people:'',spk:'',co:'',add:''}, countries:[], draft:[],
   meetings:[{id:'m0',with:'a10',day:1,time:'11:00',loc:'Table 04',note:'Demo incoming request — shows the accept / reject flow.',status:'pending',dir:'in',demo:1}],
@@ -1314,7 +1351,7 @@ const S={
 /* ===================================================================== RENDER */
 const $app=document.getElementById('app'), $dev=document.getElementById('device');
 let lastScreen='', lastSheet='';
-function screenKey(){ if(S.phase!=='app') return S.phase; const t=S.stack[S.stack.length-1]; return t? 'p:'+t.n+':'+(t.p||'') : 't:'+S.tab; }
+function screenKey(){ if(S.authOpen) return 'auth:login'; if(S.phase!=='app') return S.phase; const t=S.stack[S.stack.length-1]; return t? 'p:'+t.n+':'+(t.p||'') : 't:'+S.tab; }
 function render(anim){
   const sk=screenKey(), shk=S.sheet?S.sheet.t+':'+(S.sheet.p||''):'';
   const keep={}; $app.querySelectorAll('[data-k]').forEach(e=>keep[e.dataset.k]=[e.scrollTop,e.scrollLeft]);
@@ -1322,7 +1359,7 @@ function render(anim){
   $app.innerHTML=view()+sheetView()+viewerView();
   // Keep page headers visible while the page body scrolls.
   // Pin sponsor logos only on inner app screens, not the event list or Home dashboard.
-  if(S.phase==='app'||S.phase==='events'){
+  if(!S.authOpen && (S.phase==='app'||S.phase==='events')){
     const root=$app.querySelector('.screen');
     const pageScroll=root?.querySelector(':scope > .scroll');
     if(root && pageScroll){
@@ -1351,13 +1388,14 @@ function render(anim){
   const b=$app.querySelector('.bind'); if(b){ const to=b.dataset.to; requestAnimationFrame(()=>requestAnimationFrame(()=>b.style.setProperty('--i',to))); S._pt=+to; }
   if(fid){const el=document.getElementById(fid); if(el){el.focus({preventScroll:true}); if(sel!=null) try{el.setSelectionRange(sel,sel)}catch(e){}}}
   // The device's simulated status bar has been removed; use the OS/browser status bar.
-  const pend=$app.querySelector('[data-autofocus]'); if(pend && !fid && shk!==''){ setTimeout(()=>pend.focus({preventScroll:true}),380); pend.removeAttribute('data-autofocus'); }
+  const pend=$app.querySelector('[data-autofocus]'); if(pend && !fid && (shk!==''||S.authOpen)){ setTimeout(()=>pend.focus({preventScroll:true}),380); pend.removeAttribute('data-autofocus'); }
 }
 const topS=()=>S.stack[S.stack.length-1];
 function patch(region,html){const el=$app.querySelector(`[data-region="${region}"]`); if(el) el.innerHTML=html;}
 function view(){
   if(S.phase==='splash') return splashV();
   if(S.phase==='events') return eventsV();
+  if(S.authOpen) return loginPageV();
   const t=topS();
   if(t){ const f=PV[t.n]; return f? f(t.p):''; }
   if(S.tab==='speakers') return tabFromDetail('speakers','Speakers');
@@ -1410,7 +1448,7 @@ function homeV(){
  const e=ev(),u=S.user;
  const mine=u?S.meetings.filter(m=>m.status!=='rejected').sort((a,b)=>a.day-b.day||a.time.localeCompare(b.time)):[];
  const meetingPreview = !u
-   ? `<button class="home-meeting-row press" data-a="login"><span class="meeting-icon">${ic('lock',20,1.9)}</span><span class="home-meeting-copy"><strong>Sign in to view meetings</strong><small>Meeting requests and confirmations</small></span><span class="more-arrow">${ic('right',19,2)}</span></button>`
+   ? `<button class="home-meeting-row press" data-a="goNet" data-p="meetings"><span class="meeting-icon">${ic('lock',20,1.9)}</span><span class="home-meeting-copy"><strong>Sign in to view meetings</strong><small>Meeting requests and confirmations</small></span><span class="more-arrow">${ic('right',19,2)}</span></button>`
    : mine.length ? mine.slice(0,1).map(m=>`<button class="home-meeting-row press" data-a="goNet" data-p="meetings"><span class="meeting-icon">${ic('calendar',20,1.9)}</span><span class="home-meeting-copy"><strong>${esc(mtgName(m))}</strong><small>${esc(DAYS[m.day]?.label||'Event day')} · ${esc(m.time)} · ${esc(m.loc)}</small></span>${stPill(m.status)}</button>`).join('')
    : `<button class="home-meeting-row press" data-a="goNet" data-p="people"><span class="meeting-icon">${ic('calPlus',21,1.9)}</span><span class="home-meeting-copy"><strong>No meetings scheduled</strong><small>Find a delegate to request a meeting</small></span><span class="more-arrow">${ic('right',19,2)}</span></button>`;
  const mini=[
@@ -1690,7 +1728,6 @@ function sheetView(){
   if(t==='events') inner=sheetShell('<h3>Switch Event</h3>',EVENTS.map(e=>`<button class="gi" style="padding:12px 0" data-a="switchEvent" data-p="${e.id}"><span style="width:64px;height:44px;border-radius:10px;overflow:hidden;position:relative;flex:none">${art(e.art).replace('class="art"','class="art" style="position:absolute;inset:0;width:100%;height:100%"')}</span><span class="grow"><div class="t">${esc(e.name)}</div><div class="s">Active event</div></span>${e.id===S.eventId?`<span style="color:var(--blue)">${ic('check',20,2.4)}</span>`:''}</button>`).join('')+`<button class="btn g" style="margin-top:12px" data-a="allEvents">${ic('layers',17)} All events</button>`);
   else if(t==='session') inner=sessionSheet(p);
   else if(t==='rate') inner=rateSheet(p);
-  else if(t==='login') inner=loginSheet();
   else if(t==='attendee'){ const a=byId(ATTENDEES,p), con=S.conns.includes(p);
     inner=sheetShell('',`<div style="text-align:center;margin-top:-6px">${av(a.n,72,'margin:0 auto;')}<h3 style="font-size:20px;font-weight:800;margin-top:12px">${esc(a.n)}</h3><p class="muted">${esc(a.c)}</p><span class="cc" style="margin-top:8px"><b>${a.cc}</b>${esc(a.co)}</span>${con?`<div class="tiny" style="margin-top:8px">${ic('check',13,2.4).replace('<svg','<svg style="display:inline;vertical-align:-2px"')} In My Connection</div>`:''}</div>
       <div style="display:grid;gap:10px;margin-top:22px"><a class="btn g" style="text-decoration:none" href="mailto:${a.em}" data-a="mail" data-p="${a.id}">${ic('mail',18)} Send Email</a><button class="btn p" data-a="reqMtg" data-p="${a.id}">${ic('calPlus',18,2)} Request Meeting</button></div>`); }
@@ -1720,18 +1757,30 @@ function coList(counts){
   const q=S.q.co.trim().toLowerCase(), L=Object.keys(counts).sort().filter(c=>!q||c.toLowerCase().includes(q));
   return L.map(c=>{const on=S.draft.includes(c); return `<button class="gi" style="padding:10px 2px;min-height:52px" data-a="draftCo" data-p="${esc(c)}" role="checkbox" aria-checked="${on}"><span style="width:24px;height:24px;border-radius:7px;border:2px solid ${on?'var(--blue)':'#CBD5E1'};background:${on?'var(--blue)':'#fff'};display:grid;place-items:center;color:#fff;flex:none;transition:all .15s">${on?ic('check',15,3):''}</span><span class="grow t" style="font-weight:${on?700:500}">${esc(c)}</span><span class="tiny" style="font-variant-numeric:tabular-nums">${counts[c]}</span></button>`}).join('')||`<div class="empty"><h4>No match</h4></div>`;
 }
-function loginSheet(){
-  const L=S.login;
-  if(L.stage===1) return sheetShell(`<span class="tint t-blue" style="margin-bottom:12px">${ic('lock',18)}</span><h3>Sign in</h3><p class="tiny" style="margin-top:4px">${esc(L.reason||'Use the registration number from your event confirmation.')}</p>`,
-    `<label class="fl" for="reg" style="margin-top:6px">Registration Number</label><input id="reg" class="inp ${L.err?'err':''}" data-in="reg" data-autofocus value="${esc(L.reg)}" placeholder="e.g. FWC-000000" autocomplete="off" autocapitalize="characters">
-     ${L.err?`<div class="msg e" role="alert">${ic('alert',16,2)}<span>${esc(L.err)}</span></div>`:''}`,
-    `<button class="btn p" data-a="getCode" ${L.busy?'disabled':''}>${L.busy?'<span class="spin"></span> Checking…':'Get Login Code'}</button>`);
-  return sheetShell(`<span class="tint t-green" style="margin-bottom:12px">${ic('mail',18)}</span><h3>Enter login code</h3><p class="tiny" style="margin-top:4px">For registration <b style="color:var(--tx)">${esc(L.reg)}</b>. <button class="link" style="min-height:0;display:inline" data-a="loginBack">Change</button></p>`,
-    `<div class="msg w" style="margin-top:0">${ic('info',16,2)}<span>Prototype: no email is sent. In the live app the code is emailed to the registered address — enter any 6 digits here.</span></div>
-     <label class="fl" for="code" style="margin-top:16px">Login Code</label><input id="code" class="inp code ${L.err?'err':''}" data-in="code" data-autofocus inputmode="numeric" maxlength="6" value="${esc(L.code)}" placeholder="••••••" autocomplete="one-time-code">
-     ${L.err?`<div class="msg e" role="alert">${ic('alert',16,2)}<span>${esc(L.err)}</span></div>`:''}
-     <div style="text-align:center;margin-top:10px">${L.resend>0?`<span class="tiny">Resend code in ${L.resend}s</span>`:`<button class="link" data-a="resend">Resend Code</button>`}</div>`,
-    `<button class="btn p" data-a="doLogin" ${L.busy?'disabled':''}>${L.busy?'<span class="spin"></span> Signing in…':'Login'}</button>`);
+function loginPageV(){
+ const L=S.login,e=ev();
+ return `<div class="screen auth-screen" role="main" aria-label="FIATA delegate sign in">
+  <header class="auth-top"><button class="auth-back" data-a="cancelLogin" aria-label="Back">${ic('left',22,2)}</button><span>FIATA Event Login</span><span aria-hidden="true"></span></header>
+  <div class="scroll auth-scroll" data-k="login">
+   <div class="auth-identity"><div class="auth-brand">${brandLogo(66)}</div><p class="auth-eyebrow">FIATA CONFERENCE COMPANION</p><h1>Welcome to your event</h1><p>Sign in with your event registration number to continue.</p></div>
+   <div class="auth-event-poster">${officialEventImage(e)}</div><div class="auth-event-name">${esc(e.name)}</div>
+   <section class="auth-card">
+    <div class="auth-card-head"><span class="auth-lock">${ic('lock',20,2)}</span><span><strong>Delegate sign in</strong><small>Access your event features</small></span></div>
+    <div class="auth-destination">${ic('arrow',15,2)} Continue to <strong>${esc(L.destination||'your event')}</strong> after login</div>
+    <label class="auth-label" for="reg">Registration number</label>
+    <input id="reg" type="text" class="inp auth-input ${L.err&&L.stage===1?'err':''}" data-in="reg" ${L.stage===1?'data-autofocus':''} value="${esc(L.reg)}" placeholder="Enter registration number" autocomplete="off" autocapitalize="characters" spellcheck="false" ${L.stage===2?'readonly':''}>
+    ${L.stage===1?`<p class="auth-hint">Use the number from your FIATA event confirmation.</p>`:`
+     <button class="auth-link" data-a="loginBack">Change registration number</button>
+     <label class="auth-label" for="code">Verification code</label>
+     <input id="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="6" class="inp auth-input auth-code ${L.err?'err':''}" data-in="code" data-autofocus value="${esc(L.code)}" placeholder="6-digit code">
+     <p class="auth-hint">Demo only: no code is sent. Enter any six digits to continue.</p>
+     <div class="auth-resend"><button class="auth-link" data-a="resend" data-login-resend ${L.resend>0?'disabled':''}>${L.resend>0?'Resend code in '+L.resend+'s':'Resend code'}</button></div>`}
+    ${L.err?`<div class="msg e auth-error" role="alert">${ic('alert',16,2)}<span>${esc(L.err)}</span></div>`:''}
+    <button class="btn p auth-submit" data-a="${L.stage===1?'getCode':'doLogin'}" ${L.busy?'disabled':''}>${L.busy?'<span class="spin"></span> Please wait…':L.stage===1?`Continue ${ic('right',18,2)}`:`Sign in & continue ${ic('right',18,2)}`}</button>
+   </section>
+   <p class="auth-notice">${ic('info',16)} Prototype login: registration and codes are not checked by an actual FIATA service.</p>
+   <p class="auth-powered">FIATA Events · Powered by n-Gauge</p>
+  </div></div>`;
 }
 function confirmSheet(p){
   const [k,id]=p.split(':');
@@ -1753,18 +1802,26 @@ function viewerView(){
 }
 
 /* ===================================================================== ACTIONS */
-function push(n,p,anim='push'){ S.stack.push({n,p}); render(anim); }
-function openSheet(t,p){ S.sheet={t,p}; render(); }
+function push(n,p,anim='push'){
+  if(!S.user&&(n==='vote'||n==='gallery')) return requireLogin(()=>push(n,p,anim),n==='vote'?'Vote':'Photo Gallery');
+  S.stack.push({n,p});render(anim);
+}
+function openSheet(t,p){
+  if(!S.user&&['attendee','meeting','countries','addConn'].includes(t))
+    return requireLogin(()=>openSheet(t,p),t==='meeting'?'1 × 1 Meetings':t==='addConn'?'My Connection':'Delegates');
+  S.sheet={t,p};render();
+}
 function closeSheet(then){
   const sw=$app.querySelector('.sw'); if(!sw){S.sheet=null;then&&then();return;}
   sw.classList.remove('in'); sw.classList.add('out');
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   setTimeout(()=>{S.sheet=null; if(then) then(); else render();}, reduce?0:220);
 }
-function requireLogin(fn,reason){
-  if(S.user) return fn();
-  S.afterLogin=fn; S.login={stage:1,reg:'',code:'',err:'',busy:false,resend:0,reason};
-  openSheet('login');
+function requireLogin(fn,destination){
+  if(S.user)return fn();
+  clearInterval(resendTimer);
+  S.afterLogin=fn; S.login={stage:1,reg:'',code:'',err:'',busy:false,resend:0,destination:destination||'your event'};
+  S.authOpen=true;S.sheet=null;S.viewer=null;render('push');
 }
 function notify(m){ S.notifs.unshift({id:'n'+Date.now(),m,t:Date.now()}); }
 let resendTimer;
@@ -1772,9 +1829,21 @@ const A={
  toEvents(){ if(S.phase==='splash'){S.phase='events';render('fade');} },
  evTab(p){ S.eventsTab=p; render(); },
  pickEvent(id){ S.eventId=id; setEventContext(id); S.phase='app'; S.tab='home'; S.stack=[]; render('push'); },
- tab(p){ if(S.tab===p && !S.stack.length){ const sc=$app.querySelector('.scroll'); sc&&sc.scrollTo({top:0,behavior:'smooth'}); return;} S.tab=p; S.stack=[]; render('fade'); },
- goNet(p){ S.net=p==='connections'?'conns':p; S.tab='network'; S.stack=[]; render('fade'); },
- net(p){ S.net=p; S.hl=null; render(); },
+ tab(p){
+   if(!S.user&&['network','gallery','profile'].includes(p))
+     return requireLogin(()=>A.tab(p),p==='network'?({people:'Delegates',meetings:'1 × 1 Meetings',conns:'My Connection'}[S.net]||'Delegates'):p==='gallery'?'Photo Gallery':'Profile');
+   if(S.tab===p&&!S.stack.length){const sc=$app.querySelector('.scroll');sc&&sc.scrollTo({top:0,behavior:'smooth'});return;}
+   S.tab=p;S.stack=[];render('fade');
+ },
+ goNet(p){
+   const n=p==='connections'?'conns':p;
+   if(!S.user)return requireLogin(()=>A.goNet(n),({people:'Delegates',meetings:'1 × 1 Meetings',conns:'My Connection'}[n]||'Delegates'));
+   S.net=n;S.tab='network';S.stack=[];render('fade');
+ },
+ net(p){
+   if(!S.user)return requireLogin(()=>A.net(p),({people:'Delegates',meetings:'1 × 1 Meetings',conns:'My Connection'}[p]||'Network'));
+   S.net=p;S.hl=null;render();
+ },
  push(p){ const [n,a]=p.split(':'); push(n,a); },
  back(){ S.stack.pop(); render('pop'); },
  sheet(p){ const i=p.indexOf(':'); const t=i<0?p:p.slice(0,i), a=i<0?undefined:p.slice(i+1); if(t==='countries'){S.draft=S.countries.slice();S.q.co='';} if(t==='addConn') S.q.add=''; openSheet(t,a); },
@@ -1789,7 +1858,14 @@ const A={
    S.rd.busy=true; render(); setTimeout(()=>{ S.ratings[id]={v:S.rd.v,f:S.rd.f}; S.rd.busy=false; render(); toast('Rating submitted'); },700); },
  spkFromSheet(id){ closeSheet(()=>push('speaker',id)); },
  sesFromSpk(id){ const s=byId(SESSIONS,id); S.day=s.d; openSheet('session',id); },
- login(){ requireLogin(()=>render(),''); },
+ login(){
+   if(S.tab==='network')return requireLogin(()=>A.tab('network'),({people:'Delegates',meetings:'1 × 1 Meetings',conns:'My Connection'}[S.net]||'Delegates'));
+   if(S.tab==='profile'||S.tab==='gallery')return requireLogin(()=>A.tab(S.tab),S.tab==='profile'?'Profile':'Photo Gallery');
+   return requireLogin(()=>A.goNet('meetings'),'1 × 1 Meetings');
+ },
+ cancelLogin(){
+   clearInterval(resendTimer);S.authOpen=false;S.afterLogin=null;S.login.err='';render('pop');
+ },
  getCode(){ const L=S.login, v=L.reg.trim();
    if(!v){L.err='Enter your registration number.';return render();}
    if(!/^[A-Za-z0-9-]{4,}$/.test(v)){L.err='Registration number should contain at least 4 letters or digits.';return render();}
@@ -1799,8 +1875,15 @@ const A={
  doLogin(){ const L=S.login;
    if(!/^\d{6}$/.test(L.code)){L.err='Enter the 6-digit login code.';return render();}
    L.err='';L.busy=true;render();
-   setTimeout(()=>{ L.busy=false; S.user={n:'Demo Delegate',c:'Sample Forwarding Co.',co:'India',reg:L.reg.toUpperCase(),em:'delegate@example.com',ph:'+91 00000 00000'};
-     clearInterval(resendTimer); const fn=S.afterLogin; S.afterLogin=null; closeSheet(()=>{ render(); toast('Signed in as Demo Delegate'); if(fn) setTimeout(fn,250); }); },900); },
+   setTimeout(()=>{
+     if(!S.authOpen)return;
+     L.busy=false;S.user={n:'Demo Delegate',c:'Sample Forwarding Co.',co:'India',reg:L.reg.toUpperCase(),em:'delegate@example.com',ph:'+91 00000 00000'};
+     clearInterval(resendTimer);
+     const go=S.afterLogin;S.afterLogin=null;S.authOpen=false;
+     if(go)go();else {S.tab='home';S.stack=[];render('fade');}
+     toast('Signed in · Demo Delegate');
+   },900);
+ },
  resetSearch(){ S.q.people=''; S.countries=[]; render(); },
  rmCountry(c){ S.countries=S.countries.filter(x=>x!==c); render(); },
  clearCountries(){ S.countries=[]; render(); },
@@ -1851,7 +1934,16 @@ const A={
  pref(k){ S.prefs[k]=!S.prefs[k]; render(); toast(`${k==='push'?'Notifications':'Email notifications'} ${S.prefs[k]?'on':'off'}`,'info'); },
  delNotif(id){ S.notifs=S.notifs.filter(n=>n.id!==id); render(); toast('Notification deleted','info'); },
 };
-function startResend(){ S.login.resend=30; clearInterval(resendTimer); resendTimer=setInterval(()=>{ S.login.resend--; if(S.login.resend<=0) clearInterval(resendTimer); if(S.sheet?.t==='login' && S.login.stage===2){ render(); } else clearInterval(resendTimer); },1000); }
+function startResend(){
+  S.login.resend=30;clearInterval(resendTimer);
+  resendTimer=setInterval(()=>{
+    if(!S.authOpen||S.login.stage!==2){clearInterval(resendTimer);return;}
+    S.login.resend=Math.max(0,S.login.resend-1);
+    const btn=$app.querySelector('[data-login-resend]');
+    if(btn){btn.disabled=S.login.resend>0;btn.textContent=S.login.resend>0?'Resend code in '+S.login.resend+'s':'Resend code';}
+    if(S.login.resend===0)clearInterval(resendTimer);
+  },1000);
+}
 
 const IN={
  qpeople(v){ S.q.people=v; patch('list',peopleList()); },
@@ -1860,8 +1952,8 @@ const IN={
  qadd(v){ S.q.add=v; patch('add',addList()); },
  fb(v){ S.rd.f=v; },
  rnote(v){ S.req.note=v; },
- reg(v){ S.login.reg=v; if(S.login.err){S.login.err='';const m=$app.querySelector('.sbody .msg.e'); m&&m.remove(); document.getElementById('reg')?.classList.remove('err');} },
- code(v){ const c=v.replace(/\D/g,'').slice(0,6); S.login.code=c; const el=document.getElementById('code'); if(el&&el.value!==c) el.value=c; if(S.login.err){S.login.err='';const m=$app.querySelector('.sbody .msg.e'); m&&m.remove(); el?.classList.remove('err');} },
+ reg(v){ S.login.reg=v; if(S.login.err){S.login.err='';const m=$app.querySelector('.auth-error'); m&&m.remove(); document.getElementById('reg')?.classList.remove('err');} },
+ code(v){ const c=v.replace(/\D/g,'').slice(0,6); S.login.code=c; const el=document.getElementById('code'); if(el&&el.value!==c) el.value=c; if(S.login.err){S.login.err='';const m=$app.querySelector('.auth-error'); m&&m.remove(); el?.classList.remove('err');} },
 };
 document.addEventListener('click',e=>{
   const el=e.target.closest('[data-a]'); if(!el||!$dev.contains(el)) return;
@@ -1872,7 +1964,7 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('input',e=>{ const k=e.target.dataset&&e.target.dataset.in; if(k&&IN[k]) IN[k](e.target.value); });
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){ if(S.viewer) return A.closeViewer(); if(S.sheet) return closeSheet(); }
+  if(e.key==='Escape'){ if(S.viewer) return A.closeViewer(); if(S.sheet) return closeSheet(); if(S.authOpen) return A.cancelLogin(); }
   if(e.key==='Enter' && e.target.id==='reg') A.getCode();
   if(e.key==='Enter' && e.target.id==='code') A.doLogin();
   if(S.viewer && (e.key==='ArrowRight'||e.key==='ArrowLeft')) A.vNav(e.key==='ArrowRight'?1:-1);
@@ -1903,6 +1995,7 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
     push('about');
   };
   A.homeMeeting=function(id){
+    if(!S.user)return requireLogin(()=>A.homeMeeting(id),'1 × 1 Meetings');
     S.hl=id; S.net='meetings'; S.tab='network'; S.stack=[]; render('fade');
     setTimeout(()=>{
       const el=$app.querySelector('[data-mid="'+id+'"]');
@@ -1992,7 +2085,7 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
     const e=ev(),u=S.user;
     const mine=u?S.meetings.slice().reverse().filter(m=>m.status!=='rejected'):[];
     const meetingPreview = !u ?
-      `<button class="home-meeting-row home-meeting-guest press" data-a="login"><span class="meeting-icon">${ic('lock',20,1.9)}</span><span class="home-meeting-copy"><strong>Sign in to view 1 × 1 meetings</strong><small>Your requests, confirmations and latest meetings</small></span><span class="more-arrow">${ic('right',19,2)}</span></button>`:
+      `<button class="home-meeting-row home-meeting-guest press" data-a="goNet" data-p="meetings"><span class="meeting-icon">${ic('lock',20,1.9)}</span><span class="home-meeting-copy"><strong>Sign in to view 1 × 1 meetings</strong><small>Your requests, confirmations and latest meetings</small></span><span class="more-arrow">${ic('right',19,2)}</span></button>`:
       mine.length? `<div class="home-meetings-rail" data-k="home-meetings" data-rail="meetings" role="region" aria-label="Recent meetings, newest first">${mine.map(m=>{
        const person=byId(ATTENDEES,m.with),day=DAYS[m.day];
        return `<button data-slide class="home-meeting-swipe-card press" data-mid="${m.id}" data-a="homeMeeting" data-p="${m.id}" aria-label="View meeting with ${esc(person?.n||'Delegate')}">
