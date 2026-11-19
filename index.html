@@ -1195,6 +1195,23 @@ body{background:var(--bg);overscroll-behavior:none}
   .meeting-select{font-size:13px}
 }
 
+
+/* Connections: equal Email and Request Meeting actions, no Add Connection strip */
+.connections-list{padding-top:15px}
+.connection-card{display:flex;flex-direction:column;align-items:stretch;gap:13px;padding:14px;min-width:0}
+.connection-main{display:flex;align-items:center;gap:11px;width:100%;min-width:0}
+.connection-main .pm{flex:1 1 0;min-width:0}
+.connection-main .pn{line-height:1.4}
+.connection-main .pc{max-width:100%;line-height:1.45}
+.connection-delete{color:#8BA0B4!important;flex:none;margin-left:auto}
+.connection-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;width:100%;min-width:0}
+.connection-actions .btn{height:45px;min-width:0;width:100%;display:flex;align-items:center;justify-content:center;gap:7px;padding:0 8px;font-size:12.5px;font-weight:700;line-height:1.15;white-space:nowrap;border-radius:12px;text-align:center}
+.connection-actions .btn svg{flex-shrink:0}
+.connection-actions .connection-email{background:#fff;border:1px solid #DCE6F0;color:#173C58;text-decoration:none}
+.connection-actions .connection-request{background:#EAF5FD;border:1px solid #D9EDFA;color:#0077BC}
+.meeting-card-content{display:block;width:100%;cursor:default}
+@media(max-width:370px){.connection-actions{gap:7px}.connection-actions .btn{font-size:11px;padding:0 5px;gap:5px}.connection-actions .btn svg{width:15px}}
+
 </style>
 </head>
 <body>
@@ -1607,21 +1624,25 @@ function meetingsList(){
 function meetCard(m){
   const a=byId(ATTENDEES,m.with);
   return `<div class="mcard ${m.status==='rejected'?'rej':''}" ${S.hl===m.id?'style="box-shadow:0 0 0 2px var(--blue),var(--sh)"':''}>
-   <button style="width:100%" data-a="sheet" data-p="meeting:${m.id}"><div class="mtop">${av(a.n,44)}<div class="pm"><div class="dir">${m.dir==='in'?'Received':'Sent'}</div><div style="font-weight:700;font-size:15px">${esc(a.n)}</div><div class="tiny">${esc(a.c)}</div></div></div>
+   <div class="meeting-card-content"><div class="mtop">${av(a.n,44)}<div class="pm"><div class="dir">${m.dir==='in'?'Received':'Sent'}</div><div style="font-weight:700;font-size:15px">${esc(a.n)}</div><div class="tiny">${esc(a.c)}</div></div></div>
    <div style="margin-top:10px">${stPill(m.status)}</div>
    <div class="mgrid"><div><small>Date</small><b>${DAYS[m.day].label}</b></div><div><small>Time</small><b>${m.time}</b></div><div><small>Location</small><b>${esc(m.loc.replace('Meeting ',''))}</b></div></div>
-   ${m.note?`<div class="mnote">${ic('note',14)}<span>${esc(m.note)}</span></div>`:''}</button>
+   ${m.note?`<div class="mnote">${ic('note',14)}<span>${esc(m.note)}</span></div>`:''}</div>
    ${m.dir==='in'&&m.status==='pending'?`<div class="macts"><button class="btn dg sm" style="flex:1" data-a="mtgAct" data-p="reject:${m.id}">${ic('x',16,2.2)} Reject</button><button class="btn p sm" style="flex:1" data-a="mtgAct" data-p="accept:${m.id}">${ic('check',16,2.4)} Accept</button></div>`:''}
    ${m.dir==='out'?`<div class="macts"><button class="btn g sm" data-a="confirm" data-p="delMtg:${m.id}">${ic('trash',15)} Delete</button></div>`:''}
   </div>`;
 }
 function connList(){
-  const L=S.conns.map(id=>byId(ATTENDEES,id));
-  return `<div style="padding:14px 16px 0"><button class="btn s" data-a="sheet" data-p="addConn">${ic('userPlus',18,2)} Add Connection</button></div>
-  ${L.length? `<div class="plist">${L.map(a=>`<div class="person" style="flex-wrap:wrap">${av(a.n,46)}<span class="pm"><div class="pn">${esc(a.n)}</div><div class="pc">${esc(a.c)} · ${esc(a.co)}</div></span>
-    <button class="ibtn" aria-label="Remove connection" data-a="confirm" data-p="delConn:${a.id}" style="color:var(--tx3)">${ic('trash',18)}</button>
-    <div style="display:flex;gap:8px;width:100%;padding-left:58px"><a class="btn g sm" style="flex:1;text-decoration:none" href="mailto:${a.em}" data-a="mail" data-p="${a.id}">${ic('mail',15)} Email</a><button class="btn s sm" style="flex:1" data-a="reqMtg" data-p="${a.id}">${ic('calPlus',15)} Request Meeting</button></div></div>`).join('')}</div>`
-  : `<div class="empty"><div class="eic">${ic('contact',22)}</div><h4>No connections yet</h4><p>Add delegates you meet to keep them in one place.</p></div>`}`;
+ const L=S.conns.map(id=>byId(ATTENDEES,id)).filter(Boolean);
+ return L.length?`<div class="plist connections-list">${L.map(a=>`<article class="person connection-card">
+   <div class="connection-main">${av(a.n,46)}<span class="pm"><div class="pn">${esc(a.n)}</div><div class="pc">${esc(a.c)} · ${esc(a.co)}</div></span>
+    <button class="ibtn connection-delete" aria-label="Remove ${esc(a.n)} from connections" data-a="confirm" data-p="delConn:${a.id}">${ic('trash',18)}</button></div>
+   <div class="connection-actions">
+      <a class="btn g sm connection-email" href="mailto:${esc(a.em)}" data-a="mail" data-p="${a.id}">${ic('mail',17,2)}<span>Email</span></a>
+      <button class="btn s sm connection-request" data-a="reqMtg" data-p="${a.id}">${ic('calPlus',17,2)}<span>Request Meeting</span></button>
+   </div>
+ </article>`).join('')}</div>`
+ :`<div class="empty"><div class="eic">${ic('contact',22)}</div><h4>No connections yet</h4><p>Find delegates in Network to build your connections.</p><button class="btn s sm" data-a="net" data-p="people">Browse Delegates</button></div>`;
 }
 
 function exploreV(){
