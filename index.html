@@ -1594,6 +1594,86 @@ try{
 }catch(e){}
 document.documentElement.setAttribute('data-fiata-theme',S.theme);
 
+/* In-page localization: stable interface copy translated without leaving FIATA.
+   Official event names and other proper nouns remain in their published language.
+   Chrome's optional on-device Translator supplements this dictionary on desktop. */
+const I18N_LOCALES=["en","hi","fr","es","ar","pt","zh-CN","de"];
+const I18N_ROWS=[["Home","होम","Accueil","Inicio","الرئيسية","Início","首页","Startseite"],["Events","इवेंट्स","Événements","Eventos","الفعاليات","Eventos","活动","Veranstaltungen"],["Active","सक्रिय","Actifs","Activos","النشطة","Ativos","进行中","Aktiv"],["Past","पिछले","Passés","Pasados","السابقة","Anteriores","往期","Vergangen"],["View event","इवेंट देखें","Voir l’événement","Ver evento","عرض الفعالية","Ver evento","查看活动","Event ansehen"],["Change Event","इवेंट बदलें","Changer d’événement","Cambiar evento","تغيير الفعالية","Mudar evento","切换活动","Event wechseln"],["SELECTED EVENT","चुना गया इवेंट","ÉVÉNEMENT SÉLECTIONNÉ","EVENTO SELECCIONADO","الفعالية المختارة","EVENTO SELECIONADO","已选活动","AUSGEWÄHLTES EVENT"],["YOUR EVENT","आपका इवेंट","VOTRE ÉVÉNEMENT","TU EVENTO","فعاليتك","SEU EVENTO","您的活动","IHR EVENT"],["Quick access","त्वरित लिंक","Accès rapide","Acceso rápido","وصول سريع","Acesso rápido","快捷入口","Schnellzugriff"],["Agenda","कार्यक्रम","Programme","Agenda","جدول الأعمال","Programação","日程","Programm"],["Sessions & schedule","सत्र और समय-सारणी","Sessions et horaires","Sesiones y horario","الجلسات والجدول","Sessões e horários","会议与日程","Sitzungen & Zeitplan"],["Find delegates","प्रतिनिधि खोजें","Trouver des délégués","Buscar delegados","البحث عن المشاركين","Encontrar participantes","查找代表","Teilnehmende finden"],["Connect & meet","जुड़ें और मिलें","Rencontrer et échanger","Conectar y reunirse","تواصل والتقِ","Conectar e reunir","交流与会面","Vernetzen & treffen"],["My meetings","मेरी बैठकें","Mes rendez-vous","Mis reuniones","اجتماعاتي","Minhas reuniões","我的会议","Meine Treffen"],["View all","सभी देखें","Tout voir","Ver todo","عرض الكل","Ver todos","查看全部","Alle anzeigen"],["See all","सभी देखें","Tout voir","Ver todo","عرض الكل","Ver todos","查看全部","Alle anzeigen"],["Explore the event","इवेंट की जानकारी","Explorer l’événement","Explorar el evento","استكشف الفعالية","Explorar o evento","探索活动","Event entdecken"],["About Event","इवेंट के बारे में","À propos de l’événement","Sobre el evento","حول الفعالية","Sobre o evento","关于活动","Über die Veranstaltung"],["Event info","इवेंट जानकारी","Infos événement","Información del evento","معلومات الفعالية","Informações do evento","活动信息","Event-Infos"],["Details & links","विवरण और लिंक","Détails et liens","Detalles y enlaces","التفاصيل والروابط","Detalhes e links","详情与链接","Details & Links"],["Gallery","गैलरी","Galerie","Galería","معرض الصور","Galeria","图库","Galerie"],["Photo Gallery","फोटो गैलरी","Galerie photo","Galería de fotos","معرض الصور","Galeria de fotos","照片库","Fotogalerie"],["Event moments","इवेंट की तस्वीरें","Moments de l’événement","Momentos del evento","لحظات الفعالية","Momentos do evento","活动精彩瞬间","Event-Momente"],["Speakers","वक्ता","Intervenants","Ponentes","المتحدثون","Palestrantes","演讲嘉宾","Referenten"],["Explore profiles","प्रोफाइल देखें","Voir les profils","Explorar perfiles","استكشف الملفات","Explorar perfis","浏览简介","Profile ansehen"],["Network","नेटवर्क","Réseau","Contactos","التواصل","Rede","人脉","Netzwerk"],["Delegates","प्रतिनिधि","Délégués","Delegados","المشاركون","Delegados","代表","Delegierte"],["1 × 1 Meetings","आमने-सामने बैठकें","Rencontres individuelles","Reuniones individuales","اجتماعات فردية","Reuniões individuais","一对一会议","Einzelgespräche"],["My Connection","मेरे संपर्क","Mes contacts","Mis contactos","جهات اتصالي","Meus contatos","我的联系人","Meine Kontakte"],["Saved delegates & contacts","सहेजे गए प्रतिनिधि और संपर्क","Délégués et contacts enregistrés","Delegados y contactos guardados","المشاركون وجهات الاتصال المحفوظة","Delegados e contatos salvos","已保存的代表与联系人","Gespeicherte Kontakte"],["Partners","साझेदार","Partenaires","Socios","الشركاء","Parceiros","合作伙伴","Partner"],["Sponsors & Partners","प्रायोजक और साझेदार","Sponsors et partenaires","Patrocinadores y socios","الرعاة والشركاء","Patrocinadores e parceiros","赞助商与合作伙伴","Sponsoren & Partner"],["Sponsors & more","प्रायोजक और अन्य","Sponsors et plus","Patrocinadores y más","الرعاة والمزيد","Patrocinadores e mais","赞助商及更多","Sponsoren & mehr"],["Our Partners","हमारे साझेदार","Nos partenaires","Nuestros socios","شركاؤنا","Nossos parceiros","合作伙伴","Unsere Partner"],["Profile","प्रोफाइल","Profil","Perfil","الملف الشخصي","Perfil","个人资料","Profil"],["Notifications","सूचनाएँ","Notifications","Notificaciones","الإشعارات","Notificações","通知","Benachrichtigungen"],["Vote","मतदान","Voter","Votar","التصويت","Votar","投票","Abstimmen"],["Participate in event polls","इवेंट मतदान में भाग लें","Participer aux sondages","Participa en encuestas","شارك في الاستطلاعات","Participe das enquetes","参与活动投票","An Umfragen teilnehmen"],["Help","सहायता","Aide","Ayuda","المساعدة","Ajuda","帮助","Hilfe"],["Help & FAQs","सहायता और सामान्य प्रश्न","Aide et FAQ","Ayuda y preguntas frecuentes","المساعدة والأسئلة الشائعة","Ajuda e perguntas","帮助与常见问题","Hilfe & FAQ"],["Answers to common questions","आम सवालों के जवाब","Réponses aux questions fréquentes","Respuestas a preguntas frecuentes","إجابات للأسئلة الشائعة","Respostas às dúvidas comuns","常见问题解答","Antworten auf häufige Fragen"],["App Preferences","ऐप सेटिंग्स","Préférences de l’application","Preferencias de la aplicación","إعدادات التطبيق","Preferências do aplicativo","应用偏好设置","App-Einstellungen"],["Language","भाषा","Langue","Idioma","اللغة","Idioma","语言","Sprache"],["Translate FIATA Events on this page","इसी पेज पर FIATA Events की भाषा बदलें","Traduire FIATA Events sur cette page","Traducir FIATA Events en esta página","ترجمة تطبيق FIATA في هذه الصفحة","Traduzir FIATA Events nesta página","在此页面翻译 FIATA Events","FIATA Events auf dieser Seite übersetzen"],["Display language","दिखाने की भाषा","Langue d’affichage","Idioma de visualización","لغة العرض","Idioma de exibição","显示语言","Anzeigesprache"],["Choose a language","भाषा चुनें","Choisir une langue","Elegir un idioma","اختر لغة","Escolher idioma","选择语言","Sprache wählen"],["Changes apply immediately without leaving the app.","ऐप छोड़े बिना भाषा तुरंत बदल जाएगी।","Les modifications s’appliquent sans quitter l’application.","Los cambios se aplican sin salir de la aplicación.","تُطبّق التغييرات فوراً دون مغادرة التطبيق.","As alterações são aplicadas sem sair do aplicativo.","无需离开应用即可立即切换。","Die Änderung wird sofort in der App übernommen."],["Appearance","दिखावट","Apparence","Apariencia","المظهر","Aparência","外观","Darstellung"],["Choose how the app looks on this device","इस डिवाइस पर ऐप की थीम चुनें","Choisissez l’apparence de l’application","Elige el aspecto de la aplicación","اختر مظهر التطبيق","Escolha a aparência do aplicativo","选择应用外观","Darstellung der App wählen"],["Light","लाइट","Clair","Claro","فاتح","Claro","浅色","Hell"],["Dark","डार्क","Sombre","Oscuro","داكن","Escuro","深色","Dunkel"],["Account","खाता","Compte","Cuenta","الحساب","Conta","账户","Konto"],["Logout","लॉग आउट","Déconnexion","Cerrar sesión","تسجيل الخروج","Sair","退出登录","Abmelden"],["Delete Account","खाता हटाएँ","Supprimer le compte","Eliminar cuenta","حذف الحساب","Excluir conta","删除账户","Konto löschen"],["Your digital event pass","आपका डिजिटल इवेंट पास","Votre pass numérique","Tu pase digital","بطاقة حضورك الرقمية","Seu passe digital","您的电子通行证","Ihr digitaler Event-Pass"],["Your Event Pass","आपका इवेंट पास","Votre pass événement","Tu pase del evento","بطاقة دخول الفعالية","Seu passe do evento","您的活动通行证","Ihr Event-Pass"],["Registration No.","पंजीकरण संख्या","N° d’inscription","N.º de registro","رقم التسجيل","Nº de inscrição","注册编号","Registrierungsnr."],["Contact Information","संपर्क जानकारी","Coordonnées","Información de contacto","معلومات الاتصال","Informações de contato","联系信息","Kontaktdaten"],["Email ID","ईमेल","Adresse e-mail","Correo electrónico","البريد الإلكتروني","E-mail","电子邮箱","E-Mail"],["Mobile Number","मोबाइल नंबर","Numéro de téléphone","Número de móvil","رقم الهاتف","Número de celular","手机号码","Mobilnummer"],["Country","देश","Pays","País","البلد","País","国家","Land"],["Search speakers","वक्ता खोजें","Rechercher des intervenants","Buscar ponentes","ابحث عن متحدثين","Buscar palestrantes","搜索演讲嘉宾","Referenten suchen"],["Search name or company","नाम या कंपनी खोजें","Rechercher un nom ou une entreprise","Buscar nombre o empresa","ابحث بالاسم أو الشركة","Buscar nome ou empresa","搜索姓名或公司","Name oder Unternehmen suchen"],["Search delegates","प्रतिनिधि खोजें","Rechercher des délégués","Buscar delegados","ابحث عن مشاركين","Buscar delegados","搜索代表","Delegierte suchen"],["Request Meeting","बैठक का अनुरोध","Demander un rendez-vous","Solicitar reunión","طلب اجتماع","Solicitar reunião","请求会议","Treffen anfragen"],["Meeting Date","बैठक की तारीख","Date du rendez-vous","Fecha de reunión","تاريخ الاجتماع","Data da reunião","会议日期","Treffendatum"],["Meeting Time","बैठक का समय","Heure du rendez-vous","Hora de reunión","وقت الاجتماع","Horário da reunião","会议时间","Uhrzeit"],["Select a date","तारीख चुनें","Choisir une date","Seleccionar fecha","اختر التاريخ","Selecionar data","选择日期","Datum wählen"],["Select a time","समय चुनें","Choisir une heure","Seleccionar hora","اختر الوقت","Selecionar horário","选择时间","Uhrzeit wählen"],["Meeting Location","बैठक का स्थान","Lieu du rendez-vous","Lugar de reunión","مكان الاجتماع","Local da reunião","会议地点","Treffpunkt"],["Choose a room or table","कमरा या टेबल चुनें","Choisir une salle ou une table","Elegir sala o mesa","اختر غرفة أو طاولة","Escolher sala ou mesa","选择会议室或桌号","Raum oder Tisch wählen"],["Rooms","कमरे","Salles","Salas","الغرف","Salas","会议室","Räume"],["Tables","टेबल","Tables","Mesas","الطاولات","Mesas","桌号","Tische"],["Message","संदेश","Message","Mensaje","رسالة","Mensagem","消息","Nachricht"],["Optional","वैकल्पिक","Facultatif","Opcional","اختياري","Opcional","选填","Optional"],["Available","उपलब्ध","Disponible","Disponible","متاح","Disponível","可用","Verfügbar"],["Unavailable","उपलब्ध नहीं","Indisponible","No disponible","غير متاح","Indisponível","不可用","Nicht verfügbar"],["Selected","चयनित","Sélectionné","Seleccionado","محدد","Selecionado","已选择","Ausgewählt"],["Email","ईमेल","E-mail","Correo","البريد الإلكتروني","E-mail","邮件","E-Mail"],["Accept","स्वीकार करें","Accepter","Aceptar","قبول","Aceitar","接受","Annehmen"],["Reject","अस्वीकार करें","Refuser","Rechazar","رفض","Recusar","拒绝","Ablehnen"],["Delete","हटाएँ","Supprimer","Eliminar","حذف","Excluir","删除","Löschen"],["Cancel","रद्द करें","Annuler","Cancelar","إلغاء","Cancelar","取消","Abbrechen"],["Clear","साफ करें","Effacer","Borrar","مسح","Limpar","清除","Löschen"],["Submit","भेजें","Envoyer","Enviar","إرسال","Enviar","提交","Absenden"],["Close","बंद करें","Fermer","Cerrar","إغلاق","Fechar","关闭","Schließen"],["Sign in","साइन इन","Se connecter","Iniciar sesión","تسجيل الدخول","Entrar","登录","Anmelden"],["Delegate Login","प्रतिनिधि लॉगिन","Connexion délégué","Acceso de delegado","دخول المشارك","Login do delegado","代表登录","Delegierten-Login"],["Registration number","पंजीकरण संख्या","Numéro d’inscription","Número de registro","رقم التسجيل","Número de inscrição","注册号","Registrierungsnummer"],["Enter registration number","पंजीकरण संख्या दर्ज करें","Saisir le numéro d’inscription","Introduce el número de registro","أدخل رقم التسجيل","Digite o número de inscrição","输入注册号","Registrierungsnummer eingeben"],["Continue","जारी रखें","Continuer","Continuar","متابعة","Continuar","继续","Weiter"],["Verification code","सत्यापन कोड","Code de vérification","Código de verificación","رمز التحقق","Código de verificação","验证码","Bestätigungscode"],["Sign in & continue","साइन इन करके आगे बढ़ें","Se connecter et continuer","Iniciar sesión y continuar","تسجيل الدخول والمتابعة","Entrar e continuar","登录并继续","Anmelden und weiter"],["Change registration number","पंजीकरण संख्या बदलें","Modifier le numéro d’inscription","Cambiar número de registro","تغيير رقم التسجيل","Alterar número de inscrição","更改注册号","Registrierungsnummer ändern"],["Request sent","अनुरोध भेज दिया गया","Demande envoyée","Solicitud enviada","تم إرسال الطلب","Solicitação enviada","请求已发送","Anfrage gesendet"],["Sending request…","अनुरोध भेजा जा रहा है…","Envoi de la demande…","Enviando solicitud…","جارٍ إرسال الطلب…","Enviando solicitação…","正在发送请求…","Anfrage wird gesendet…"],["Confirmation Pending","पुष्टि लंबित","Confirmation en attente","Confirmación pendiente","بانتظار التأكيد","Confirmação pendente","等待确认","Bestätigung ausstehend"],["Confirmation Accepted","पुष्ट","Confirmé","Confirmado","تم التأكيد","Confirmado","已确认","Bestätigt"],["No meetings scheduled","कोई बैठक तय नहीं","Aucun rendez-vous prévu","Sin reuniones programadas","لا اجتماعات مجدولة","Nenhuma reunião agendada","暂无已安排会议","Keine Treffen geplant"],["Sign in to view meetings","बैठकें देखने के लिए लॉगिन करें","Connectez-vous pour voir les rendez-vous","Inicia sesión para ver reuniones","سجّل الدخول لعرض الاجتماعات","Entre para ver reuniões","登录查看会议","Anmelden, um Treffen zu sehen"],["Meeting requests and confirmations","बैठक अनुरोध और पुष्टियाँ","Demandes et confirmations","Solicitudes y confirmaciones","طلبات الاجتماعات والتأكيدات","Solicitações e confirmações","会议请求与确认","Anfragen & Bestätigungen"],["Find a delegate to request a meeting","बैठक के लिए प्रतिनिधि खोजें","Trouver un délégué à rencontrer","Busca un delegado para reunirte","ابحث عن مشارك لطلب اجتماع","Encontre um delegado para reunião","查找代表并预约会议","Delegierte für ein Treffen suchen"],["No connections yet","अभी कोई संपर्क नहीं","Aucun contact pour le moment","Todavía no hay contactos","لا توجد جهات اتصال بعد","Ainda não há contatos","暂无联系人","Noch keine Kontakte"],["Browse Delegates","प्रतिनिधि देखें","Parcourir les délégués","Explorar delegados","تصفح المشاركين","Ver delegados","浏览代表","Delegierte durchsuchen"],["View Profile","प्रोफाइल देखें","Voir le profil","Ver perfil","عرض الملف الشخصي","Ver perfil","查看个人资料","Profil ansehen"],["Biography","परिचय","Biographie","Biografía","السيرة الذاتية","Biografia","个人简介","Biografie"],["Sessions","सत्र","Sessions","Sesiones","الجلسات","Sessões","场次","Sitzungen"],["Rated","रेटिंग दी","Noté","Calificado","تم التقييم","Avaliado","已评分","Bewertet"],["Rate","रेटिंग दें","Évaluer","Calificar","تقييم","Avaliar","评分","Bewerten"],["Rate Session","सत्र को रेटिंग दें","Évaluer la session","Calificar sesión","تقييم الجلسة","Avaliar sessão","评价会议","Sitzung bewerten"],["Feedback","प्रतिक्रिया","Avis","Comentarios","ملاحظات","Feedback","反馈","Feedback"],["Submit Rating","रेटिंग भेजें","Envoyer l’évaluation","Enviar calificación","إرسال التقييم","Enviar avaliação","提交评分","Bewertung absenden"],["No speakers match","कोई वक्ता नहीं मिला","Aucun intervenant trouvé","No se encontraron ponentes","لم يتم العثور على متحدثين","Nenhum palestrante encontrado","没有找到演讲嘉宾","Keine Referenten gefunden"],["Try a different name or company.","दूसरा नाम या कंपनी खोजें।","Essayez un autre nom ou une autre entreprise.","Prueba otro nombre o empresa.","جرّب اسماً أو شركة أخرى.","Tente outro nome ou empresa.","请尝试其他姓名或公司。","Versuchen Sie einen anderen Namen oder ein anderes Unternehmen."],["Photo unavailable","फोटो उपलब्ध नहीं","Photo indisponible","Foto no disponible","الصورة غير متاحة","Foto indisponível","照片不可用","Foto nicht verfügbar"],["Open original","मूल फोटो खोलें","Ouvrir l’original","Abrir original","فتح الصورة الأصلية","Abrir original","打开原图","Original öffnen"],["Share","शेयर करें","Partager","Compartir","مشاركة","Compartilhar","分享","Teilen"],["Load more photos","और फोटो देखें","Charger plus de photos","Cargar más fotos","تحميل المزيد من الصور","Carregar mais fotos","加载更多照片","Mehr Fotos laden"],["Help questions","सहायता प्रश्न","Questions d’aide","Preguntas de ayuda","أسئلة المساعدة","Perguntas de ajuda","帮助问题","Hilfefragen"],["Registration & Resources","पंजीकरण और संसाधन","Inscription et ressources","Registro y recursos","التسجيل والموارد","Inscrição e recursos","注册与资源","Registrierung & Ressourcen"],["Resources & Registration","संसाधन और पंजीकरण","Ressources et inscription","Recursos y registro","الموارد والتسجيل","Recursos e inscrição","资源与注册","Ressourcen & Anmeldung"],["About the Event","इवेंट के बारे में","À propos de l’événement","Sobre el evento","حول الفعالية","Sobre o evento","关于活动","Über die Veranstaltung"]];
+const I18N_MAP=Object.fromEntries(I18N_LOCALES.map((lang,j)=>[
+ lang,new Map(I18N_ROWS.map(row=>[row[0].toLowerCase(),row[j]]))
+]));
+const I18N_TRANSLATION_CACHE=new Map();
+let i18nBrowserTranslator=null,i18nBrowserLang='',i18nTranslationRun=0;
+const i18nSkipSelector='script,style,svg,[translate="no"],.sponsor-dock,.fixed-sponsor-strip,.partner-logo-card,.events-brand-identity,.home-identity,.av,.speaker-portrait,.pn,.pc,.events-brand-name,.home-feature-image,.gallery-grid,.qrbox';
+function translatedLabel(original,lang=S.language){
+ const key=String(original||'').trim().replace(/\s+/g,' ');
+ if(!key||lang==='en')return null;
+ const dict=I18N_MAP[lang];if(!dict)return null;
+ return dict.get(key.toLowerCase())||null;
+}
+function translateAppInPlace(){
+ const lang=S.language||'en';
+ document.documentElement.lang=lang;
+ document.documentElement.dataset.fiataLanguage=lang;
+ if(lang==='en')return;
+ const root=document.getElementById('app');if(!root)return;
+ const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+ const pending=[];
+ let node;
+ while((node=walker.nextNode())){
+   const parent=node.parentElement;
+   if(!parent||parent.closest(i18nSkipSelector))continue;
+   const old=node.nodeValue,source=old.trim().replace(/\s+/g,' ');
+   if(!source||!/[a-zA-Z]/.test(source)||source.length>350)continue;
+   const trans=translatedLabel(source,lang);
+   if(trans){
+     node.nodeValue=old.replace(source,trans);
+     if(lang==='ar'&&/^(SPAN|STRONG|SMALL|LABEL|P|H[1-6]|OPTION)$/.test(parent.tagName))parent.dir='auto';
+   }else if(i18nBrowserTranslator&&i18nBrowserLang===lang&&source.length>3&&source.length<250&&!/^([A-Z]{2,6}|[0-9 .:/+-]+)$/.test(source)){
+     const cacheKey=lang+':'+source;
+     const cached=I18N_TRANSLATION_CACHE.get(cacheKey);
+     if(cached){node.nodeValue=old.replace(source,cached);continue;}
+     if(pending.length<40)pending.push({node,source,old,cacheKey});
+   }
+ }
+ root.querySelectorAll('[placeholder],[title],[aria-label]').forEach(el=>{
+   if(el.closest(i18nSkipSelector))return;
+   for(const attr of ['placeholder','title','aria-label']){
+     const original=el.getAttribute(attr);
+     const output=translatedLabel(original,lang);
+     if(output)el.setAttribute(attr,output);
+   }
+ });
+ if(pending.length){
+   const currentRun=++i18nTranslationRun;
+   (async()=>{
+     for(const task of pending){
+       if(S.language!==lang||currentRun!==i18nTranslationRun||!task.node.isConnected)break;
+       try{
+         const translated=await i18nBrowserTranslator.translate(task.source);
+         if(translated && translated!==task.source){
+           I18N_TRANSLATION_CACHE.set(task.cacheKey,translated);
+           if(S.language===lang&&task.node.isConnected&&task.node.nodeValue===task.old)
+             task.node.nodeValue=task.old.replace(task.source,translated);
+         }
+       }catch(e){}
+     }
+   })();
+ }
+}
+function enableBrowserTranslation(lang){
+ i18nBrowserTranslator=null;i18nBrowserLang='';i18nTranslationRun++;
+ if(lang==='en'||!('Translator' in window))return;
+ try{
+   // Chrome desktop can translate additional event copy on device.
+   Promise.resolve(window.Translator.create({sourceLanguage:'en',targetLanguage:lang==='zh-CN'?'zh':lang}))
+     .then(t=>{
+       if(S.language!==lang){t.destroy?.();return;}
+       i18nBrowserTranslator=t;i18nBrowserLang=lang;translateAppInPlace();
+     }).catch(()=>{});
+ }catch(e){}
+}
+
 /* ===================================================================== RENDER */
 const $app=document.getElementById('app'), $dev=document.getElementById('device');
 let lastScreen='', lastSheet='';
@@ -1644,6 +1724,7 @@ function render(anim){
     if(keep[k] && (isSheet? shk===lastSheet : sk===lastScreen)){e.scrollTop=keep[k][0];e.scrollLeft=keep[k][1];}});
   const sw=$app.querySelector('.sw'); if(sw && shk!==lastSheet) sw.classList.add('in');
   lastScreen=sk; lastSheet=shk;
+  translateAppInPlace();
   const b=$app.querySelector('.bind'); if(b){ const to=b.dataset.to; requestAnimationFrame(()=>requestAnimationFrame(()=>b.style.setProperty('--i',to))); S._pt=+to; }
   if(fid){const el=document.getElementById(fid); if(el){el.focus({preventScroll:true}); if(sel!=null) try{el.setSelectionRange(sel,sel)}catch(e){}}}
   // The device's simulated status bar has been removed; use the OS/browser status bar.
@@ -1892,12 +1973,12 @@ const PROFILE_LANGUAGES=[
 function profileSettingsV(){
  return `<section class="sec profile-settings"><div class="sech"><h3>App Preferences</h3></div>
   <div class="profile-settings-card">
-    <div class="profile-settings-heading">${ic('globe',20,1.8)}<span><strong>Language</strong><small>Choose a language using Google Translate</small></span></div>
-    <label for="profile-language" class="profile-settings-label">Translate with Google</label>
-    <div class="profile-language-select-wrap"><select id="profile-language" data-profile-language aria-label="Translate FIATA Events with Google">
+    <div class="profile-settings-heading">${ic('globe',20,1.8)}<span><strong>Language</strong><small>Translate FIATA Events on this page</small></span></div>
+    <label for="profile-language" class="profile-settings-label">Display language</label>
+    <div class="profile-language-select-wrap"><select id="profile-language" data-profile-language aria-label="Choose a language">
       ${PROFILE_LANGUAGES.map(([code,label])=>`<option value="${code}" ${S.language===code?'selected':''}>${label}</option>`).join('')}
      </select>${ic('down',17,2)}</div>
-    <p class="profile-settings-hint">Languages open through Google Translate in a new tab. Translated interactive screens may vary.</p>
+    <p class="profile-settings-hint">Changes apply immediately without leaving the app.</p>
     <div class="profile-settings-divider"></div>
     <div class="profile-settings-heading">${ic('sun',20,1.8)}<span><strong>Appearance</strong><small>Choose how the app looks on this device</small></span></div>
     <div class="profile-theme-options" role="group" aria-label="Choose color theme">
@@ -2173,11 +2254,8 @@ const A={
    if(!PROFILE_LANGUAGES.some(item=>item[0]===code))return;
    S.language=code;
    try{localStorage.setItem('fiata-language',code);}catch(e){}
-   if(code==='en'){render();toast('English selected');return;}
-   const target='https://translate.google.com/translate?sl=en&tl='+encodeURIComponent(code)+'&u='+encodeURIComponent(window.location.href.split('#')[0]);
-   const opened=window.open(target,'_blank','noopener,noreferrer');
-   // Popup blockers may return null for noopener; leave the app open when this happens.
-   render();toast('Opening Google Translate…','info');
+   enableBrowserTranslation(code);
+   render();
  },
   faqAsk(p){
     const index=Number(p);
@@ -2345,6 +2423,7 @@ document.addEventListener('keydown',e=>{
 
 /* Start the real event journey without desktop prototype shortcuts. */
 render();
+enableBrowserTranslation(S.language);
 const splashT=setTimeout(()=>A.toEvents(),2200);
 </script>
 <script>
