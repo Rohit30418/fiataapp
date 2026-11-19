@@ -1285,6 +1285,88 @@ body{background:var(--bg);overscroll-behavior:none}
 .faq-page-composer input:focus{border-color:#087FBE}
 .faq-page-composer button{display:grid;place-items:center;flex:none;width:44px;height:44px;background:linear-gradient(125deg,#0AB2E6,#0864AD);color:#fff;border-radius:50%}
 
+
+/* Profile language and theme preferences */
+.profile-settings{margin-bottom:20px}
+.profile-settings-card{margin:0 20px;background:var(--card);border:1px solid var(--bd);border-radius:17px;padding:17px;box-shadow:var(--sh)}
+.profile-settings-heading{display:flex;align-items:center;gap:11px;color:#0E7EB9}
+.profile-settings-heading>span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.profile-settings-heading strong{color:var(--tx);font-size:14px;font-weight:750}
+.profile-settings-heading small{font-size:11px;color:var(--tx2);line-height:1.4}
+.profile-settings-label{display:block;margin:15px 0 8px;font-size:11px;font-weight:740;color:var(--tx2)}
+.profile-language-select-wrap{position:relative}
+.profile-language-select-wrap select{appearance:none;-webkit-appearance:none;width:100%;height:48px;padding:0 40px 0 13px;border:1px solid var(--bd);border-radius:12px;background:var(--bg);font-size:13px;color:var(--tx);font-weight:650}
+.profile-language-select-wrap>.ic{position:absolute;top:50%;right:12px;transform:translateY(-50%);pointer-events:none;color:var(--tx2)}
+.profile-settings-hint{font-size:11px;color:var(--tx2);line-height:1.55;margin:10px 0 0}
+.profile-settings-divider{height:1px;background:var(--bd);margin:19px 0 18px}
+.profile-theme-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:13px}
+.profile-theme-options button{display:flex;align-items:center;justify-content:center;gap:8px;height:46px;background:var(--bg);border:1px solid var(--bd);border-radius:12px;color:var(--tx2);font-size:13px;font-weight:700}
+.profile-theme-options button.selected{background:#E4F3FF;border-color:#0084CB;color:#03699F;box-shadow:0 0 0 2px rgba(0,132,203,.11)}
+/* True persistent dark mode for the mobile UI, retaining image/sponsor readability */
+html[data-fiata-theme="dark"]{--bg:#0D1827;--card:#17283B;--tx:#E8F2FB;--tx2:#B2C3D3;--tx3:#8FA7BA;--bd:#2D4255;--blue:#41B7EF;--sh:0 3px 15px rgba(0,0,0,.18)}
+html[data-fiata-theme="dark"] body,
+html[data-fiata-theme="dark"] .stage,
+html[data-fiata-theme="dark"] .device,
+html[data-fiata-theme="dark"] .screen,
+html[data-fiata-theme="dark"] .scroll{background:var(--bg);color:var(--tx)}
+html[data-fiata-theme="dark"] .person,
+html[data-fiata-theme="dark"] .mcard,
+html[data-fiata-theme="dark"] .card,
+html[data-fiata-theme="dark"] .gi,
+html[data-fiata-theme="dark"] .glist,
+html[data-fiata-theme="dark"] .home-menu-list,
+html[data-fiata-theme="dark"] .home-menu-item,
+html[data-fiata-theme="dark"] .home-vote-row,
+html[data-fiata-theme="dark"] .home-action-card.secondary,
+html[data-fiata-theme="dark"] .home-meeting-swipe-card,
+html[data-fiata-theme="dark"] .home-meeting-row,
+html[data-fiata-theme="dark"] .partner-logo-card,
+html[data-fiata-theme="dark"] .auth-card,
+html[data-fiata-theme="dark"] .faq-msg-answer,
+html[data-fiata-theme="dark"] .faq-page-topic,
+html[data-fiata-theme="dark"] .faq-page-composer,
+html[data-fiata-theme="dark"] .faq-conversation,
+html[data-fiata-theme="dark"] .profile-settings-card{background:var(--card);border-color:var(--bd);color:var(--tx)}
+html[data-fiata-theme="dark"] .home-menu-copy strong,
+html[data-fiata-theme="dark"] .home-menu-item strong,
+html[data-fiata-theme="dark"] .home-action-card.secondary strong,
+html[data-fiata-theme="dark"] .person .pn,
+html[data-fiata-theme="dark"] .gi .t,
+html[data-fiata-theme="dark"] .faq-page-topic,
+html[data-fiata-theme="dark"] .home-meeting-card-name strong,
+html[data-fiata-theme="dark"] .partner-section h3{color:var(--tx)}
+html[data-fiata-theme="dark"] .home-vote-row small,
+html[data-fiata-theme="dark"] .home-menu-copy small,
+html[data-fiata-theme="dark"] .person .pc,
+html[data-fiata-theme="dark"] .gi .s{color:var(--tx2)}
+html[data-fiata-theme="dark"] .screen>.bnav.fiata-nav{background:#142538;border-top:1px solid #2D4255}
+html[data-fiata-theme="dark"] .screen>.bnav.fiata-nav::before{background:#17283B}
+html[data-fiata-theme="dark"] .screen>.bnav.fiata-nav .bn:not(.on){color:#A8BBD0}
+html[data-fiata-theme="dark"] .seg{background:#1B3045}
+html[data-fiata-theme="dark"] .seg button{color:#ADC1D2}
+html[data-fiata-theme="dark"] .seg button.on{background:#365370;color:#fff}
+html[data-fiata-theme="dark"] .mgrid div,
+html[data-fiata-theme="dark"] .tchip,
+html[data-fiata-theme="dark"] .lchip{background:#203347;color:var(--tx)}
+html[data-fiata-theme="dark"] input,
+html[data-fiata-theme="dark"] textarea,
+html[data-fiata-theme="dark"] .meeting-select,
+html[data-fiata-theme="dark"] select{background:#122538;border-color:var(--bd);color:#E5F0FA}
+html[data-fiata-theme="dark"] input::placeholder,
+html[data-fiata-theme="dark"] textarea::placeholder{color:#94A9BA}
+html[data-fiata-theme="dark"] .btn.g,
+html[data-fiata-theme="dark"] .connection-email{background:#20364C;border-color:var(--bd);color:var(--tx)}
+html[data-fiata-theme="dark"] .faq-welcome{background:#18314A;border-color:#294963}
+html[data-fiata-theme="dark"] .faq-welcome h2{color:var(--tx)}
+html[data-fiata-theme="dark"] .faq-welcome p{color:var(--tx2)}
+html[data-fiata-theme="dark"] .profile-theme-options button.selected{background:#164467;color:#A8E0FF}
+html[data-fiata-theme="dark"] .gallery-album-head>span{background:#203B51;color:#C5DCEE}
+html[data-fiata-theme="dark"] .home-bottom-note{color:#A9BFD2}
+/* Sponsors and official photos remain on neutral white for accurate logos. */
+html[data-fiata-theme="dark"] .fixed-sponsor-strip,
+html[data-fiata-theme="dark"] .sponsor-dock,
+html[data-fiata-theme="dark"] .partner-logo-card{background:#fff}
+
 </style>
 </head>
 <body>
@@ -1362,6 +1444,8 @@ const POLL = { q:'Which topic interests you most for future sessions?', opts:['D
 
 /* ===================================================================== */
 const I = {
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/>',
+ moon:'<path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5Z"/>',
  chat:'<path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 3v-7.5A7.5 7.5 0 1 1 20 11.5Z"/><path d="M8 11.5h8M8 14.5h5"/>',
  home:'<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
  calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
@@ -1476,7 +1560,7 @@ const phImg=(k)=>{const p=PHG[hash('img'+k)%PHG.length];return `<span class="ph-
 const now=Date.now();
 const S={
   phase:'splash', eventsTab:'active', eventId:null, tab:'home', stack:[], sheet:null, viewer:null,
-  user:null, afterLogin:null, authOpen:false, faqOpen:false, faqHistory:[], faqDraft:'',
+  user:null, afterLogin:null, authOpen:false, theme:'light',language:'en', faqOpen:false, faqHistory:[], faqDraft:'',
   login:{stage:1,reg:'',code:'',err:'',busy:false,resend:0},
   day:0, net:'people', q:{people:'',spk:'',co:'',add:''}, countries:[], draft:[],
   meetings:[{id:'m0',with:'a10',day:1,time:'11:00',loc:'Table 04',note:'Please confirm your availability for this meeting.',status:'pending',dir:'in',demo:1}],
@@ -1484,6 +1568,13 @@ const S={
   prefs:{push:true,email:true}, ratings:{}, vote:{sel:null,done:false,busy:false},
   req:null, openCats:{0:true}, galMore:{}, hl:null,
 };
+try{
+  const theme=localStorage.getItem('fiata-theme');
+  const language=localStorage.getItem('fiata-language');
+  if(theme==='dark'||theme==='light')S.theme=theme;
+  if(language)S.language=language;
+}catch(e){}
+document.documentElement.setAttribute('data-fiata-theme',S.theme);
 
 /* ===================================================================== RENDER */
 const $app=document.getElementById('app'), $dev=document.getElementById('device');
@@ -1781,6 +1872,26 @@ function exploreV(){
 }
 const resList=()=>RESOURCES.map(r=>`<button class="res press" data-a="res" data-p="${r.id}"><span class="tint ${r.kind==='pdf'?'t-red':'t-blue'}">${ic(r.icon,19)}</span><span class="grow"><div class="t">${r.t}</div><div class="s">${r.s}</div></span><span class="kind ${r.kind}">${r.kind==='pdf'?'PDF':'LINK'}</span><span class="chev">${ic(r.kind==='pdf'?'right':'ext',16,2)}</span></button>`).join('');
 
+const PROFILE_LANGUAGES=[
+  ['en','English'],['hi','हिन्दी (Hindi)'],['fr','Français'],['es','Español'],['ar','العربية'],['pt','Português'],['zh-CN','中文 (简体)'],['de','Deutsch']
+];
+function profileSettingsV(){
+ return `<section class="sec profile-settings"><div class="sech"><h3>App Preferences</h3></div>
+  <div class="profile-settings-card">
+    <div class="profile-settings-heading">${ic('globe',20,1.8)}<span><strong>Language</strong><small>Choose a language using Google Translate</small></span></div>
+    <label for="profile-language" class="profile-settings-label">Translate with Google</label>
+    <div class="profile-language-select-wrap"><select id="profile-language" data-profile-language aria-label="Translate FIATA Events with Google">
+      ${PROFILE_LANGUAGES.map(([code,label])=>`<option value="${code}" ${S.language===code?'selected':''}>${label}</option>`).join('')}
+     </select>${ic('down',17,2)}</div>
+    <p class="profile-settings-hint">Languages open through Google Translate in a new tab. Translated interactive screens may vary.</p>
+    <div class="profile-settings-divider"></div>
+    <div class="profile-settings-heading">${ic('sun',20,1.8)}<span><strong>Appearance</strong><small>Choose how the app looks on this device</small></span></div>
+    <div class="profile-theme-options" role="group" aria-label="Choose color theme">
+      <button class="${S.theme==='light'?'selected':''}" aria-pressed="${S.theme==='light'}" data-a="setTheme" data-p="light">${ic('sun',19,1.9)} Light</button>
+      <button class="${S.theme==='dark'?'selected':''}" aria-pressed="${S.theme==='dark'}" data-a="setTheme" data-p="dark">${ic('moon',19,1.9)} Dark</button>
+    </div>
+  </div></section>`;
+}
 function profileV(){
   const u=S.user, e=ev();
   if(!u) return tabbed(`<div class="scroll" data-k="pr">${tabTitle('Profile','Your digital event pass')}
@@ -1799,6 +1910,7 @@ function profileV(){
      <div class="gi"><span class="tint t-navy">${ic('mail',18)}</span><span class="grow"><div class="s">Email ID</div><div class="t" style="font-size:14px">${esc(u.em)}</div></span></div>
      <div class="gi"><span class="tint t-navy">${ic('phone',18)}</span><span class="grow"><div class="s">Mobile Number</div><div class="t" style="font-size:14px">${esc(u.ph)}</div></span></div>
    </div></section>
+   ${profileSettingsV()}
    <section class="sec" style="margin-bottom:28px"><div class="sech"><h3>Account</h3></div><div class="glist">
      <button class="gi" data-a="push" data-p="notifs"><span class="tint t-blue">${ic('bell',19)}</span><span class="grow"><div class="t">Notifications</div><div class="s">Messages & email preferences</div></span><span class="chev">${ic('right',18,2)}</span></button>
      <button class="gi" data-a="confirm" data-p="logout"><span class="tint t-navy">${ic('logout',19)}</span><span class="grow"><div class="t">Logout</div></span><span class="chev">${ic('right',18,2)}</span></button>
@@ -2036,6 +2148,23 @@ function requireLogin(fn,destination){
 function notify(m){ S.notifs.unshift({id:'n'+Date.now(),m,t:Date.now()}); }
 let resendTimer;
 const A={
+ setTheme(mode){
+   if(!['light','dark'].includes(mode))return;
+   S.theme=mode;
+   document.documentElement.setAttribute('data-fiata-theme',mode);
+   try{localStorage.setItem('fiata-theme',mode);}catch(e){}
+   render();toast(mode==='dark'?'Dark appearance enabled':'Light appearance enabled');
+ },
+ setLanguage(code){
+   if(!PROFILE_LANGUAGES.some(item=>item[0]===code))return;
+   S.language=code;
+   try{localStorage.setItem('fiata-language',code);}catch(e){}
+   if(code==='en'){render();toast('English selected');return;}
+   const target='https://translate.google.com/translate?sl=en&tl='+encodeURIComponent(code)+'&u='+encodeURIComponent(window.location.href.split('#')[0]);
+   const opened=window.open(target,'_blank','noopener,noreferrer');
+   // Popup blockers may return null for noopener; leave the app open when this happens.
+   render();toast('Opening Google Translate…','info');
+ },
   faqToggle(){push('help');},
   faqAsk(p){
     const item=FAQ_ENTRIES[Number(p)];if(!item)return;
@@ -2196,6 +2325,8 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('input',e=>{ const k=e.target.dataset&&e.target.dataset.in; if(k&&IN[k]) IN[k](e.target.value); });
 document.addEventListener('change',e=>{
+  const lang=e.target.closest?.('select[data-profile-language]');
+  if(lang&&$dev.contains(lang)){A.setLanguage(lang.value);return;}
   const select=e.target.closest?.('select[data-meeting-select]');
   if(!select || !$dev.contains(select) || !S.req) return;
   if(select.dataset.meetingSelect==='date') A.rDay(select.value);
