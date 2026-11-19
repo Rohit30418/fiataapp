@@ -1310,7 +1310,7 @@ const speakerPortrait=(speaker,size=56,large=false)=>{
   const flag=iso?String.fromCodePoint(...iso.toUpperCase().split('').map(c=>c.charCodeAt(0)+127397)):'';
   return `<span class="speaker-portrait ${large?'speaker-portrait-lg':''}" style="width:${size}px;height:${size}px">
     ${av(speaker.n,size)}
-    ${iso?`<span class="speaker-flag" title="Sample country: ${esc(country)}" aria-label="Sample ${esc(country)} flag"><span class="speaker-flag-fallback" aria-hidden="true">${flag}</span><img src="https://flagcdn.com/w40/${iso}.png" alt="" loading="lazy" onerror="this.remove()"></span>`:''}
+    ${iso?`<span class="speaker-flag" title="${esc(country)}" aria-label="${esc(country)} flag"><span class="speaker-flag-fallback" aria-hidden="true">${flag}</span><img src="https://flagcdn.com/w40/${iso}.png" alt="" loading="lazy" onerror="this.remove()"></span>`:''}
   </span>`;
 };
 const byId=(arr,id)=>arr.find(x=>x.id===id);
@@ -1345,7 +1345,7 @@ function qr(seed,size=168){
   return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="Registration QR code">${r}${fnd(0,0)}${fnd(n-7,0)}${fnd(0,n-7)}</svg>`;
 }
 const PHG=[['#0A2540','#0077C8'],['#0b3a6c','#22B8F0'],['#164e63','#2BC4C9'],['#1e293b','#475569'],['#0077C8','#7dd3fc'],['#312e81','#0077C8']];
-const phImg=(k,label=true)=>{const p=PHG[hash('img'+k)%PHG.length];return `<span class="ph-img" style="background:linear-gradient(${hash(k)%180}deg,${p[0]},${p[1]})">${ic('image',24,1.5).replace('class="ic"','class="ic pi"')}${label?'<span class="pl">PLACEHOLDER</span>':''}</span>`};
+const phImg=(k)=>{const p=PHG[hash('img'+k)%PHG.length];return `<span class="ph-img" style="background:linear-gradient(${hash(k)%180}deg,${p[0]},${p[1]})">${ic('image',24,1.5).replace('class="ic"','class="ic pi"')}</span>`};
 
 /* ===================================================================== STATE */
 const now=Date.now();
@@ -1710,7 +1710,7 @@ function voteV(){
   if(!S.user) body=gate('Sign in to vote','Voting is available to registered delegates.');
   else body=`<div class="pad"><div class="qh">${esc(POLL.q)}</div>
      ${POLL.opts.map((o,i)=>`<button class="opt ${v.sel===i?'on':''} ${v.done?'lock':''}" data-a="opt" data-p="${i}" role="radio" aria-checked="${v.sel===i}"><span class="rd"></span><span style="font-weight:600;font-size:15px;flex:1">${o}</span>${v.done&&v.sel===i?ic('check',18,2.4):''}</button>`).join('')}
-     ${v.done?`<div class="msg o">${ic('check',16,2.4)}<span>Your vote has been recorded. Thank you for taking part.</span></div>`: v.err?`<div class="msg e">${ic('alert',16,2)}<span>${esc(v.err)}</span></div>`:''}</div>`;
+     ${v.done?`<div class="msg o">${ic('check',16,2.4)}<span>Your response has been saved in this preview.</span></div>`: v.err?`<div class="msg e">${ic('alert',16,2)}<span>${esc(v.err)}</span></div>`:''}</div>`;
   return `<div class="screen">${phdr('Vote')}<div class="scroll" data-k="vote"><div class="pad inner-intro"><p class="tiny">${esc(ev().short)}</p></div>${body}</div>
    ${S.user&&!v.done?`<div class="foot"><button class="btn p" data-a="submitVote" ${v.busy?'disabled':''}>${v.busy?'<span class="spin"></span>':'Submit Vote'}</button></div>`:''}</div>`;
 }
@@ -1748,7 +1748,9 @@ function sheetView(){
      m.dir==='in'&&m.status==='pending'?`<button class="btn dg" data-a="mtgAct" data-p="reject:${m.id}">Reject</button><button class="btn p" data-a="mtgAct" data-p="accept:${m.id}">Accept</button>`
      : m.dir==='out'?`<a class="btn g" style="text-decoration:none" href="mailto:${a.em}" data-a="mail" data-p="${a.id}">${ic('mail',17)} Email</a><button class="btn dg" data-a="confirm" data-p="delMtg:${m.id}">${ic('trash',17)} Delete</button>`:`<button class="btn g" data-a="closeSheet">Close</button>`); }
   else if(t==='addConn') inner=sheetShell('<h3>Add Connection</h3>',`<label class="search" style="margin-bottom:10px">${ic('search',18,2)}<input id="qa" data-in="qadd" placeholder="Search delegates" value="${esc(S.q.add)}" autocomplete="off"></label><div data-region="add">${addList()}</div>`);
-  else if(t==='pdf') inner=sheetShell(`<h3 style="font-size:17px">${esc(p)}</h3>`,`<div class="pdfp"><div class="pg"><i style="width:60%;height:10px;background:#CFDDEA"></i><i></i><i style="width:90%"></i><i style="width:80%"></i><i></i><i style="width:70%"></i><i style="width:85%;margin-top:10px"></i><i style="width:75%"></i></div></div><div class="msg i">${ic('info',16,2)}<span>The live app opens the PDF supplied in the event record in this viewer. No document is attached to this prototype.</span></div>`,`<button class="btn g" data-a="closeSheet">Close</button><button class="btn p" data-a="toastInfo" data-p="Download starts from the source document in the live app">${ic('download',17,2)} Download</button>`);
+  else if(t==='pdf') inner=sheetShell(`<h3 style="font-size:17px">${esc(p)}</h3>`,
+    `<div class="empty"><div class="eic">${ic('fileText',23)}</div><h4>Document unavailable</h4><p>This document has not been published for this event.</p></div>`,
+    `<button class="btn g" data-a="closeSheet">Close</button>`);
   else if(t==='confirm') inner=confirmSheet(p);
   return `<div class="sw" role="dialog" aria-modal="true"><div class="scrim" data-a="closeSheet"></div><div class="sheet">${inner}</div></div>`;
 }
@@ -1796,7 +1798,7 @@ function confirmSheet(p){
     delConn:['trash','t-red','Remove connection?',`${byId(ATTENDEES,id)?.n||''} will be removed from My Connection.`,'Remove','d'],
     delMtg:['trash','t-red','Delete meeting request?','The meeting request will be withdrawn and the location released.','Delete','d'],
   }[k];
-  return `<div class="grab"></div><div class="sbody" style="text-align:center;padding-top:18px"><span class="tint ${C[1]}" style="width:56px;height:56px;border-radius:18px;margin:0 auto 14px">${ic(C[0],26)}</span><h3 style="font-size:20px;font-weight:800">${C[2]}</h3><p class="muted" style="margin:6px auto 0;max-width:290px">${esc(C[3])}</p>${k==='delAcc'?`<div class="msg w" style="text-align:left">${ic('shield',16,2)}<span>Prototype: confirming simulates the result only. No account is deleted.</span></div>`:''}</div>
+  return `<div class="grab"></div><div class="sbody" style="text-align:center;padding-top:18px"><span class="tint ${C[1]}" style="width:56px;height:56px;border-radius:18px;margin:0 auto 14px">${ic(C[0],26)}</span><h3 style="font-size:20px;font-weight:800">${C[2]}</h3><p class="muted" style="margin:6px auto 0;max-width:290px">${esc(C[3])}</p>${k==='delAcc'?`<div class="msg w" style="text-align:left">${ic('shield',16,2)}<span>Account deletion is unavailable in this preview.</span></div>`:''}</div>
   <div class="sfoot" style="border:0"><button class="btn g" data-a="closeSheet">Cancel</button><button class="btn ${C[5]}" data-a="doConfirm" data-p="${p}">${C[4]}</button></div>`;
 }
 function viewerView(){
@@ -1804,7 +1806,7 @@ function viewerView(){
   const [g,i]=S.viewer;
   return `<div class="viewer" role="dialog" aria-label="Photo viewer"><div class="vbar"><button class="ibtn" data-a="closeViewer" aria-label="Close">${ic('x',24,2)}</button><span style="font-weight:600;font-size:14px">${GALLERY[g].d} · ${i+1} / ${GALLERY[g].k}</span><span style="width:44px"></span></div>
    <div class="vimg"><button class="ibtn" style="position:absolute;left:6px;z-index:2;color:#fff" data-a="vNav" data-p="-1" aria-label="Previous">${ic('left',26,2)}</button>${phImg(g+'-'+i)}<button class="ibtn" style="position:absolute;right:6px;z-index:2;color:#fff" data-a="vNav" data-p="1" aria-label="Next">${ic('right',26,2)}</button></div>
-   <div class="vfoot"><button class="btn" data-a="toastInfo" data-p="Download saves the original event photo in the live app">${ic('download',18,2)} Download</button><button class="btn" data-a="share">${ic('share',18,2)} Share</button></div></div>`;
+   <div class="vfoot"><button class="btn" data-a="toastInfo" data-p="Photo download is not available yet">${ic('download',18,2)} Download</button><button class="btn" data-a="share">${ic('share',18,2)} Share</button></div></div>`;
 }
 
 /* ===================================================================== ACTIONS */
@@ -1883,11 +1885,11 @@ const A={
    L.err='';L.busy=true;render();
    setTimeout(()=>{
      if(!S.authOpen)return;
-     L.busy=false;S.user={n:'Demo Delegate',c:'Sample Forwarding Co.',co:'India',reg:L.reg.toUpperCase(),em:'delegate@example.com',ph:'+91 00000 00000'};
+     L.busy=false;S.user={n:'Event Delegate',c:'Freight Forwarding Co.',co:'India',reg:L.reg.toUpperCase(),em:'delegate@example.com',ph:'+91 00000 00000'};
      clearInterval(resendTimer);
      const go=S.afterLogin;S.afterLogin=null;S.authOpen=false;
      if(go)go();else {S.tab='home';S.stack=[];render('fade');}
-     toast('Signed in · Demo Delegate');
+     toast('Signed in');
    },900);
  },
  resetSearch(){ S.q.people=''; S.countries=[]; render(); },
@@ -1921,13 +1923,13 @@ const A={
  doConfirm(p){ const [k,id]=p.split(':');
    closeSheet(()=>{
      if(k==='logout'){ S.user=null; S.tab='home'; S.stack=[]; render('fade'); toast('You have been logged out','info'); }
-     else if(k==='delAcc'){ render(); toast('Prototype: deletion simulated — no account was deleted','info'); }
+     else if(k==='delAcc'){ render(); toast('Account deletion is unavailable','info'); }
      else if(k==='delConn'){ S.conns=S.conns.filter(x=>x!==id); render(); toast('Connection removed','info'); }
      else if(k==='delMtg'){ S.meetings=S.meetings.filter(x=>x.id!==id); render(); toast('Meeting request deleted','info'); }
    }); },
  addConn(id){ S.conns.push(id); render(); toast(byId(ATTENDEES,id).n+' added to My Connection'); },
  opt(i){ S.vote.sel=+i; S.vote.err=''; render(); },
- submitVote(){ const v=S.vote; if(v.sel==null){v.err='Select an option before submitting your vote.';return render();} v.busy=true;render(); setTimeout(()=>{v.busy=false;v.done=true;render();toast('Vote recorded');},800); },
+ submitVote(){ const v=S.vote; if(v.sel==null){v.err='Select an option before submitting your vote.';return render();} v.busy=true;render(); setTimeout(()=>{v.busy=false;v.done=true;render();toast('Response saved in preview');},800); },
  cat(i){ S.openCats[i]=!S.openCats[i]; render(); },
  galMore(i){ S.galMore[i]=!S.galMore[i]; render(); },
  view(p){ S.viewer=p.split(':').map(Number); render(); },
@@ -1935,7 +1937,7 @@ const A={
  closeViewer(){ S.viewer=null; render(); },
  share(){ if(navigator.share){ navigator.share({title:'FIATA Events photo',text:'Photo from '+ev().name}).catch(()=>{}); } else toast('Share sheet opens with the original photo in the live app','info'); },
  res(id){ const r=byId(RESOURCES,id); if(r.url){ if(r.kind==='pdf') openSheet('pdf',r.t); else window.open(r.url,'_blank','noopener'); return; }
-   if(r.kind==='pdf') openSheet('pdf',r.t); else toast(`${r.t} opens the URL from the event record`,'info'); },
+   if(r.kind==='pdf') openSheet('pdf',r.t); else toast('This resource is not available yet','info'); },
  toastInfo(m){ toast(m,'info'); },
  pref(k){ S.prefs[k]=!S.prefs[k]; render(); toast(`${k==='push'?'Notifications':'Email notifications'} ${S.prefs[k]?'on':'off'}`,'info'); },
  delNotif(id){ S.notifs=S.notifs.filter(n=>n.id!==id); render(); toast('Notification deleted','info'); },
