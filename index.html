@@ -1410,7 +1410,54 @@ html[data-fiata-theme="dark"] .help-accordion-chevron{background:#203A50;color:#
 @media(prefers-reduced-motion:reduce){.help-accordion-chevron{transition:none}}
 
 </style>
-  <link rel="stylesheet" href="./agenda-redesign.css">
+  <style>
+/* Inlined from agenda-redesign.css: self-contained page */
+/* FIATA schedule refresh: clean date selector, cards and sponsor accordions */
+.agenda-scroll{background:#F7F8FA;color:#111827;font-family:'Plus Jakarta Sans',system-ui,sans-serif;overscroll-behavior-y:contain}
+.agenda-date-sticky{position:sticky;top:0;z-index:12;background:#F7F8FA;padding:12px 16px 10px;border-bottom:1px solid #ECEFF4}
+.agenda-month{font-size:12px;font-weight:700;color:#6B7280;margin:0 0 8px 2px}
+.agenda-day-row{display:flex;align-items:center;gap:4px;height:62px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity}
+.agenda-day-row::-webkit-scrollbar{display:none}
+.agenda-day{flex:1 0 0;min-width:0;height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;border-radius:14px;background:transparent;color:#9CA3AF;cursor:pointer;scroll-snap-align:center;text-align:center}
+.agenda-day-row.is-long .agenda-day{flex:0 0 64px}
+.agenda-dow{font-size:12px;font-weight:600;line-height:1.2;text-transform:uppercase}
+.agenda-num{font-size:17px;font-weight:700;line-height:1.2}
+.agenda-day.is-selected{background:#147BC1;color:#fff}
+.agenda-day:focus-visible,.agenda-session-card:focus-visible{outline:2px solid #147BC1;outline-offset:2px}
+.agenda-session-list{display:flex;flex-direction:column;gap:12px;padding:16px 16px 4px;min-width:0;touch-action:pan-y}
+.agenda-session-card{display:flex;flex-direction:column;gap:9px;min-width:0;width:100%;border:1px solid #E9EDF2;border-radius:15px;background:#fff;box-shadow:0 2px 12px rgba(16,24,40,.035);padding:16px;text-align:left;color:#111827;cursor:pointer;overflow:hidden}
+.agenda-session-card.agenda-now{background:#F0F8FF;border-color:#147BC1}
+.agenda-session-title{font-size:16px;font-weight:650;line-height:1.4;color:#111827;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.agenda-session-meta{font-size:12px;line-height:1.45;color:#6B7280;font-weight:500;white-space:normal;overflow-wrap:anywhere}
+.agenda-session-speakers{display:flex;align-items:center;gap:9px;min-width:0;height:27px}
+.agenda-avatar-stack{display:inline-flex;align-items:center;flex:none;padding-left:3px}
+.agenda-avatar-stack>.av,.agenda-avatar-stack>span{margin-left:-3px;border:2px solid #fff;border-radius:50%;flex:none}
+.agenda-speaker-names{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:#6B7280}
+.agenda-empty{font-size:14px;color:#6B7280;text-align:center;padding:40px 10px}
+.agenda-sponsor-footer{border-top:1px solid #ECEFF3;margin:25px 16px;padding:18px 0 10px}
+.agenda-sponsor-footer h2{font-size:14px;font-weight:650;color:#6B7280;margin-bottom:12px}
+.agenda-sponsor-logos{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.agenda-sponsor-logos img{width:78px;height:46px;padding:6px;object-fit:contain;background:#fff;border:1px solid #E9EDF2;border-radius:9px}
+.agenda-detail{padding:24px 20px 35px;background:#F7F8FA;color:#111827;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.agenda-detail h1{font-size:24px;font-weight:750;line-height:1.28;overflow-wrap:anywhere}
+.agenda-detail-time{font-size:14px;color:#6B7280;line-height:1.6;margin:13px 0 25px}
+.agenda-detail-box{margin-bottom:23px}.agenda-detail-box h2{font-size:13px;font-weight:700;color:#6B7280;margin-bottom:9px}.agenda-detail-box p{font-size:15px;color:#111827;line-height:1.65}
+.agenda-detail-speaker{display:flex;align-items:center;gap:11px;width:100%;min-width:0;padding:11px 0;border-bottom:1px solid #E9EDF2;text-align:left}
+.agenda-detail-speaker>span:last-child{display:flex;flex-direction:column;gap:4px;min-width:0}
+.agenda-detail-speaker strong{font-size:14px;color:#111827}.agenda-detail-speaker small{font-size:12px;color:#6B7280;white-space:normal}
+.agenda-rate-btn{border-radius:13px;text-align:center;background:#147BC1;color:#fff;width:100%;padding:14px 16px;font-weight:700;margin-top:8px}.agenda-rate-btn:disabled{cursor:not-allowed;color:#9CA3AF;background:#E5E7EB}.agenda-rate-hint{color:#6B7280;font-size:12px;text-align:center;margin-top:10px}
+.sponsor-accordion{margin:12px 18px;border:1px solid var(--bd);border-radius:15px;background:var(--card);overflow:hidden;box-shadow:var(--sh)}
+.sponsor-accordion summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;min-height:60px;padding:16px}
+.sponsor-accordion summary::-webkit-details-marker{display:none}
+.sponsor-accordion summary strong{font-size:14px;color:var(--tx);flex:1}
+.sponsor-accordion-count{font-size:12px;color:var(--tx2)}
+.sponsor-accordion-caret{width:10px;height:10px;border-bottom:2px solid #8BA0B4;border-right:2px solid #8BA0B4;transform:rotate(45deg);transition:transform .15s;margin-right:5px;margin-top:-5px}
+.sponsor-accordion[open] .sponsor-accordion-caret{transform:rotate(225deg);margin-top:5px}
+.sponsor-accordion-content{padding:3px 16px 16px;border-top:1px solid var(--bd)}
+.sponsor-accordion .partner-logo-grid{padding-top:13px}.sponsor-accordion .partner-logo-card{display:flex;flex-direction:column;gap:10px}
+.sponsor-accordion-empty{font-size:12px;color:var(--tx2);padding:16px 0 2px}
+@media(max-width:360px){.agenda-day-row{gap:0}.agenda-day .agenda-num{font-size:16px}}
+</style>
 </head>
 <body>
 <div class="stage">
@@ -2654,6 +2701,145 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
 })();
 
 </script>
-  <script src="./agenda-redesign.js"></script>
+  <script>
+/* Inlined from agenda-redesign.js: self-contained page */
+/* FIATA agenda redesign: additive enhancement, preserving existing app data and routes. */
+(function(){
+  if(!SESSIONS.some(s=>s.id==='demo-d4-1')){
+    SESSIONS.push(
+      {id:'demo-d4-1',d:3,t:'09:00',e:'10:00',ti:'Morning Coffee & Networking',rm:'Foyer',brk:1},
+      {id:'demo-d4-2',d:3,t:'10:00',e:'11:30',ti:'Digital Transformation in Global Freight and Logistics',rm:'Main Hall',sp:['s2','s5'],ds:'Practical strategies for using technology to improve freight operations and collaboration.'},
+      {id:'demo-d4-3',d:3,t:'11:45',e:'12:45',ti:'Emerging Trade Corridors',rm:'Room 1',sp:['s4','s8'],ds:'An exploration of new routes, customs approaches, and opportunities for supply chains.'},
+      {id:'demo-d4-4',d:3,t:'12:45',e:'14:00',ti:'Lunch Break',rm:'Terrace',brk:1},
+      {id:'demo-d4-5',d:3,t:'14:00',e:'15:00',ti:'Collaborative Closing Discussion',rm:'Main Hall',sp:['s1'],ds:'Closing discussion, action points, and a review of key themes.'}
+    );
+  }
+  function dateAt(index){
+    const d=DAYS[index],year=Number((ev().date.match(/20\d{2}/)||['2026'])[0]);
+    const monthToken=(d.label.match(/[A-Za-z]+/)||['Oct'])[0];
+    const month=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'].indexOf(monthToken.slice(0,3).toLowerCase());
+    return new Date(year,month<0?9:month,Number(d.num));
+  }
+  function times(s){
+    const d=dateAt(s.d),a=s.t.split(':').map(Number),b=s.e.split(':').map(Number);
+    return [new Date(d.getFullYear(),d.getMonth(),d.getDate(),a[0],a[1]).getTime(),
+      new Date(d.getFullYear(),d.getMonth(),d.getDate(),b[0],b[1]).getTime()];
+  }
+  const started=s=>Date.now()>=times(s)[0];
+  const running=s=>{const [a,b]=times(s),n=Date.now();return n>=a&&n<b};
+  agendaV=function(){
+    const month=dateAt(S.day).toLocaleDateString('en-US',{month:'long',year:'numeric'});
+    const items=SESSIONS.filter(s=>s.d===S.day);
+    return tabbed(`<div class="scroll agenda-scroll" data-k="ag">
+      ${tabTitle('Agenda',esc(ev().name))}
+      <div class="agenda-date-sticky">
+        <div class="agenda-month">${esc(month)}</div>
+        <div class="agenda-day-row ${DAYS.length>5?'is-long':''}" data-k="days" role="tablist" aria-label="Event dates">
+          ${DAYS.map((d,i)=>`<button type="button" role="tab" aria-selected="${S.day===i}" class="agenda-day ${S.day===i?'is-selected':''}" data-a="day" data-p="${i}" aria-label="${esc(d.dow)} ${esc(d.label)}">
+            <span class="agenda-dow">${esc(d.dow)}</span><span class="agenda-num">${Number(d.num)}</span>
+          </button>`).join('')}
+        </div>
+      </div>
+      <div class="agenda-session-list" data-day="${S.day}" aria-label="Sessions for ${esc(DAYS[S.day].label)}">
+        ${items.length?items.map(s=>{
+          const speakers=(s.sp||[]).map(x=>byId(SPEAKERS,x)).filter(Boolean);
+          return `<button type="button" class="agenda-session-card ${running(s)?'agenda-now':''}" data-a="push" data-p="sessionDetail:${s.id}" aria-label="${esc(s.ti)}, ${esc(s.t)} to ${esc(s.e)}, ${esc(s.rm)}">
+            <span class="agenda-session-title">${esc(s.ti)}</span>
+            <span class="agenda-session-meta">${esc(s.t)} – ${esc(s.e)} · ${esc(s.rm)}</span>
+            ${speakers.length?`<span class="agenda-session-speakers">
+              <span class="agenda-avatar-stack">${speakers.slice(0,3).map(x=>av(x.n,26)).join('')}</span>
+              <span class="agenda-speaker-names">${esc(speakers.map(x=>x.n).join(', '))}</span>
+            </span>`:''}
+          </button>`;
+        }).join(''):`<p class="agenda-empty">No sessions scheduled for this day.</p>`}
+      </div>
+    </div>`);
+  };
+  // Open Agenda as the real FIATA full-screen page: one date selector and
+  // ordinary session cards only. The date tabs aren't search/filter controls.
+  PV.agenda=function(){
+    return agendaV()
+      .replace(tabTitle('Agenda',esc(ev().name)),'')
+      .replace('<div class="screen"><div class="scroll agenda-scroll"',
+        `<div class="screen">${phdr('Agenda')}<div class="scroll agenda-scroll"`)
+      .replace(navV(),'');
+  };
+  PV.sessionDetail=function(id){
+    const s=byId(SESSIONS,id);
+    if(!s)return `<div class="screen">${phdr('Session Details')}<div class="scroll agenda-detail"><p>Session not found.</p></div></div>`;
+    const people=(s.sp||[]).map(x=>byId(SPEAKERS,x)).filter(Boolean),r=S.ratings[id],canRate=started(s);
+    const date=dateAt(s.d).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+    return `<div class="screen">${phdr('Session Details')}<div class="scroll agenda-detail" data-k="session-${id}">
+      <h1>${esc(s.ti)}</h1>
+      <p class="agenda-detail-time">${esc(date)} · ${s.t} – ${s.e}</p>
+      <section class="agenda-detail-box"><h2>Room</h2><p>${esc(s.rm)}</p></section>
+      <section class="agenda-detail-box"><h2>About this session</h2><p>${esc(s.ds||'No further description is available for this session.')}</p></section>
+      ${people.length?`<section class="agenda-detail-box"><h2>Speakers</h2>
+        ${people.map(x=>`<button class="agenda-detail-speaker" data-a="push" data-p="speaker:${x.id}">${av(x.n,40)}<span><strong>${esc(x.n)}</strong><small>${esc(x.r)} · ${esc(x.c)}</small></span></button>`).join('')}
+        </section>`:''}
+      ${!s.brk?`<button class="agenda-rate-btn" data-a="rate" data-p="${id}" ${canRate?'':'disabled aria-disabled="true"'}>${r?'Rated '+r.v+'/5':'Rate Session'}</button>
+        ${canRate?'':`<p class="agenda-rate-hint">Rating is available once the session starts.</p>`}`:''}
+    </div></div>`;
+  };
+  PV.sponsors=function(){
+    const categories=new Map();
+    SOURCE_SPONSOR_LOGOS.forEach(l=>{
+      const name=(l.category||'Category to be confirmed').trim()||'Category to be confirmed';
+      if(!categories.has(name))categories.set(name,[]);
+      categories.get(name).push(l);
+    });
+    SPONSOR_CATS.forEach(c=>{if(!categories.has(c.n))categories.set(c.n,[])});
+    return `<div class="screen">${phdr('Sponsors & Partners')}<div class="scroll" data-k="sps">
+      <div class="partner-page-intro"><h2>Sponsors & Partners</h2><p>Explore sponsors by category</p></div>
+      ${Array.from(categories,([name,logos],i)=>`<details class="sponsor-accordion" ${i===0?'open':''}>
+        <summary><strong>${esc(name)}</strong><span class="sponsor-accordion-count">${logos.length} ${logos.length===1?'logo':'logos'}</span><span class="sponsor-accordion-caret" aria-hidden="true"></span></summary>
+        <div class="sponsor-accordion-content">
+          ${logos.length?`<div class="partner-logo-grid">${logos.map(l=>`<div class="partner-logo-card"><img src="${l.image}" alt="${esc(l.name)}" loading="lazy"><span class="sponsor-logo-name">${esc(l.name)}</span></div>`).join('')}</div>`:`<p class="sponsor-accordion-empty">No sponsor logos assigned yet.</p>`}
+        </div>
+      </details>`).join('')}
+    </div></div>`;
+  };
+  A.day=function(p){
+    const next=Number(p);if(!Number.isInteger(next)||next<0||next>=DAYS.length)return;
+    S.day=next;render();const sc=$app.querySelector('[data-k="ag"]');if(sc)sc.scrollTop=0;
+  };
+  const originalRate=A.rate;
+  A.rate=function(id){
+    const s=byId(SESSIONS,id);
+    if(!s||s.brk)return;
+    if(!started(s)){toast('You can rate this session after it starts.','info');return;}
+    return originalRate.call(A,id);
+  };
+  A.sesFromSpk=function(id){const s=byId(SESSIONS,id);if(!s)return;S.day=s.d;closeSheet(()=>push('sessionDetail',id))};
+  // Card list swipe changes dates, but scrolling the list vertically still works.
+  let sx=null,sy=null;
+  document.addEventListener('touchstart',e=>{
+    if(!e.target.closest('.agenda-session-list')||e.touches.length!==1)return;
+    sx=e.touches[0].clientX;sy=e.touches[0].clientY;
+  },{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(sx===null||!e.changedTouches.length)return;
+    const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;sy=null;
+    if(Math.abs(dx)>55 && Math.abs(dx)>Math.abs(dy)*1.35)A.day(S.day+(dx<0?1:-1));
+  },{passive:true});
+  const oldRender=render;
+  render=function(anim){
+    oldRender(anim);
+    const page=topS()?.n;
+    // Agenda uses the identical animated sponsor strip as other FIATA pages.
+    // Keep the session detail screen distraction-free as before.
+    if(page==='sessionDetail'){
+      const root=$app.querySelector('.screen');
+      root?.querySelector('.fixed-sponsor-strip')?.remove();
+      root?.classList.remove('has-fixed-sponsors');
+    }
+    const strip=$app.querySelector('.agenda-day-row'),selected=strip?.querySelector('.is-selected');
+    if(strip&&selected&&DAYS.length>5){
+      requestAnimationFrame(()=>strip.scrollTo({left:strip.scrollLeft + selected.getBoundingClientRect().left - strip.getBoundingClientRect().left - (strip.clientWidth-selected.offsetWidth)/2,behavior:'smooth'}));
+    }
+  };
+  render();
+})();
+</script>
 </body>
 </html>
