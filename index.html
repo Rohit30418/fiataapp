@@ -1671,6 +1671,58 @@ try{
 }catch(e){}
 document.documentElement.setAttribute('data-fiata-theme',S.theme);
 
+/* Keep preview sign-in on this device until the delegate explicitly logs out.
+   Never store the one-time code or password in localStorage. */
+const FIATA_LOGIN_SESSION_KEY='fiata-login-session-v1';
+const FIATA_SESSION_TABS=['home','agenda','speakers','network','gallery','explore','profile'];
+const FIATA_SESSION_NETWORK=['people','meetings','conns'];
+function saveLoginSession(){
+  if(!S.user || !EVENTS.some(event=>event.id===S.eventId))return;
+  const reg=String(S.user.reg||'').trim().toUpperCase();
+  if(!/^[A-Z0-9-]{4,120}$/.test(reg))return;
+  try{
+    localStorage.setItem(FIATA_LOGIN_SESSION_KEY,JSON.stringify({
+      version:1,reg,eventId:S.eventId,
+      tab:FIATA_SESSION_TABS.includes(S.tab)?S.tab:'home',
+      net:FIATA_SESSION_NETWORK.includes(S.net)?S.net:'people'
+    }));
+  }catch(e){/* Browser storage may be blocked; in-page sign-in still works. */}
+}
+function clearLoginSession(){
+  try{localStorage.removeItem(FIATA_LOGIN_SESSION_KEY);}catch(e){}
+}
+function restoreLoginSession(){
+  try{
+    const raw=localStorage.getItem(FIATA_LOGIN_SESSION_KEY);
+    if(!raw)return;
+    const saved=JSON.parse(raw);
+    if(!saved || saved.version!==1 || typeof saved.reg!=='string' ||
+       !/^[A-Z0-9-]{4,120}$/.test(saved.reg) ||
+       !EVENTS.some(event=>event.id===saved.eventId)){
+      clearLoginSession();return;
+    }
+    // This is a local-only preview login; a real deployment needs a server-validated session.
+    S.user={n:'Event Delegate',c:'Freight Forwarding Co.',co:'India',
+      reg:saved.reg,em:'delegate@example.com',ph:'+91 00000 00000'};
+    S.eventId=saved.eventId;
+    setEventContext(S.eventId);
+    S.tab=FIATA_SESSION_TABS.includes(saved.tab)?saved.tab:'home';
+    S.net=FIATA_SESSION_NETWORK.includes(saved.net)?saved.net:'people';
+    S.phase='app';
+    S.stack=[];S.authOpen=false;S.afterLogin=null;
+  }catch(e){clearLoginSession();}
+}
+restoreLoginSession();
+// A logout in another tab signs this tab out as well.
+window.addEventListener('storage',function(event){
+  if(event.key!==FIATA_LOGIN_SESSION_KEY || event.newValue!==null || !S.user)return;
+  S.user=null;S.authOpen=false;S.afterLogin=null;
+  S.sheet=null;S.viewer=null;S.stack=[];S.tab='home';
+  S.login={stage:1,reg:'',code:'',err:'',busy:false,resend:0};
+  render('fade');
+});
+
+
 /* In-page localization: stable interface copy translated without leaving FIATA.
    Official event names and other proper nouns remain in their published language.
    Chrome's optional on-device Translator supplements this dictionary on desktop. */
@@ -1757,6 +1809,8 @@ const $app=document.getElementById('app'), $dev=document.getElementById('device'
 let lastScreen='', lastSheet='';
 function screenKey(){ if(S.authOpen) return 'auth:login'; if(S.phase!=='app') return S.phase; const t=S.stack[S.stack.length-1]; return t? 'p:'+t.n+':'+(t.p||'') : 't:'+S.tab; }
 function render(anim){
+  // Remember the selected event and main page while signed in.
+  if(S.user)saveLoginSession();
   const sk=screenKey(), shk=S.sheet?S.sheet.t+':'+(S.sheet.p||''):'';
   const keep={}; $app.querySelectorAll('[data-k]').forEach(e=>keep[e.dataset.k]=[e.scrollTop,e.scrollLeft]);
   const ae=document.activeElement, fid=ae&&ae.id&&$app.contains(ae)?ae.id:null; let sel=null; try{sel=ae.selectionStart}catch(e){}
@@ -2460,7 +2514,7 @@ const A={
  confirm(p){ const go=()=>openSheet('confirm',p); S.sheet? closeSheet(go):go(); },
  doConfirm(p){ const [k,id]=p.split(':');
    closeSheet(()=>{
-     if(k==='logout'){ S.user=null; S.tab='home'; S.stack=[]; S.helpExpanded=null; render('fade'); toast('You have been logged out','info'); }
+     if(k==='logout'){ clearLoginSession(); S.user=null; S.authOpen=false; S.afterLogin=null; S.login={stage:1,reg:'',code:'',err:'',busy:false,resend:0}; S.tab='home'; S.stack=[]; S.helpExpanded=null; render('fade'); toast('You have been logged out','info'); }
      else if(k==='delAcc'){ render(); toast('Account deletion is unavailable','info'); }
      else if(k==='delConn'){ S.conns=S.conns.filter(x=>x!==id); render(); toast('Connection removed','info'); }
      else if(k==='delMtg'){ S.meetings=S.meetings.filter(x=>x.id!==id); render(); toast('Meeting request deleted','info'); }
