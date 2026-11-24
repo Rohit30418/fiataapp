@@ -1458,6 +1458,43 @@ html[data-fiata-theme="dark"] .help-accordion-chevron{background:#203A50;color:#
 .sponsor-accordion-empty{font-size:12px;color:var(--tx2);padding:16px 0 2px}
 @media(max-width:360px){.agenda-day-row{gap:0}.agenda-day .agenda-num{font-size:16px}}
 </style>
+<style>
+/* Profile editor and meeting calendar */
+.profile-identity{display:flex;align-items:center;gap:14px;padding:14px 20px 4px}
+.profile-identity>div{flex:1;min-width:0}
+.profile-identity h2{font-size:22px;line-height:1.2;font-weight:800;overflow-wrap:anywhere}
+.profile-identity p{color:#c9dfef;margin-top:4px;overflow-wrap:anywhere}
+.edit-profile-avatar{width:72px;height:72px;flex:none;border:2px solid rgba(255,255,255,.7);border-radius:50%;display:grid;place-items:center;position:relative;overflow:hidden;background:#e0edf8;color:#0a416f;font-size:24px;font-weight:800}
+.edit-profile-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.profile-edit-action{display:flex;align-items:center;justify-content:center;gap:7px;margin:12px 20px 4px;padding:10px 14px;width:calc(100% - 40px);border:1px solid rgba(255,255,255,.35);border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-weight:700}
+.profile-edit-page{padding:18px 20px 28px}
+.profile-edit-form{display:grid;gap:16px}
+.profile-edit-photo{display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--bd);background:var(--card);border-radius:16px}
+.profile-edit-photo .edit-profile-avatar{width:76px;height:76px;border-color:var(--bd)}
+.profile-edit-photo-actions{min-width:0;display:grid;gap:5px;flex:1}
+.profile-edit-photo-actions small,.profile-edit-hint{color:var(--tx2);font-size:12px;line-height:1.5}
+.profile-photo-picker{display:block;font-size:12px;width:100%;min-width:0;color:var(--tx)}
+.profile-photo-picker::file-selector-button{border:1px solid var(--bd);background:var(--bg);color:var(--tx);padding:7px 9px;border-radius:8px;font:inherit;cursor:pointer}
+.profile-edit-remove{color:var(--blue);font-weight:700;font-size:12px;min-height:30px}
+.profile-edit-fields{display:grid;gap:13px;padding:16px;background:var(--card);border:1px solid var(--bd);border-radius:16px}
+.profile-edit-fields label{display:grid;gap:6px;font-weight:700;font-size:13px;min-width:0}
+.profile-edit-fields input{min-width:0;background:var(--card);color:var(--tx)}
+.profile-edit-fields input[readonly]{background:var(--bg);color:var(--tx2)}
+.profile-edit-error{font-size:13px;color:var(--err);overflow-wrap:anywhere}
+.profile-edit-error:empty{display:none}
+.meeting-calendar{margin:16px 20px 4px}
+.meeting-calendar-head{display:flex;align-items:center;gap:7px;margin-bottom:9px;color:var(--tx2);font-size:12px;font-weight:750}
+.meeting-calendar-head small{margin-left:auto;font-size:11px;font-weight:600}
+.meeting-calendar-row{display:flex;gap:7px;overflow-x:auto;padding:2px 1px 6px;scrollbar-width:thin}
+.meeting-date-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:1 0 58px;min-height:76px;padding:8px 5px;border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx2);text-align:center}
+.meeting-date-tile .meeting-dow{font-size:10px;line-height:1.15;text-transform:uppercase;font-weight:750;white-space:nowrap}
+.meeting-date-tile .meeting-number{font-size:20px;line-height:1.15;color:var(--tx);font-weight:800}
+.meeting-date-tile .meeting-count{font-size:10px;line-height:1.15;white-space:nowrap}
+.meeting-date-tile.is-active{border-color:var(--blue);box-shadow:inset 0 -3px 0 var(--blue);color:var(--blue)}
+.meeting-date-tile.is-active .meeting-number{color:var(--blue)}
+.meeting-date-tile:focus-visible,.profile-edit-action:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+@media(max-width:360px){.meeting-calendar{margin-left:14px;margin-right:14px}.meeting-date-tile{flex-basis:54px}.profile-edit-page{padding-left:14px;padding-right:14px}.profile-identity{gap:10px}.profile-identity h2{font-size:20px}}
+</style>
 </head>
 <body>
 <div class="stage">
@@ -2057,7 +2094,7 @@ function meetingsList(){
 }
 function meetCard(m){
   const a=byId(ATTENDEES,m.with);
-  return `<div class="mcard ${m.status==='rejected'?'rej':''}" ${S.hl===m.id?'style="box-shadow:0 0 0 2px var(--blue),var(--sh)"':''}>
+  return `<div data-mid="${esc(m.id)}" class="mcard ${m.status==='rejected'?'rej':''}" ${S.hl===m.id?'style="box-shadow:0 0 0 2px var(--blue),var(--sh)"':''}>
    <div class="meeting-card-content"><div class="mtop">${av(a.n,44)}<div class="pm"><div class="dir">${m.dir==='in'?'Received':'Sent'}</div><div style="font-weight:700;font-size:15px">${esc(a.n)}</div><div class="tiny">${esc(a.c)}</div></div></div>
    <div style="margin-top:10px">${stPill(m.status)}</div>
    <div class="mgrid"><div><small>Date</small><b>${DAYS[m.day].label}</b></div><div><small>Time</small><b>${m.time}</b></div><div><small>Location</small><b>${esc(m.loc.replace('Meeting ',''))}</b></div></div>
@@ -2892,6 +2929,124 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
       requestAnimationFrame(()=>strip.scrollTo({left:strip.scrollLeft + selected.getBoundingClientRect().left - strip.getBoundingClientRect().left - (strip.clientWidth-selected.offsetWidth)/2,behavior:'smooth'}));
     }
   };
+  render();
+})();
+</script>
+<script>
+(function(){
+  const fields=[['n','Full name','text',100,'name'],['c','Company','text',120,'organization'],['co','Country','text',100,'country-name'],['em','Email ID','email',160,'email'],['ph','Mobile number','tel',40,'tel']];
+  const key=u=>'fiata-preview-profile-v1:'+encodeURIComponent(String(u.reg).toUpperCase());
+  const photoOK=v=>typeof v==='string'&&v.length<=220000&&/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(v);
+  let activeUser=null,draft=null,photoRequest=0,photoBusy=false,photoError='';
+  function loadUser(){
+    if(activeUser===S.user)return;
+    activeUser=S.user;draft=null;photoRequest++;photoBusy=false;photoError='';S.meetingDay='all';
+    if(!activeUser)return;
+    try{
+      const saved=JSON.parse(localStorage.getItem(key(activeUser))||'null');
+      if(!saved)return;
+      for(const [k,,,max] of fields)if(typeof saved[k]==='string'&&saved[k].length<=max)activeUser[k]=saved[k];
+      if(photoOK(saved.photo))activeUser.photo=saved.photo;
+    }catch(e){}
+  }
+  const avatar=u=>`<span class="edit-profile-avatar">${esc(initials(u.n||'Delegate'))}${photoOK(u.photo)?`<img src="${esc(u.photo)}" alt="" onerror="this.remove()">`:''}</span>`;
+  const oldProfile=profileV;
+  profileV=function(){
+    const html=oldProfile();
+    if(!S.user)return html;
+    const u=S.user;
+    return html.replace('<div class="nm"><h2>'+esc(u.n)+'</h2><p>'+esc(u.c)+'</p></div>',()=>`<div class="profile-identity">${avatar(u)}<div><h2>${esc(u.n)}</h2><p>${esc(u.c)}</p></div></div><button class="profile-edit-action" data-a="editProfile">${ic('note',17,2)} Edit Profile</button>`);
+  };
+  A.editProfile=function(){
+    if(!S.user)return;
+    draft={...S.user};photoRequest++;photoBusy=false;photoError='';push('editProfile');
+  };
+  PV.editProfile=function(){
+    if(!S.user||!draft)return `<div class="screen">${phdr('Edit Profile')}</div>`;
+    return `<div class="screen">${phdr('Edit Profile')}<div class="scroll profile-edit-page" data-k="edit-profile"><form class="profile-edit-form" data-profile-form>
+      <div class="profile-edit-photo"><div data-edit-avatar>${avatar(draft)}</div><div class="profile-edit-photo-actions"><strong>Profile photo</strong><small>JPG, PNG or WebP, up to 10 MB.</small><input type="file" class="profile-photo-picker" data-profile-photo accept="image/jpeg,image/png,image/webp" aria-label="Choose profile photo"><button type="button" class="profile-edit-remove" data-a="removeProfilePhoto" ${draft.photo?'':'hidden'}>Remove photo</button></div></div>
+      <div class="profile-edit-fields">${fields.map(([k,label,type,max,auto])=>`<label>${esc(label)}<input class="inp" name="${k}" type="${type}" maxlength="${max}" autocomplete="${auto}" value="${esc(draft[k]||'')}" ${['n','c','co'].includes(k)?'required':''}></label>`).join('')}<label>Registration No.<input class="inp" value="${esc(S.user.reg)}" readonly></label></div>
+      <p class="profile-edit-hint">Registration number cannot be changed. Profile changes are saved in this browser only, not synced with the event directory.</p><p class="profile-edit-error" data-profile-error role="alert">${esc(photoError)}</p>
+      <button type="submit" class="btn p" data-profile-save ${photoBusy?'disabled':''}>Save Changes</button><button type="button" class="btn g" data-a="cancelProfile">Cancel</button>
+      </form></div></div>`;
+  };
+  function updatePhotoControls(){
+    const form=$app.querySelector('[data-profile-form]');if(!form||!draft)return;
+    form.querySelector('[data-edit-avatar]').innerHTML=avatar(draft);
+    form.querySelector('[data-a="removeProfilePhoto"]').hidden=!draft.photo&&!photoBusy;
+    form.querySelector('[data-profile-save]').disabled=photoBusy;
+    form.querySelector('[data-profile-error]').textContent=photoError;
+  }
+  document.addEventListener('input',e=>{
+    const input=e.target;
+    if(draft&&input.closest?.('[data-profile-form]')&&fields.some(f=>f[0]===input.name))draft[input.name]=input.value;
+  });
+  document.addEventListener('change',e=>{
+    const input=e.target.closest?.('[data-profile-photo]');
+    if(!input||!$dev.contains(input)||!S.user||!draft)return;
+    const file=input.files?.[0];if(!file)return;
+    const request=++photoRequest,owner=S.user,editing=draft;
+    const current=()=>photoRequest===request&&S.user===owner&&draft===editing&&topS()?.n==='editProfile';
+    photoBusy=false;photoError='';
+    if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>10*1024*1024){photoError='Choose a JPG, PNG or WebP image up to 10 MB.';input.value='';updatePhotoControls();return;}
+    photoBusy=true;updatePhotoControls();
+    const url=URL.createObjectURL(file),img=new Image();
+    img.onload=()=>{
+      try{
+        if(!current())return;
+        const side=Math.min(img.naturalWidth,img.naturalHeight);if(!side)throw Error('Invalid image');
+        const canvas=document.createElement('canvas');canvas.width=canvas.height=320;
+        const ctx=canvas.getContext('2d');if(!ctx)throw Error('No canvas');
+        ctx.fillStyle='#fff';ctx.fillRect(0,0,320,320);
+        ctx.drawImage(img,(img.naturalWidth-side)/2,(img.naturalHeight-side)/2,side,side,0,0,320,320);
+        const photo=canvas.toDataURL('image/jpeg',.82);if(!photoOK(photo))throw Error('Invalid photo');
+        draft.photo=photo;
+      }catch(err){if(current())photoError='Could not process the photo. Choose another image.';}
+      finally{URL.revokeObjectURL(url);if(current()){photoBusy=false;input.value='';updatePhotoControls();}}
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);if(current()){photoBusy=false;photoError='Could not read the photo. Choose another image.';input.value='';updatePhotoControls();}};
+    img.src=url;
+  });
+  A.removeProfilePhoto=function(){
+    if(!draft||!S.user)return;
+    photoRequest++;photoBusy=false;photoError='';draft.photo='';
+    const input=$app.querySelector('[data-profile-photo]');if(input)input.value='';updatePhotoControls();
+  };
+  A.cancelProfile=function(){draft=null;photoRequest++;photoBusy=false;photoError='';A.back();};
+  document.addEventListener('submit',e=>{
+    const form=e.target;
+    if(!form.matches?.('[data-profile-form]')||!$dev.contains(form))return;
+    e.preventDefault();if(!draft||!S.user||photoBusy)return;
+    const data={};
+    for(const [k] of fields)data[k]=form.elements[k].value.trim();
+    if(!data.n||!data.c||!data.co){photoError='Enter your name, company and country.';updatePhotoControls();return;}
+    data.photo=photoOK(draft.photo)?draft.photo:'';
+    let stored=true;try{localStorage.setItem(key(S.user),JSON.stringify(data));}catch(err){stored=false;}
+    Object.assign(S.user,data);A.cancelProfile();toast(stored?'Profile saved on this device':'Profile updated for this session only',stored?'ok':'info');
+  });
+  S.meetingDay='all';
+  meetingsList=function(){
+    const all=S.meetings.filter(m=>Number.isInteger(m.day)&&DAYS[m.day]).slice().sort((a,b)=>a.day-b.day||a.time.localeCompare(b.time));
+    const selected=DAYS[S.meetingDay]?S.meetingDay:'all',list=selected==='all'?all:all.filter(m=>m.day===selected);
+    const tile=(k,d,count)=>`<button type="button" class="meeting-date-tile ${selected===k?'is-active':''}" data-a="meetingDay" data-p="${k}" aria-pressed="${selected===k}" aria-label="${esc(d?d.label:'All dates')}, ${count} meetings"><span class="meeting-dow">${d?esc(d.dow):'All dates'}</span><span class="meeting-number">${d?esc(d.num):ic('calendar',20,2)}</span><span class="meeting-count">${d?esc(d.label.split(' ').slice(1).join(' '))+' · ':''}${count}</span></button>`;
+    const filter=`<section class="meeting-calendar"><div class="meeting-calendar-head">${ic('calendar',16,2)}<span>Meeting dates</span><small>${list.length} ${list.length===1?'meeting':'meetings'}</small></div><div class="meeting-calendar-row" data-k="meeting-dates" role="group" aria-label="Filter meetings by date">${tile('all',null,all.length)}${DAYS.map((d,i)=>tile(i,d,all.filter(m=>m.day===i).length)).join('')}</div></section>`;
+    if(!list.length)return filter+`<div class="card empty" style="margin:16px 20px"><div class="eic">${ic('calPlus',22)}</div><h4>${all.length?'No meetings on this date':'No meetings yet'}</h4><p>${all.length?'Choose another date to view your meeting requests.':'Requests you send or receive will appear here, grouped by day.'}</p>${all.length?'<button class="btn s sm" data-a="meetingDay" data-p="all">Show all dates</button>':'<button class="btn p sm" data-a="net" data-p="people">Find a delegate</button>'}</div>`;
+    let out='',day=-1;
+    for(const m of list){if(m.day!==day){day=m.day;out+=`<div class="mdate">${esc(DAYS[day].label)} · ${esc(DAYS[day].dow)} ${esc(DAYS[day].num)}</div>`;}out+=meetCard(m);}
+    return filter+out+'<div style="height:20px"></div>';
+  };
+  A.meetingDay=function(p){
+    const next=p==='all'?'all':Number(p);if(next!=='all'&&(!Number.isInteger(next)||!DAYS[next]))return;
+    S.meetingDay=next;S.hl=null;render();
+  };
+  const oldContext=setEventContext;
+  setEventContext=function(id){S.meetingDay='all';return oldContext(id);};
+  const oldHomeMeeting=A.homeMeeting;
+  A.homeMeeting=function(id){S.meetingDay='all';return oldHomeMeeting(id);};
+  const oldSubmitReq=A.submitReq;
+  A.submitReq=function(){S.meetingDay='all';return oldSubmitReq();};
+  const oldRender=render;
+  render=function(anim){loadUser();if(draft&&topS()?.n!=='editProfile'){draft=null;photoRequest++;photoBusy=false;photoError='';}return oldRender(anim);};
   render();
 })();
 </script>
