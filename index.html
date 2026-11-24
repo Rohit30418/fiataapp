@@ -1476,10 +1476,6 @@ html[data-fiata-theme="dark"] .help-accordion-chevron{background:#203A50;color:#
 .profile-photo-picker{display:block;font-size:12px;width:100%;min-width:0;color:var(--tx)}
 .profile-photo-picker::file-selector-button{border:1px solid var(--bd);background:var(--bg);color:var(--tx);padding:7px 9px;border-radius:8px;font:inherit;cursor:pointer}
 .profile-edit-remove{color:var(--blue);font-weight:700;font-size:12px;min-height:30px}
-.profile-edit-fields{display:grid;gap:13px;padding:16px;background:var(--card);border:1px solid var(--bd);border-radius:16px}
-.profile-edit-fields label{display:grid;gap:6px;font-weight:700;font-size:13px;min-width:0}
-.profile-edit-fields input{min-width:0;background:var(--card);color:var(--tx)}
-.profile-edit-fields input[readonly]{background:var(--bg);color:var(--tx2)}
 .profile-edit-error{font-size:13px;color:var(--err);overflow-wrap:anywhere}
 .profile-edit-error:empty{display:none}
 .meeting-calendar{margin:16px 20px 4px}
@@ -2934,7 +2930,6 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
 </script>
 <script>
 (function(){
-  const fields=[['n','Full name','text',100,'name'],['c','Company','text',120,'organization'],['co','Country','text',100,'country-name'],['em','Email ID','email',160,'email'],['ph','Mobile number','tel',40,'tel']];
   const key=u=>'fiata-preview-profile-v1:'+encodeURIComponent(String(u.reg).toUpperCase());
   const photoOK=v=>typeof v==='string'&&v.length<=220000&&/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(v);
   let activeUser=null,draft=null,photoRequest=0,photoBusy=false,photoError='';
@@ -2945,8 +2940,9 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
     try{
       const saved=JSON.parse(localStorage.getItem(key(activeUser))||'null');
       if(!saved)return;
-      for(const [k,,,max] of fields)if(typeof saved[k]==='string'&&saved[k].length<=max)activeUser[k]=saved[k];
       if(photoOK(saved.photo))activeUser.photo=saved.photo;
+      // Discard legacy locally edited identity details; preserve the photo only.
+      if(Object.keys(saved).some(k=>k!=='photo'))localStorage.setItem(key(activeUser),JSON.stringify({photo:photoOK(saved.photo)?saved.photo:''}));
     }catch(e){}
   }
   const avatar=u=>`<span class="edit-profile-avatar">${esc(initials(u.n||'Delegate'))}${photoOK(u.photo)?`<img src="${esc(u.photo)}" alt="" onerror="this.remove()">`:''}</span>`;
@@ -2955,19 +2951,18 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
     const html=oldProfile();
     if(!S.user)return html;
     const u=S.user;
-    return html.replace('<div class="nm"><h2>'+esc(u.n)+'</h2><p>'+esc(u.c)+'</p></div>',()=>`<div class="profile-identity">${avatar(u)}<div><h2>${esc(u.n)}</h2><p>${esc(u.c)}</p></div></div><button class="profile-edit-action" data-a="editProfile">${ic('note',17,2)} Edit Profile</button>`);
+    return html.replace('<div class="nm"><h2>'+esc(u.n)+'</h2><p>'+esc(u.c)+'</p></div>',()=>`<div class="profile-identity">${avatar(u)}<div><h2>${esc(u.n)}</h2><p>${esc(u.c)}</p></div></div><button class="profile-edit-action" data-a="editProfile">${ic('note',17,2)} Edit Profile Photo</button>`);
   };
   A.editProfile=function(){
     if(!S.user)return;
-    draft={...S.user};photoRequest++;photoBusy=false;photoError='';push('editProfile');
+    draft={n:S.user.n,photo:photoOK(S.user.photo)?S.user.photo:''};photoRequest++;photoBusy=false;photoError='';push('editProfile');
   };
   PV.editProfile=function(){
-    if(!S.user||!draft)return `<div class="screen">${phdr('Edit Profile')}</div>`;
-    return `<div class="screen">${phdr('Edit Profile')}<div class="scroll profile-edit-page" data-k="edit-profile"><form class="profile-edit-form" data-profile-form>
+    if(!S.user||!draft)return `<div class="screen">${phdr('Edit Profile Photo')}</div>`;
+    return `<div class="screen">${phdr('Edit Profile Photo')}<div class="scroll profile-edit-page" data-k="edit-profile"><form class="profile-edit-form" data-profile-form>
       <div class="profile-edit-photo"><div data-edit-avatar>${avatar(draft)}</div><div class="profile-edit-photo-actions"><strong>Profile photo</strong><small>JPG, PNG or WebP, up to 10 MB.</small><input type="file" class="profile-photo-picker" data-profile-photo accept="image/jpeg,image/png,image/webp" aria-label="Choose profile photo"><button type="button" class="profile-edit-remove" data-a="removeProfilePhoto" ${draft.photo?'':'hidden'}>Remove photo</button></div></div>
-      <div class="profile-edit-fields">${fields.map(([k,label,type,max,auto])=>`<label>${esc(label)}<input class="inp" name="${k}" type="${type}" maxlength="${max}" autocomplete="${auto}" value="${esc(draft[k]||'')}" ${['n','c','co'].includes(k)?'required':''}></label>`).join('')}<label>Registration No.<input class="inp" value="${esc(S.user.reg)}" readonly></label></div>
-      <p class="profile-edit-hint">Registration number cannot be changed. Profile changes are saved in this browser only, not synced with the event directory.</p><p class="profile-edit-error" data-profile-error role="alert">${esc(photoError)}</p>
-      <button type="submit" class="btn p" data-profile-save ${photoBusy?'disabled':''}>Save Changes</button><button type="button" class="btn g" data-a="cancelProfile">Cancel</button>
+      <p class="profile-edit-hint">Only your profile photo can be changed. All registration and contact details are read-only. Your photo is saved in this browser only.</p><p class="profile-edit-error" data-profile-error role="alert">${esc(photoError)}</p>
+      <button type="submit" class="btn p" data-profile-save ${photoBusy?'disabled':''}>Save Photo</button><button type="button" class="btn g" data-a="cancelProfile">Cancel</button>
       </form></div></div>`;
   };
   function updatePhotoControls(){
@@ -2977,10 +2972,6 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
     form.querySelector('[data-profile-save]').disabled=photoBusy;
     form.querySelector('[data-profile-error]').textContent=photoError;
   }
-  document.addEventListener('input',e=>{
-    const input=e.target;
-    if(draft&&input.closest?.('[data-profile-form]')&&fields.some(f=>f[0]===input.name))draft[input.name]=input.value;
-  });
   document.addEventListener('change',e=>{
     const input=e.target.closest?.('[data-profile-photo]');
     if(!input||!$dev.contains(input)||!S.user||!draft)return;
@@ -3017,12 +3008,9 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
     const form=e.target;
     if(!form.matches?.('[data-profile-form]')||!$dev.contains(form))return;
     e.preventDefault();if(!draft||!S.user||photoBusy)return;
-    const data={};
-    for(const [k] of fields)data[k]=form.elements[k].value.trim();
-    if(!data.n||!data.c||!data.co){photoError='Enter your name, company and country.';updatePhotoControls();return;}
-    data.photo=photoOK(draft.photo)?draft.photo:'';
+    const data={photo:photoOK(draft.photo)?draft.photo:''};
     let stored=true;try{localStorage.setItem(key(S.user),JSON.stringify(data));}catch(err){stored=false;}
-    Object.assign(S.user,data);A.cancelProfile();toast(stored?'Profile saved on this device':'Profile updated for this session only',stored?'ok':'info');
+    S.user.photo=data.photo;A.cancelProfile();toast(stored?'Profile photo saved on this device':'Profile photo updated for this session only',stored?'ok':'info');
   });
   S.meetingDay='all';
   meetingsList=function(){
