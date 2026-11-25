@@ -2930,7 +2930,7 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
   let activeUser=null,draft=null,photoRequest=0,photoBusy=false,photoError='';
   function loadUser(){
     if(activeUser===S.user)return;
-    activeUser=S.user;draft=null;photoRequest++;photoBusy=false;photoError='';S.meetingDay='all';
+    activeUser=S.user;draft=null;photoRequest++;photoBusy=false;photoError='';S.meetingDay=0;
     if(!activeUser)return;
     try{
       const saved=JSON.parse(localStorage.getItem(key(activeUser))||'null');
@@ -3007,27 +3007,27 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
     let stored=true;try{localStorage.setItem(key(S.user),JSON.stringify(data));}catch(err){stored=false;}
     S.user.photo=data.photo;A.cancelProfile();toast(stored?'Profile photo saved on this device':'Profile photo updated for this session only',stored?'ok':'info');
   });
-  S.meetingDay='all';
+  S.meetingDay=0;
   meetingsList=function(){
     const all=S.meetings.filter(m=>Number.isInteger(m.day)&&DAYS[m.day]).slice().sort((a,b)=>a.day-b.day||a.time.localeCompare(b.time));
-    const selected=DAYS[S.meetingDay]?S.meetingDay:'all',list=selected==='all'?all:all.filter(m=>m.day===selected);
-    const tile=(k,d)=>`<button type="button" class="meeting-date-tile ${selected===k?'is-active':''}" data-a="meetingDay" data-p="${k}" aria-pressed="${selected===k}">${esc(d?d.label:'All Dates')}</button>`;
-    const filter=`<section class="meeting-calendar"><div class="meeting-calendar-head">${ic('calendar',16,2)}<span>Meeting dates</span></div><div class="meeting-calendar-row" data-k="meeting-dates" role="group" aria-label="Filter meetings by date">${tile('all',null)}${DAYS.map((d,i)=>tile(i,d)).join('')}</div></section>`;
-    if(!list.length)return filter+`<div class="card empty" style="margin:16px 20px"><div class="eic">${ic('calPlus',22)}</div><h4>${all.length?'No meetings on this date':'No meetings yet'}</h4><p>${all.length?'Choose another date to view your meeting requests.':'Requests you send or receive will appear here, grouped by day.'}</p>${all.length?'<button class="btn s sm" data-a="meetingDay" data-p="all">Show all dates</button>':'<button class="btn p sm" data-a="net" data-p="people">Find a delegate</button>'}</div>`;
+    const selected=Number.isInteger(S.meetingDay)&&DAYS[S.meetingDay]?S.meetingDay:0,list=all.filter(m=>m.day===selected);
+    const tile=(k,d)=>`<button type="button" class="meeting-date-tile ${selected===k?'is-active':''}" data-a="meetingDay" data-p="${k}" aria-pressed="${selected===k}">${esc(d.label)}</button>`;
+    const filter=`<section class="meeting-calendar"><div class="meeting-calendar-head">${ic('calendar',16,2)}<span>Meeting dates</span></div><div class="meeting-calendar-row" data-k="meeting-dates" role="group" aria-label="Filter meetings by date">${DAYS.map((d,i)=>tile(i,d)).join('')}</div></section>`;
+    if(!list.length)return filter+`<div class="card empty" style="margin:16px 20px"><div class="eic">${ic('calPlus',22)}</div><h4>${all.length?'No meetings on this date':'No meetings yet'}</h4><p>${all.length?'Choose another date to view your meeting requests.':'Requests you send or receive will appear here, grouped by day.'}</p>${all.length?'':'<button class="btn p sm" data-a="net" data-p="people">Find a delegate</button>'}</div>`;
     let out='',day=-1;
     for(const m of list){if(m.day!==day){day=m.day;out+=`<div class="mdate">${esc(DAYS[day].label)} · ${esc(DAYS[day].dow)} ${esc(DAYS[day].num)}</div>`;}out+=meetCard(m);}
     return filter+out+'<div style="height:20px"></div>';
   };
   A.meetingDay=function(p){
-    const next=p==='all'?'all':Number(p);if(next!=='all'&&(!Number.isInteger(next)||!DAYS[next]))return;
+    const next=Number(p);if(!Number.isInteger(next)||!DAYS[next])return;
     S.meetingDay=next;S.hl=null;render();
   };
   const oldContext=setEventContext;
-  setEventContext=function(id){S.meetingDay='all';return oldContext(id);};
+  setEventContext=function(id){S.meetingDay=0;return oldContext(id);};
   const oldHomeMeeting=A.homeMeeting;
-  A.homeMeeting=function(id){S.meetingDay='all';return oldHomeMeeting(id);};
+  A.homeMeeting=function(id){const meeting=S.meetings.find(m=>m.id===id);S.meetingDay=meeting&&DAYS[meeting.day]?meeting.day:0;return oldHomeMeeting(id);};
   const oldSubmitReq=A.submitReq;
-  A.submitReq=function(){S.meetingDay='all';return oldSubmitReq();};
+  A.submitReq=function(){if(Number.isInteger(S.req?.day)&&DAYS[S.req.day])S.meetingDay=S.req.day;return oldSubmitReq();};
   const oldRender=render;
   render=function(anim){loadUser();if(draft&&topS()?.n!=='editProfile'){draft=null;photoRequest++;photoBusy=false;photoError='';}return oldRender(anim);};
   render();
