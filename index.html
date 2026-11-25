@@ -596,7 +596,7 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 .home-text-action{display:inline-flex;align-items:center;gap:1px;color:#0878BD;font-size:12px;font-weight:750;min-height:36px;white-space:nowrap}
 .home-actions,.home-meeting-section,.home-discover-section{padding:0 20px;margin-top:22px}
 .home-actions{margin-top:19px}
-.home-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.home-action-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .home-action-card{min-height:119px;border-radius:17px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;gap:7px;position:relative;text-align:left;box-shadow:0 2px 9px rgba(13,49,77,.045)}
 .home-action-card.primary{background:#0A3D66;color:#fff}
 .home-action-card.secondary{background:#fff;border:1px solid #E4EBF2;color:var(--tx)}
@@ -1486,6 +1486,18 @@ html[data-fiata-theme="dark"] .help-accordion-chevron{background:#203A50;color:#
 .meeting-date-tile:focus-visible,.profile-edit-action:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 @media(max-width:360px){.meeting-calendar{margin-left:14px;margin-right:14px}.meeting-date-tile{min-width:48px;padding-inline:8px}.profile-edit-page{padding-left:14px;padding-right:14px}.profile-identity{gap:10px}.profile-identity h2{font-size:20px}}
 </style>
+<style>
+/* Three equal Home quick actions; icons above short labels on narrow screens. */
+.home-actions .home-action-grid{gap:8px}
+.home-actions .home-action-card{min-width:0;min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:10px 7px;border-radius:14px;text-align:center}
+.home-actions .home-action-card .action-icon{width:32px;height:32px;border-radius:9px}
+.home-actions .home-action-card .action-icon svg{width:20px;height:20px}
+.home-actions .home-action-card strong{font-size:12px;line-height:1.2;letter-spacing:0;white-space:normal;overflow-wrap:normal}
+.home-actions .home-action-card .action-arrow{right:6px;top:7px}
+.home-actions .home-action-card .action-arrow svg{width:11px;height:11px}
+@media(min-width:480px){.home-actions .home-action-card{min-height:92px}.home-actions .home-action-card strong{font-size:14px}}
+@media(max-width:340px){.home-actions .home-action-grid{gap:6px}.home-actions .home-action-card{padding:9px 4px}.home-actions .home-action-card strong{font-size:11px}.home-actions .home-action-card .action-arrow{display:none}}
+</style>
 </head>
 <body>
 <div class="stage">
@@ -1997,8 +2009,9 @@ function homeV(){
    </section>
    <section class="home-actions"><div class="home-section-head"><h2>Quick access</h2></div>
      <div class="home-action-grid">
-       <button class="home-action-card primary press" data-a="tab" data-p="agenda"><div class="action-icon">${ic('calendar',23,1.9)}</div><span class="action-arrow">${ic('arrowUR',18,2)}</span><div><strong>Agenda</strong><small>Sessions & schedule</small></div></button>
-       <button class="home-action-card secondary press" data-a="goNet" data-p="people"><div class="action-icon">${ic('users',23,1.9)}</div><span class="action-arrow">${ic('arrowUR',18,2)}</span><div><strong>Find delegates</strong><small>Connect & meet</small></div></button>
+       <button class="home-action-card primary press" data-a="tab" data-p="agenda"><div class="action-icon">${ic('calendar',23,1.9)}</div><span class="action-arrow">${ic('arrowUR',18,2)}</span><div><strong>Agenda</strong></div></button>
+       <button class="home-action-card secondary press" data-a="goNet" data-p="people"><div class="action-icon">${ic('users',23,1.9)}</div><span class="action-arrow">${ic('arrowUR',18,2)}</span><div><strong>Find Delegates</strong></div></button>
+       <button class="home-action-card secondary press" data-a="push" data-p="vote" aria-label="Vote"><div class="action-icon">${ic('vote',23,1.9)}</div><span class="action-arrow">${ic('arrowUR',18,2)}</span><div><strong>Vote</strong></div></button>
      </div>
    </section>
    <section class="home-meeting-section"><div class="home-section-head"><h2>My meetings</h2><button class="home-text-action" data-a="goNet" data-p="meetings">View all ${ic('right',15,2)}</button></div>
@@ -2006,7 +2019,6 @@ function homeV(){
    </section>
    <section class="home-discover-section"><div class="home-section-head"><h2>Explore the event</h2><button class="home-text-action" data-a="tab" data-p="explore">See all ${ic('right',15,2)}</button></div>
       <div class="home-mini-grid">${mini.map(([k,icn,t,s])=>`<button class="home-mini press" data-a="push" data-p="${k}"><span class="home-mini-icon">${ic(icn,20,1.8)}</span><strong>${t}</strong><small>${s}</small><span class="home-mini-go">${ic('arrowUR',15,1.8)}</span></button>`).join('')}</div>
-      <button class="home-vote-row press" data-a="push" data-p="vote"><span class="home-vote-icon">${ic('vote',19,1.9)}</span><span><strong>Vote</strong><small>Participate in event polls</small></span>${ic('right',19,2)}</button>
       <button class="home-vote-row press" data-a="goNet" data-p="conns"><span class="home-vote-icon">${ic('contact',19,1.9)}</span><span><strong>My Connection</strong><small>Saved delegates & contacts</small></span>${ic('right',19,2)}</button>
    </section>
    <div class="home-bottom-note">FIATA Events · Powered by n-Gauge</div>
@@ -2739,7 +2751,6 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
       `<button class="home-meeting-row home-meeting-guest press" data-a="goNet" data-p="people"><span class="meeting-icon">${ic('calPlus',20,1.9)}</span><span class="home-meeting-copy"><strong>No meetings scheduled</strong><small>Find a delegate to request a meeting</small></span><span class="more-arrow">${ic('right',19,2)}</span></button>`;
     const menus=[
       ['about','info','About Event','Overview, brochure & registration links','push'],
-      ['vote','vote','Vote','Take part in event polls','push'],
       ['sponsors','award','Sponsors & Partners','Event sponsors by category','push'],
       ['help','chat','Help','Answers to common questions','push']
     ];
@@ -2761,12 +2772,16 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
          <div class="home-action-grid">
            <button class="home-action-card primary press" data-a="openAgenda" aria-label="Open Agenda">
              <span class="action-icon">${ic('calendar',23,1.9)}</span><span class="action-arrow">${ic('arrowUR',18,2)}</span>
-             <span><strong>Agenda</strong><small>Sessions & schedule</small></span>
+             <span><strong>Agenda</strong></span>
            </button>
            <button class="home-action-card secondary press" data-a="goNet" data-p="people" aria-label="Find Delegates">
              <span class="action-icon">${ic('users',23,1.9)}</span><span class="action-arrow">${ic('arrowUR',18,2)}</span>
-             <span><strong>Find Delegates</strong><small>Connect & meet</small></span>
-           </button>
+             <span><strong>Find Delegates</strong></span>
+            </button>
+            <button class="home-action-card secondary press" data-a="push" data-p="vote" aria-label="Vote">
+              <span class="action-icon">${ic('vote',23,1.9)}</span><span class="action-arrow">${ic('arrowUR',18,2)}</span>
+              <span><strong>Vote</strong></span>
+            </button>
          </div>
        </section>
        <section class="home-meeting-section"><div class="home-section-head"><h2>1 × 1 Meetings</h2><button class="home-text-action" data-a="goNet" data-p="meetings">View all ${ic('right',15,2)}</button></div>
