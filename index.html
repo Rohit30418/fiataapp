@@ -1482,14 +1482,14 @@ html[data-fiata-theme="dark"] .help-accordion-chevron{background:#203A50;color:#
 .meeting-calendar-head{display:flex;align-items:center;gap:7px;margin-bottom:9px;color:var(--tx2);font-size:12px;font-weight:750}
 .meeting-calendar-head small{margin-left:auto;font-size:11px;font-weight:600}
 .meeting-calendar-row{display:flex;gap:7px;overflow-x:auto;padding:2px 1px 6px;scrollbar-width:thin}
-.meeting-date-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;flex:1 0 58px;min-height:76px;padding:8px 5px;border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx2);text-align:center}
-.meeting-date-tile .meeting-dow{font-size:10px;line-height:1.15;text-transform:uppercase;font-weight:750;white-space:nowrap}
-.meeting-date-tile .meeting-number{font-size:20px;line-height:1.15;color:var(--tx);font-weight:800}
-.meeting-date-tile .meeting-count{font-size:10px;line-height:1.15;white-space:nowrap}
+.meeting-date-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;flex:1 0 64px;min-height:72px;padding:9px 4px;border:1px solid var(--bd);border-radius:10px;background:var(--card);color:var(--tx2);text-align:center}
+.meeting-date-tile .meeting-dow{font-size:11px;line-height:1.2;font-weight:600;white-space:nowrap}
+.meeting-date-tile .meeting-number{font-size:13px;line-height:1.2;color:var(--tx);font-weight:800;white-space:nowrap}
+.meeting-date-tile .meeting-count{font-size:10px;line-height:1.2;white-space:nowrap;color:var(--tx2)}
 .meeting-date-tile.is-active{border-color:var(--blue);box-shadow:inset 0 -3px 0 var(--blue);color:var(--blue)}
 .meeting-date-tile.is-active .meeting-number{color:var(--blue)}
 .meeting-date-tile:focus-visible,.profile-edit-action:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-@media(max-width:360px){.meeting-calendar{margin-left:14px;margin-right:14px}.meeting-date-tile{flex-basis:54px}.profile-edit-page{padding-left:14px;padding-right:14px}.profile-identity{gap:10px}.profile-identity h2{font-size:20px}}
+@media(max-width:360px){.meeting-calendar{margin-left:14px;margin-right:14px}.meeting-date-tile{flex-basis:64px}.profile-edit-page{padding-left:14px;padding-right:14px}.profile-identity{gap:10px}.profile-identity h2{font-size:20px}}
 </style>
 </head>
 <body>
@@ -3016,7 +3016,10 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
   meetingsList=function(){
     const all=S.meetings.filter(m=>Number.isInteger(m.day)&&DAYS[m.day]).slice().sort((a,b)=>a.day-b.day||a.time.localeCompare(b.time));
     const selected=DAYS[S.meetingDay]?S.meetingDay:'all',list=selected==='all'?all:all.filter(m=>m.day===selected);
-    const tile=(k,d,count)=>`<button type="button" class="meeting-date-tile ${selected===k?'is-active':''}" data-a="meetingDay" data-p="${k}" aria-pressed="${selected===k}" aria-label="${esc(d?d.label:'All dates')}, ${count} meetings"><span class="meeting-dow">${d?esc(d.dow):'All dates'}</span><span class="meeting-number">${d?esc(d.num):ic('calendar',20,2)}</span><span class="meeting-count">${d?esc(d.label.split(' ').slice(1).join(' '))+' · ':''}${count}</span></button>`;
+    const tile=(k,d,count)=>{
+      const label=d?d.label:'All dates',day=d?d.dow:'Overview',total=count+' '+(count===1?'meeting':'meetings');
+      return `<button type="button" class="meeting-date-tile ${selected===k?'is-active':''}" data-a="meetingDay" data-p="${k}" aria-pressed="${selected===k}" aria-label="${esc(label)}, ${esc(day)}, ${total}"><span class="meeting-number">${esc(label)}</span><span class="meeting-dow">${esc(day)}</span><span class="meeting-count">${total}</span></button>`;
+    };
     const filter=`<section class="meeting-calendar"><div class="meeting-calendar-head">${ic('calendar',16,2)}<span>Meeting dates</span><small>${list.length} ${list.length===1?'meeting':'meetings'}</small></div><div class="meeting-calendar-row" data-k="meeting-dates" role="group" aria-label="Filter meetings by date">${tile('all',null,all.length)}${DAYS.map((d,i)=>tile(i,d,all.filter(m=>m.day===i).length)).join('')}</div></section>`;
     if(!list.length)return filter+`<div class="card empty" style="margin:16px 20px"><div class="eic">${ic('calPlus',22)}</div><h4>${all.length?'No meetings on this date':'No meetings yet'}</h4><p>${all.length?'Choose another date to view your meeting requests.':'Requests you send or receive will appear here, grouped by day.'}</p>${all.length?'<button class="btn s sm" data-a="meetingDay" data-p="all">Show all dates</button>':'<button class="btn p sm" data-a="net" data-p="people">Find a delegate</button>'}</div>`;
     let out='',day=-1;
