@@ -1688,9 +1688,14 @@ html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn.on{color:#80cae8}
 </style>
 
 <style>
-/* FIATA active tabs: selected state is yellow, with accessible dark text.
-   All inactive tabs keep their existing styling. */
-:root{--fiata-tab-active:#ffb300;--fiata-tab-active-text:#001a27}
+/* FIATA active-state refresh: mid-blue fill, white text, fine yellow
+   underline (#ffb300), matching the supplied 6 Oct reference. */
+:root{
+  --fiata-tab-active:#006f9e;
+  --fiata-tab-active-text:#ffffff;
+  --fiata-tab-underline:#ffb300;
+}
+/* Main status, date and filter tabs */
 .seg button.on,
 .seg.dk button.on,
 .events-list-tabs button.on,
@@ -1698,34 +1703,45 @@ html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn.on{color:#80cae8}
 .tchip.on,
 .agenda-day.is-selected,
 .meeting-date-tile.is-active{
-  background:var(--fiata-tab-active);
+  background:#006f9e;
   background-image:none;
-  border-color:var(--fiata-tab-active);
-  color:var(--fiata-tab-active-text);
-  box-shadow:0 3px 10px rgba(255,179,0,.20);
+  border-color:#006f9e;
+  border-radius:12px;
+  color:#ffffff;
+  box-shadow:inset 0 -3px 0 #ffb300,0 3px 8px rgba(0,111,158,.14);
 }
-.dchip.on .w,.dchip.on .l{color:#001a27}
-.meeting-date-tile.is-active{box-shadow:inset 0 -3px 0 #001a27}
+.dchip.on .w,.dchip.on .l,
+.agenda-day.is-selected .agenda-dow,
+.agenda-day.is-selected .agenda-num{
+  color:#ffffff;
+}
+.meeting-date-tile.is-active{
+  box-shadow:inset 0 -3px 0 #ffb300,0 3px 8px rgba(0,111,158,.14);
+}
+/* Bottom navigation: blue selected icon with subtle yellow underline.
+   Keep the label legible against the white footer. */
 .screen > .bnav.fiata-nav .bn.on,
 .screen > .bnav.fiata-nav .bn.on .bn-label,
 .screen > .bnav.fiata-nav .bn-network.on .bn-label,
 .screen > .bnav.fiata-nav .bn[data-p="speakers"].on .bn-label{
-  color:#001a27;
+  color:#006f9e;
 }
 .screen > .bnav.fiata-nav .bn.on:not(.bn-network) .bn-icon,
 .screen > .bnav.fiata-nav .bn-network.on .bn-icon,
 .screen > .bnav.fiata-nav .bn[data-p="speakers"].on .bn-icon{
-  background:#ffb300;
+  background:#006f9e;
   background-image:none;
-  color:#001a27;
-  box-shadow:0 2px 9px rgba(255,179,0,.23);
+  color:#ffffff;
+  box-shadow:inset 0 -3px 0 #ffb300,0 3px 8px rgba(0,111,158,.17);
 }
-/* The podium icon stays in the bottom bar but is yellow only when selected. */
+/* Podium only in the bottom navigation: no yellow background unless it is
+   the 3px underline of an active blue selection. */
 .screen > .bnav.fiata-nav .bn[data-p="speakers"]:not(.on) .bn-icon{
   background:transparent;
   color:inherit;
   box-shadow:none;
 }
+/* Mirror the same visible active state in dark mode. */
 html[data-fiata-theme="dark"] .seg button.on,
 html[data-fiata-theme="dark"] .seg.dk button.on,
 html[data-fiata-theme="dark"] .events-list-tabs button.on,
@@ -1733,18 +1749,25 @@ html[data-fiata-theme="dark"] .dchip.on,
 html[data-fiata-theme="dark"] .tchip.on,
 html[data-fiata-theme="dark"] .agenda-day.is-selected,
 html[data-fiata-theme="dark"] .meeting-date-tile.is-active{
-  background:#ffb300;
+  background:#006f9e;
   background-image:none;
-  color:#001a27;
-  border-color:#ffb300;
+  border-color:#006f9e;
+  color:#ffffff;
+  box-shadow:inset 0 -3px 0 #ffb300,0 3px 8px rgba(0,111,158,.14);
 }
 html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn.on,
-html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn.on .bn-label{color:#ffb300}
+html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn.on .bn-label{
+  color:#ffb300;
+}
 html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn.on .bn-icon{
-  background:#ffb300;color:#001a27;
+  background:#006f9e;
+  color:#ffffff;
+  box-shadow:inset 0 -3px 0 #ffb300,0 3px 8px rgba(0,111,158,.17);
 }
 html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn[data-p="speakers"]:not(.on) .bn-icon{
-  background:transparent;color:inherit;box-shadow:none;
+  background:transparent;
+  color:inherit;
+  box-shadow:none;
 }
 </style>
 </head>
