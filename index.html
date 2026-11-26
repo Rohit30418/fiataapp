@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--mid:#071C35;--navy:#0A2540;--blue:#0077C8;--cyan:#22B8F0;--bg:#F6F8FC;--card:#fff;--tx:#102239;--tx2:#64748B;--tx3:#94A3B8;--bd:#E4EAF2;--ok:#16A34A;--warn:#D97706;--err:#DC2626;--ease:cubic-bezier(.2,.8,.2,1);--sh:0 1px 2px rgba(16,34,57,.04),0 4px 16px rgba(16,34,57,.06)}
+:root{--mid:#001a27;--navy:#001a27;--blue:#006f9e;--cyan:#0088c2;--bg:#F6F8FC;--card:#fff;--tx:#001a27;--tx2:#64748B;--tx3:#94A3B8;--bd:#E4EAF2;--ok:#16A34A;--warn:#D97706;--err:#DC2626;--ease:cubic-bezier(.2,.8,.2,1);--sh:0 1px 2px rgba(16,34,57,.04),0 4px 16px rgba(16,34,57,.06)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{font-family:'Plus Jakarta Sans',Inter,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:#081424;color:var(--tx);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.45}
@@ -21,7 +21,7 @@ input,textarea{font:inherit;color:inherit}
 .ic{flex:none;display:block}
 
 /* ---------- Desktop canvas ---------- */
-.stage{min-height:100vh;display:flex;align-items:center;justify-content:center;gap:64px;padding:32px;background:radial-gradient(1200px 600px at 75% 10%,#0d3a66 0%,transparent 60%),radial-gradient(800px 500px at 10% 90%,#0a2c4f 0%,transparent 60%),#071C35}
+.stage{min-height:100vh;display:flex;align-items:center;justify-content:center;gap:64px;padding:32px;background:radial-gradient(1200px 600px at 75% 10%,#0d3a66 0%,transparent 60%),radial-gradient(800px 500px at 10% 90%,#001a27 0%,transparent 60%),#001a27}
 .side{width:320px;color:#cfe0f2}
 .side .k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:700}
 .side h1{font-size:30px;line-height:1.15;color:#fff;margin:10px 0 12px;letter-spacing:-.02em}
@@ -98,7 +98,7 @@ input,textarea{font:inherit;color:inherit}
 .glass{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:6px 10px;border-radius:99px;background:rgba(255,255,255,.14);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18)}
 .prim{display:grid;grid-template-columns:1.3fr 1fr;gap:12px;padding:0 16px;margin-top:16px}
 .pa{border-radius:20px;padding:16px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
-.pa.a{background:linear-gradient(160deg,var(--navy),#0b3765);color:#fff}
+.pa.a{background:linear-gradient(160deg,var(--navy),#001a27);color:#fff}
 .pa.a::before{content:"";position:absolute;right:-30px;bottom:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(34,184,240,.35),transparent 70%)}
 .pa.b{background:#fff;border:1px solid var(--bd);box-shadow:var(--sh)}
 .pa .pi{width:40px;height:40px;border-radius:12px;display:grid;place-items:center}
@@ -284,7 +284,7 @@ textarea.inp{height:auto;min-height:96px;padding:14px 16px;resize:none;line-heig
 .dir{font-size:11px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em}
 
 /* request meeting */
-.who{margin:4px 16px 0;padding:14px;border-radius:20px;background:linear-gradient(150deg,var(--navy),#0c3a6b);color:#fff;display:flex;gap:12px;align-items:center}
+.who{margin:4px 16px 0;padding:14px;border-radius:20px;background:linear-gradient(150deg,var(--navy),#006f9e);color:#fff;display:flex;gap:12px;align-items:center}
 .who .pc{color:#9fc0e0;font-size:13px}
 .step{display:flex;align-items:center;gap:10px;padding:0 20px;margin:26px 0 12px}
 .step b{width:24px;height:24px;border-radius:8px;background:#E8F3FB;color:var(--blue);font-size:12px;display:grid;place-items:center;font-weight:800}
@@ -337,7 +337,7 @@ textarea.inp{height:auto;min-height:96px;padding:14px 16px;resize:none;line-heig
 .spk .rl{font-size:12.5px;color:var(--blue);font-weight:600;margin-top:1px}
 .spk .bio{font-size:13px;color:var(--tx2);margin-top:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .spk .vp{font-size:12px;font-weight:700;color:var(--blue);margin-top:8px;display:inline-flex;align-items:center;gap:2px}
-.prof{padding:calc(var(--sat) + 60px) 20px 26px;background:linear-gradient(170deg,var(--navy),#0c3a6b);color:#fff;text-align:center;position:relative;overflow:hidden}
+.prof{padding:calc(var(--sat) + 60px) 20px 26px;background:linear-gradient(170deg,var(--navy),#006f9e);color:#fff;text-align:center;position:relative;overflow:hidden}
 .prof h1{font-size:24px;font-weight:800;margin-top:14px;letter-spacing:-.02em}
 .prof .rl{color:#9fc0e0;font-size:14px;margin-top:4px}
 
@@ -387,7 +387,7 @@ textarea.inp{height:auto;min-height:96px;padding:14px 16px;resize:none;line-heig
 .vfoot .btn{background:rgba(255,255,255,.12);color:#fff}
 
 /* profile pass */
-.pass{margin:8px 16px 0;border-radius:24px;overflow:hidden;box-shadow:0 24px 50px -18px rgba(7,28,53,.55);background:linear-gradient(155deg,#0A2540 0%,#0b3a6c 60%,#0a5b98 100%);color:#fff;position:relative}
+.pass{margin:8px 16px 0;border-radius:24px;overflow:hidden;box-shadow:0 24px 50px -18px rgba(7,28,53,.55);background:linear-gradient(155deg,#001a27 0%,#0b3a6c 60%,#0a5b98 100%);color:#fff;position:relative}
 .pass::before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:1px solid rgba(34,184,240,.25);box-shadow:0 0 0 30px rgba(34,184,240,.05)}
 .pass .top{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 0;position:relative}
 .pass .evn{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9fc0e0}
@@ -440,15 +440,15 @@ textarea.inp{height:auto;min-height:96px;padding:14px 16px;resize:none;line-heig
    The layout below deliberately leaves the functional state/flows above intact.
    ============================================================================ */
 :root{
-  --mid:#092640;--navy:#0A2540;--blue:#0878BD;--cyan:#2BA6DA;
-  --bg:#F7F9FC;--card:#FFFFFF;--tx:#10253E;--tx2:#5F7289;--tx3:#8A9AAC;
+  --mid:#001a27;--navy:#001a27;--blue:#006f9e;--cyan:#0088c2;
+  --bg:#F7F9FC;--card:#FFFFFF;--tx:#001a27;--tx2:#5F7289;--tx3:#8A9AAC;
   --bd:#E7ECF3;--ok:#15803D;--warn:#BE7517;--err:#CF3445;
   --sh:0 2px 12px rgba(17,40,69,.045);
 }
 body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:14px;line-height:1.5;font-weight:400;letter-spacing:-.006em}
 .stage{gap:64px;padding:30px;background:radial-gradient(circle at 12% 20%,#fff 0,#F4F8FE 35%,transparent 58%),#EAF0F8}
 .side{color:var(--navy);width:300px}
-.side .k{color:#0878BD;font-size:11px;letter-spacing:.16em}
+.side .k{color:#006f9e;font-size:11px;letter-spacing:.16em}
 .side h1{font-size:30px;color:#0B2540;line-height:1.12;letter-spacing:-.035em}
 .side p{color:#64788E;font-size:14px;line-height:1.6}
 .side small{color:#738399;font-size:11.5px;line-height:1.65}
@@ -565,7 +565,7 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 .splash .pw{font-size:12px}
 /* Rebuilt home — authentic event art, editorial hierarchy, clear touch targets. */
 .home-scroll{background:#F7F9FC}
-.home-top{background:#092B49;color:#fff;padding:calc(var(--sat) + 12px) 20px 75px;position:relative;overflow:hidden}
+.home-top{background:#001a27;color:#fff;padding:calc(var(--sat) + 12px) 20px 75px;position:relative;overflow:hidden}
 .home-top:after{content:"";width:260px;height:260px;border-radius:50%;border:1px solid rgba(255,255,255,.065);position:absolute;top:-150px;right:-130px;box-shadow:0 0 0 44px rgba(255,255,255,.015);pointer-events:none}
 .home-toolbar{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
 .home-identity{display:flex;align-items:center;gap:11px}
@@ -584,24 +584,24 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 .home-feature-image .fiata-source-art{position:static;display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:white}
 .poster-caption{position:absolute;left:12px;top:12px;background:rgba(255,255,255,.92);color:#3F5B74;border:1px solid #E4EAF1;border-radius:7px;padding:4px 7px;font-weight:750;font-size:9px;letter-spacing:.075em}
 .home-feature-body{padding:13px 16px 16px}
-.home-feature-label{font-size:10px;letter-spacing:.115em;font-weight:800;color:#0878BD;margin-bottom:6px}
+.home-feature-label{font-size:10px;letter-spacing:.115em;font-weight:800;color:#006f9e;margin-bottom:6px}
 .home-feature-line{display:flex;gap:14px;align-items:flex-start;justify-content:space-between}
 .home-feature-line h1{font-size:19px;font-weight:780;letter-spacing:-.034em;line-height:1.22;max-width:275px}
-.home-event-arrow{width:29px;height:29px;border-radius:9px;background:#EAF4FB;color:#0878BD;display:grid;place-items:center;flex:none}
+.home-event-arrow{width:29px;height:29px;border-radius:9px;background:#EAF4FB;color:#006f9e;display:grid;place-items:center;flex:none}
 .home-event-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;color:#60748C;font-size:11.5px;font-weight:600}
 .home-event-meta span{display:inline-flex;align-items:center;gap:5px}
-.home-event-meta svg{color:#0878BD}
+.home-event-meta svg{color:#006f9e}
 .home-section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
 .home-section-head h2{font-size:17px;font-weight:750;letter-spacing:-.025em}
-.home-text-action{display:inline-flex;align-items:center;gap:1px;color:#0878BD;font-size:12px;font-weight:750;min-height:36px;white-space:nowrap}
+.home-text-action{display:inline-flex;align-items:center;gap:1px;color:#006f9e;font-size:12px;font-weight:750;min-height:36px;white-space:nowrap}
 .home-actions,.home-meeting-section,.home-discover-section{padding:0 20px;margin-top:22px}
 .home-actions{margin-top:19px}
 .home-action-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .home-action-card{min-height:119px;border-radius:17px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;gap:7px;position:relative;text-align:left;box-shadow:0 2px 9px rgba(13,49,77,.045)}
-.home-action-card.primary{background:#0A3D66;color:#fff}
+.home-action-card.primary{background:#006f9e;color:#fff}
 .home-action-card.secondary{background:#fff;border:1px solid #E4EBF2;color:var(--tx)}
 .home-action-card .action-icon{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:rgba(255,255,255,.13)}
-.home-action-card.secondary .action-icon{color:#0878BD;background:#E8F4FC}
+.home-action-card.secondary .action-icon{color:#006f9e;background:#E8F4FC}
 .home-action-card strong{font-size:15.5px;font-weight:750;display:block;letter-spacing:-.02em}
 .home-action-card small{display:block;margin-top:3px;font-size:11px;line-height:1.35;color:rgba(255,255,255,.76)}
 .home-action-card.secondary small{color:#64778B}
@@ -609,7 +609,7 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 .home-action-card.secondary .action-arrow{color:#8AA2B8}
 .home-meeting-section{margin-top:20px}
 .home-meeting-row{width:100%;min-height:82px;padding:14px;display:flex;gap:12px;align-items:center;border:1px solid #E7EDF3;background:#fff;border-radius:16px;box-shadow:var(--sh)}
-.meeting-icon{width:43px;height:43px;display:grid;place-items:center;flex:none;background:#EAF4FA;border-radius:13px;color:#0878BD}
+.meeting-icon{width:43px;height:43px;display:grid;place-items:center;flex:none;background:#EAF4FA;border-radius:13px;color:#006f9e}
 .home-meeting-copy{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
 .home-meeting-copy strong{font-size:13.5px;font-weight:750;line-height:1.3}
 .home-meeting-copy small{font-size:11.5px;color:#6B7F92;line-height:1.4}
@@ -619,7 +619,7 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 .home-discover-section{margin-top:22px}
 .home-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .home-mini{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:111px;padding:13px;background:#fff;border:1px solid #E7EDF4;border-radius:15px;box-shadow:var(--sh)}
-.home-mini-icon{width:33px;height:33px;border-radius:11px;display:grid;place-items:center;background:#EAF4FA;color:#0878BD;margin-bottom:5px}
+.home-mini-icon{width:33px;height:33px;border-radius:11px;display:grid;place-items:center;background:#EAF4FA;color:#006f9e;margin-bottom:5px}
 .home-mini strong{font-size:13.5px;font-weight:750}
 .home-mini small{font-size:11px;color:#728499}
 .home-mini-go{position:absolute;right:13px;top:14px;color:#8AA2B8}
@@ -659,7 +659,7 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 .gallery-folder-card{display:flex;align-items:stretch;width:100%;min-height:134px;overflow:hidden;background:var(--card);border:1px solid var(--bd);border-radius:18px;box-shadow:var(--sh);text-align:left;transition:transform .2s,border-color .2s}
 .gallery-folder-card:active{transform:scale(.99)}
 .gallery-folder-card:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
-.gallery-folder-cover{width:36%;min-width:114px;max-width:175px;background:linear-gradient(140deg,#103E63,#1E88C5);overflow:hidden;flex:none}
+.gallery-folder-cover{width:36%;min-width:114px;max-width:175px;background:linear-gradient(140deg,#001a27,#1E88C5);overflow:hidden;flex:none}
 .gallery-folder-cover img{width:100%;height:100%;object-fit:cover;display:block}
 .gallery-folder-info{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px;padding:14px 8px 14px 16px}
 .gallery-folder-label{font-size:10px;color:var(--blue);font-weight:800;letter-spacing:.07em}
@@ -679,7 +679,7 @@ html[data-fiata-theme="dark"] .sponsor-category-section .partner-logo-card{backg
 /* FIATA home and events-list refresh — 18 November 2026 */
 .events-clean-head{padding:calc(var(--sat) + 13px) 20px 15px;background:#fff;border-bottom:1px solid #E8EEF5;display:flex;align-items:center;justify-content:space-between;gap:14px}
 .events-clean-brand{display:flex;gap:11px;align-items:center}
-.events-clean-brand strong{font-size:19px;font-weight:760;letter-spacing:-.035em;color:#102B44;line-height:1.2}
+.events-clean-brand strong{font-size:19px;font-weight:760;letter-spacing:-.035em;color:#001a27;line-height:1.2}
 .events-clean-brand small{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#69849A;font-weight:730;margin-bottom:2px}
 .events-clean-hint{font-size:11px;color:#8296A8;margin:14px 20px 9px;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .events-clean-hint strong{font-size:12px;color:#526B7F}
@@ -692,8 +692,8 @@ html[data-fiata-theme="dark"] .sponsor-category-section .partner-logo-card{backg
 .events-rail-body{padding:15px 16px 16px;display:flex;flex-direction:column;gap:9px;flex:1}
 .events-rail-body h2{font-size:17px;line-height:1.25;letter-spacing:-.02em;font-weight:750}
 .events-rail-meta{display:flex;gap:7px;align-items:flex-start;color:#667C91;font-size:11.5px;line-height:1.4;font-weight:590}
-.events-rail-meta svg{flex:none;color:#0878BD}
-.events-rail-enter{margin-top:auto;padding-top:7px;display:flex;align-items:center;justify-content:space-between;color:#0878BD;font-size:12.5px;font-weight:760}
+.events-rail-meta svg{flex:none;color:#006f9e}
+.events-rail-enter{margin-top:auto;padding-top:7px;display:flex;align-items:center;justify-content:space-between;color:#006f9e;font-size:12.5px;font-weight:760}
 .events-hints{display:flex;align-items:center;justify-content:center;gap:7px;padding:4px 0 16px}
 .events-hints .rail-dot,.home-hints .rail-dot{width:7px;height:7px;display:block;border-radius:20px;background:#C7D7E4;transition:width .2s,background .2s}
 .events-hints .rail-dot.active,.home-hints .rail-dot.active{width:21px;background:#057BBE}
@@ -720,11 +720,11 @@ html[data-fiata-theme="dark"] .sponsor-category-section .partner-logo-card{backg
 .home-banner-slide .home-event-arrow{width:28px;height:28px}
 .home-promo-slide{border-radius:18px;padding:17px;position:relative;overflow:hidden;justify-content:space-between;text-align:left;box-shadow:0 6px 23px rgba(11,40,68,.10)}
 .home-promo-slide:before{content:"";position:absolute;right:-62px;top:-65px;width:198px;height:198px;border-radius:50%;border:1px solid rgba(255,255,255,.17);box-shadow:0 0 0 35px rgba(255,255,255,.045),0 0 0 68px rgba(255,255,255,.035);pointer-events:none}
-.home-promo-agenda{background:linear-gradient(145deg,#082F50,#0B75A8);color:#fff}
-.home-promo-network{background:linear-gradient(145deg,#E8F7FF,#CCEEFA);color:#0A3452;border:1px solid #B4E1F5}
+.home-promo-agenda{background:linear-gradient(145deg,#001a27,#006f9e);color:#fff}
+.home-promo-network{background:linear-gradient(145deg,#E8F7FF,#CCEEFA);color:#001a27;border:1px solid #B4E1F5}
 .home-promo-kicker{font-size:10px;font-weight:760;letter-spacing:.12em;text-transform:uppercase;opacity:.74;position:relative}
 .home-promo-icon{height:43px;width:43px;border-radius:13px;background:rgba(255,255,255,.15);display:grid;place-items:center;position:relative}
-.home-promo-network .home-promo-icon{background:#fff;color:#0878BD}
+.home-promo-network .home-promo-icon{background:#fff;color:#006f9e}
 .home-promo-slide h2{font-size:23px;font-weight:780;line-height:1.17;letter-spacing:-.035em;max-width:210px;position:relative;margin-bottom:7px}
 .home-promo-slide p{font-size:11.5px;line-height:1.45;max-width:220px;opacity:.84;position:relative}
 .home-promo-go{font-size:11.5px;font-weight:750;display:flex;align-items:center;gap:6px;margin-top:12px;position:relative}
@@ -754,7 +754,7 @@ html[data-fiata-theme="dark"] .sponsor-category-section .partner-logo-card{backg
 .home-meeting-swipe-card .st{max-width:100%;font-size:10px;padding:5px 7px}
 .home-meeting-card-bottom{display:flex;gap:7px;flex-wrap:wrap;margin-top:auto}
 .home-meeting-pill{display:inline-flex;align-items:center;gap:5px;background:#F1F6FA;color:#566F83;border-radius:7px;padding:6px 7px;font-size:10.6px;font-weight:660;line-height:1.3}
-.home-meeting-pill svg{color:#0878BD}
+.home-meeting-pill svg{color:#006f9e}
 .home-meeting-note{font-size:10.5px;color:#6F8598;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .home-meeting-guest{flex:0 0 calc(100% - 40px);min-height:98px;display:flex;align-items:center}
 .home-meeting-guest .home-meeting-copy{gap:4px}
@@ -772,7 +772,7 @@ html[data-fiata-theme="dark"] .sponsor-category-section .partner-logo-card{backg
 .home-menu-item:nth-child(2) .home-menu-icon{background:#E5F8FF;color:#1AA8CB}
 .home-menu-item:nth-child(3) .home-menu-icon{background:#E9F7EF;color:#1C9B60}
 .home-menu-item:nth-child(4) .home-menu-icon{background:#EDF2F8;color:#476987}
-.home-menu-item:nth-child(5) .home-menu-icon{background:#FFF4E5;color:#CF8B32}
+.home-menu-item:nth-child(5) .home-menu-icon{background:#FFF4E5;color:#8a5a00}
 .home-menu-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .home-menu-copy strong{font-size:13px;font-weight:710;color:#102A45;line-height:1.3}
 .home-menu-copy small{font-size:10.7px;font-weight:460;color:#7A8FA2;line-height:1.3}
@@ -831,19 +831,19 @@ html[data-fiata-theme="dark"] .sponsor-category-section .partner-logo-card{backg
 .home-discover-section{margin-top:23px;margin-bottom:20px}
 .home-discover-section .home-section-head{margin-bottom:12px}
 .home-menu-item{min-height:60px}
-.home-menu-item:nth-child(1) .home-menu-icon{background:#EAF4FC;color:#087BC3}
-.home-menu-item:nth-child(2) .home-menu-icon{background:#E8F5FC;color:#1C85C7}
+.home-menu-item:nth-child(1) .home-menu-icon{background:#EAF4FC;color:#006f9e}
+.home-menu-item:nth-child(2) .home-menu-icon{background:#E8F5FC;color:#006f9e}
 .home-menu-item:nth-child(3) .home-menu-icon{background:#E8F6EE;color:#119F67}
-.home-menu-item:nth-child(4) .home-menu-icon{background:#FFF2E2;color:#CF8B32}
+.home-menu-item:nth-child(4) .home-menu-icon{background:#FFF2E2;color:#8a5a00}
 .fiata-nav{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));height:calc(65px + var(--sab));padding:5px 11px calc(5px + var(--sab));overflow:visible;isolation:isolate;border-top:1px solid #E2EAF2;background:#fff;align-items:end;box-shadow:0 -6px 22px rgba(9,39,66,.035)}
 .fiata-nav .bn{height:54px;min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:2px 0 0;position:relative;color:#8194A8;font-size:10.2px;font-weight:670;text-align:center}
 .fiata-nav .bn-icon{width:38px;height:29px;display:grid;place-items:center;border-radius:12px;transition:color .2s,background .2s,transform .2s;flex:none}
 .fiata-nav .bn-label{line-height:1.2;white-space:nowrap}
-.fiata-nav .bn.on{color:#0878BD}
-.fiata-nav .bn.on:not(.bn-network) .bn-icon{background:#EAF5FC;color:#0878BD}
+.fiata-nav .bn.on{color:#006f9e}
+.fiata-nav .bn.on:not(.bn-network) .bn-icon{background:#EAF5FC;color:#006f9e}
 .fiata-nav .bn-network{color:#46758D;justify-content:flex-end;gap:0;padding-bottom:3px}
 .fiata-nav .bn-network .bn-label{position:relative;z-index:2}
-.fiata-nav .bn-network .bn-icon{position:absolute;top:2px;left:50%;transform:translateX(-50%);width:42px;height:42px;border-radius:50%;background:linear-gradient(140deg,#43D6F7 0%,#0A95D2 45%,#075BBD 100%);color:#fff;box-shadow:0 0 0 5px #fff,0 9px 19px rgba(0,119,200,.30);z-index:2}
+.fiata-nav .bn-network .bn-icon{position:absolute;top:2px;left:50%;transform:translateX(-50%);width:42px;height:42px;border-radius:50%;background:linear-gradient(140deg,#0088c2 0%,#0088c2 45%,#006f9e 100%);color:#fff;box-shadow:0 0 0 5px #fff,0 9px 19px rgba(0,119,200,.30);z-index:2}
 .fiata-nav .bn-network .bn-icon:before,.fiata-nav .bn-network .bn-icon:after{content:'';position:absolute;inset:-8px;border:1.5px solid rgba(37,187,232,.33);border-radius:50%;opacity:0;pointer-events:none;animation:fiata-network-wave 3.6s ease-out infinite;z-index:-1}
 .fiata-nav .bn-network .bn-icon:after{animation-delay:1.8s}
 .fiata-nav .bn-network.on .bn-icon{background:linear-gradient(140deg,#35D9F0 0%,#047FC7 46%,#062F82 100%);box-shadow:0 0 0 5px #fff,0 10px 24px rgba(0,115,210,.44)}
@@ -853,7 +853,7 @@ html[data-fiata-theme="dark"] .sponsor-category-section .partner-logo-card{backg
 @media(max-width:359px){.fiata-nav .bn{font-size:9.5px}.fiata-nav .bn-network .bn-icon{width:40px;height:40px;top:3px}.events-list-bottom .events-list-meta.venue{font-size:10.5px}}
 
 /* Consistent FIATA inner-page headers and speaker profile — Nov 2026 */
-:root{--fiata-top-gradient:linear-gradient(115deg,#0A294A 0%,#124E7E 58%,#087BB4 100%)}
+:root{--fiata-top-gradient:linear-gradient(115deg,#001a27 0%,#124E7E 58%,#006f9e 100%)}
 .ttl,.phdr,.events-list-head{
   background:var(--fiata-top-gradient);color:#fff;border-bottom:1px solid rgba(255,255,255,.13);
   box-shadow:0 4px 18px rgba(12,56,93,.11);position:relative;z-index:5;
@@ -883,7 +883,7 @@ html[data-fiata-theme="dark"] .sponsor-category-section .partner-logo-card{backg
 .av-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%;background:#E4EAF2}
 .prof{
   padding:26px 20px 27px;
-  background:linear-gradient(160deg,#103D67,#0B2E52);color:#fff;text-align:center;
+  background:linear-gradient(160deg,#001a27,#001a27);color:#fff;text-align:center;
 }
 .prof .av{margin:0 auto}
 .prof h1{margin:16px auto 0;font-size:23px;line-height:1.3;max-width:320px}
@@ -933,7 +933,7 @@ html[data-fiata-theme="dark"] .sponsor-category-section .partner-logo-card{backg
 .fiata-nav .bn-network.on .bn-icon{box-shadow:0 0 0 3px #fff,0 5px 12px rgba(0,115,210,.25)}
 .fiata-nav .bn-network .bn-icon::before,.fiata-nav .bn-network .bn-icon::after{inset:-4px}
 .fiata-nav .bn-label{display:block;position:relative;z-index:1;color:inherit}
-.fiata-nav .bn.on:not(.bn-network) .bn-label{color:#0878BD}
+.fiata-nav .bn.on:not(.bn-network) .bn-label{color:#006f9e}
 
 
 /* Full-screen responsive FIATA web app — no prototype side panel or phone frame. */
@@ -1088,7 +1088,7 @@ body{background:var(--bg);overscroll-behavior:none}
   position:relative;
   z-index:2;
 }
-.screen > .bnav.fiata-nav .bn.on{color:#007FC4}
+.screen > .bnav.fiata-nav .bn.on{color:#006f9e}
 .screen > .bnav.fiata-nav .bn.on:not(.bn-network) .bn-icon{background:#EAF5FC}
 .screen > .bnav.fiata-nav .bn-network{
   justify-content:flex-end;
@@ -1104,13 +1104,13 @@ body{background:var(--bg);overscroll-behavior:none}
   width:47px;
   height:47px;
   border-radius:50%;
-  background:linear-gradient(145deg,#45D8F6 0%,#079AD8 42%,#0763C8 100%);
+  background:linear-gradient(145deg,#0088c2 0%,#0088c2 42%,#006f9e 100%);
   color:#fff;
   box-shadow:0 0 0 4px #fff,0 5px 13px rgba(0,111,199,.24);
   z-index:3;
 }
 .screen > .bnav.fiata-nav .bn-network.on .bn-icon{
-  background:linear-gradient(145deg,#36D4F5 0%,#068DCE 44%,#073E9C 100%);
+  background:linear-gradient(145deg,#0088c2 0%,#0088c2 44%,#073E9C 100%);
   box-shadow:0 0 0 4px #fff,0 6px 15px rgba(0,110,200,.3);
 }
 .screen > .bnav.fiata-nav .bn-network .bn-label{
@@ -1245,7 +1245,7 @@ body{background:var(--bg);overscroll-behavior:none}
 /* FAQ floating above the footer/sponsors and any fixed submit button */
 .faq-widget{position:absolute;right:16px;bottom:var(--faq-clearance,100px);z-index:32;display:flex;align-items:flex-end;flex-direction:column;pointer-events:none}
 .faq-widget>*{pointer-events:auto}
-.faq-fab{display:flex;align-items:center;justify-content:center;gap:7px;height:52px;min-width:52px;padding:0 14px;border-radius:28px;background:linear-gradient(140deg,#19B7E9,#0762A9);color:#fff;box-shadow:0 6px 20px rgba(5,88,156,.28),0 0 0 4px #fff;font-weight:750;font-size:13px}
+.faq-fab{display:flex;align-items:center;justify-content:center;gap:7px;height:52px;min-width:52px;padding:0 14px;border-radius:28px;background:linear-gradient(140deg,#0088c2,#006f9e);color:#fff;box-shadow:0 6px 20px rgba(5,88,156,.28),0 0 0 4px #fff;font-weight:750;font-size:13px}
 .faq-open .faq-fab{height:45px;min-width:45px;padding:0}
 .faq-panel{display:flex;flex-direction:column;width:min(355px,calc(100vw - 32px));max-height:min(66dvh,500px);overflow:hidden;background:#fff;border:1px solid #DCE7F0;border-radius:19px;box-shadow:0 15px 43px rgba(3,32,63,.23);margin-bottom:12px}
 .faq-panel-header{display:flex;align-items:center;gap:10px;background:linear-gradient(120deg,#0A3154,#087EB9);padding:13px 14px;color:#fff;flex:none}
@@ -1292,7 +1292,7 @@ body{background:var(--bg);overscroll-behavior:none}
 /* Dedicated FIATA Help page */
 .faq-page-scroll{padding-bottom:12px}
 .faq-welcome{display:flex;align-items:center;gap:13px;margin:19px 16px 17px;padding:14px;background:linear-gradient(120deg,#E8F5FD,#F5FAFE);border:1px solid #D4EAF7;border-radius:16px}
-.faq-page-logo{height:43px;width:43px;display:grid;place-items:center;color:#0E83BF;background:#D7EFFA;border-radius:13px;flex:none}
+.faq-page-logo{height:43px;width:43px;display:grid;place-items:center;color:#006f9e;background:#D7EFFA;border-radius:13px;flex:none}
 .faq-welcome h2{font-size:17px;font-weight:780;color:#113C5E}
 .faq-welcome p{font-size:12px;line-height:1.5;color:#54758B;margin-top:4px}
 .faq-page-chat{display:flex;flex-direction:column;gap:10px;padding:5px 16px 14px}
@@ -1302,18 +1302,18 @@ body{background:var(--bg);overscroll-behavior:none}
 .faq-page-topics{margin:5px 16px 16px;display:flex;flex-direction:column;gap:7px}
 .faq-page-topics h3{font-size:13px;color:var(--tx2);margin:6px 0;font-weight:740}
 .faq-page-topic{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:45px;text-align:left;font-size:12px;color:var(--tx);font-weight:650;padding:11px 12px;border:1px solid var(--bd);background:#fff;border-radius:12px}
-.faq-page-topic svg{flex:none;color:#168BC3}
+.faq-page-topic svg{flex:none;color:#0088c2}
 .faq-page-note{font-size:11px;color:var(--tx2);text-align:center;margin:15px 18px}
 .faq-page-composer{display:flex;align-items:center;gap:9px;background:#fff;border-top:1px solid var(--bd);padding:11px 15px calc(11px + var(--sab));flex:none;z-index:4}
 .faq-page-composer input{flex:1;min-width:0;height:44px;border:1px solid #D5E3EE;border-radius:22px;padding:0 15px;font-size:13px;outline:none}
-.faq-page-composer input:focus{border-color:#087FBE}
-.faq-page-composer button{display:grid;place-items:center;flex:none;width:44px;height:44px;background:linear-gradient(125deg,#0AB2E6,#0864AD);color:#fff;border-radius:50%}
+.faq-page-composer input:focus{border-color:#006f9e}
+.faq-page-composer button{display:grid;place-items:center;flex:none;width:44px;height:44px;background:linear-gradient(125deg,#0088c2,#006f9e);color:#fff;border-radius:50%}
 
 
 /* Profile language and theme preferences */
 .profile-settings{margin-bottom:20px}
 .profile-settings-card{margin:0 20px;background:var(--card);border:1px solid var(--bd);border-radius:17px;padding:17px;box-shadow:var(--sh)}
-.profile-settings-heading{display:flex;align-items:center;gap:11px;color:#0E7EB9}
+.profile-settings-heading{display:flex;align-items:center;gap:11px;color:#006f9e}
 .profile-settings-heading>span{display:flex;flex-direction:column;gap:3px;min-width:0}
 .profile-settings-heading strong{color:var(--tx);font-size:14px;font-weight:750}
 .profile-settings-heading small{font-size:11px;color:var(--tx2);line-height:1.4}
@@ -1398,7 +1398,7 @@ html[data-fiata-theme="dark"] .partner-logo-card{background:#fff}
 .help-accordion-list{display:flex;flex-direction:column;gap:10px;margin:0 auto;max-width:720px}
 .help-accordion-item{overflow:hidden;border:1px solid var(--bd);border-radius:14px;background:var(--card);box-shadow:0 2px 10px rgba(14,46,72,.04)}
 .help-accordion-question{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:60px;padding:16px;gap:13px;background:transparent;color:var(--tx);font-size:14px;font-weight:700;line-height:1.45;text-align:left}
-.help-accordion-question:focus-visible{outline:2px solid #168BC3;outline-offset:-3px}
+.help-accordion-question:focus-visible{outline:2px solid #0088c2;outline-offset:-3px}
 .help-accordion-chevron{display:grid;place-items:center;flex:0 0 28px;width:28px;height:28px;border-radius:9px;background:#E8F4FC;color:#057EC1;transition:transform .2s ease}
 .help-accordion-item.expanded .help-accordion-chevron{transform:rotate(180deg)}
 .help-accordion-answer{padding:0 16px 16px;border-top:1px solid var(--bd)}
@@ -1422,11 +1422,11 @@ html[data-fiata-theme="dark"] .help-accordion-chevron{background:#203A50;color:#
 .agenda-day-row.is-long .agenda-day{flex:0 0 64px}
 .agenda-dow{font-size:12px;font-weight:600;line-height:1.2;text-transform:uppercase}
 .agenda-num{font-size:17px;font-weight:700;line-height:1.2}
-.agenda-day.is-selected{background:#147BC1;color:#fff}
-.agenda-day:focus-visible,.agenda-session-card:focus-visible{outline:2px solid #147BC1;outline-offset:2px}
+.agenda-day.is-selected{background:#006f9e;color:#fff}
+.agenda-day:focus-visible,.agenda-session-card:focus-visible{outline:2px solid #006f9e;outline-offset:2px}
 .agenda-session-list{display:flex;flex-direction:column;gap:12px;padding:16px 16px 4px;min-width:0;touch-action:pan-y}
 .agenda-session-card{display:flex;flex-direction:column;gap:9px;min-width:0;width:100%;border:1px solid #E9EDF2;border-radius:15px;background:#fff;box-shadow:0 2px 12px rgba(16,24,40,.035);padding:16px;text-align:left;color:#111827;cursor:pointer;overflow:hidden}
-.agenda-session-card.agenda-now{background:#F0F8FF;border-color:#147BC1}
+.agenda-session-card.agenda-now{background:#F0F8FF;border-color:#006f9e}
 .agenda-session-title{font-size:16px;font-weight:650;line-height:1.4;color:#111827;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
 .agenda-session-meta{font-size:12px;line-height:1.45;color:#6B7280;font-weight:500;white-space:normal;overflow-wrap:anywhere}
 .agenda-session-speakers{display:flex;align-items:center;gap:9px;min-width:0;height:27px}
@@ -1445,7 +1445,7 @@ html[data-fiata-theme="dark"] .help-accordion-chevron{background:#203A50;color:#
 .agenda-detail-speaker{display:flex;align-items:center;gap:11px;width:100%;min-width:0;padding:11px 0;border-bottom:1px solid #E9EDF2;text-align:left}
 .agenda-detail-speaker>span:last-child{display:flex;flex-direction:column;gap:4px;min-width:0}
 .agenda-detail-speaker strong{font-size:14px;color:#111827}.agenda-detail-speaker small{font-size:12px;color:#6B7280;white-space:normal}
-.agenda-rate-btn{border-radius:13px;text-align:center;background:#147BC1;color:#fff;width:100%;padding:14px 16px;font-weight:700;margin-top:8px}.agenda-rate-btn:disabled{cursor:not-allowed;color:#9CA3AF;background:#E5E7EB}.agenda-rate-hint{color:#6B7280;font-size:12px;text-align:center;margin-top:10px}
+.agenda-rate-btn{border-radius:13px;text-align:center;background:#006f9e;color:#fff;width:100%;padding:14px 16px;font-weight:700;margin-top:8px}.agenda-rate-btn:disabled{cursor:not-allowed;color:#9CA3AF;background:#E5E7EB}.agenda-rate-hint{color:#6B7280;font-size:12px;text-align:center;margin-top:10px}
 .sponsor-accordion{margin:12px 18px;border:1px solid var(--bd);border-radius:15px;background:var(--card);overflow:hidden;box-shadow:var(--sh)}
 .sponsor-accordion summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;min-height:60px;padding:16px}
 .sponsor-accordion summary::-webkit-details-marker{display:none}
@@ -1464,7 +1464,7 @@ html[data-fiata-theme="dark"] .help-accordion-chevron{background:#203A50;color:#
 .profile-identity>div{flex:1;min-width:0}
 .profile-identity h2{font-size:22px;line-height:1.2;font-weight:800;overflow-wrap:anywhere}
 .profile-identity p{color:#c9dfef;margin-top:4px;overflow-wrap:anywhere}
-.edit-profile-avatar{width:72px;height:72px;flex:none;border:2px solid rgba(255,255,255,.7);border-radius:50%;display:grid;place-items:center;position:relative;overflow:hidden;background:#e0edf8;color:#0a416f;font-size:24px;font-weight:800}
+.edit-profile-avatar{width:72px;height:72px;flex:none;border:2px solid rgba(255,255,255,.7);border-radius:50%;display:grid;place-items:center;position:relative;overflow:hidden;background:#e0edf8;color:#006f9e;font-size:24px;font-weight:800}
 .edit-profile-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .profile-edit-action{display:flex;align-items:center;justify-content:center;gap:7px;margin:12px 20px 4px;padding:10px 14px;width:calc(100% - 40px);border:1px solid rgba(255,255,255,.35);border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-weight:700}
 .profile-edit-page{padding:18px 20px 28px}
@@ -1556,6 +1556,135 @@ html[data-fiata-theme="dark"]{
 @media(prefers-reduced-motion:reduce){
   .speaker-podium-icon{transition:none}
 }
+</style>
+
+<style>
+/* FIATA brand-palette consistency pass — application surfaces only.
+   Approved: mid #006f9e; light #0088c2; dark #001a27; yellow #ffb300; white #ffffff.
+   Neutral UI, success green and destructive red remain distinct for accessibility. */
+:root{
+  --mid:#001a27;--navy:#001a27;--blue:#006f9e;--cyan:#0088c2;
+  --warn:#ffb300;--fiata-mid-blue:#006f9e;--fiata-light-blue:#0088c2;
+  --fiata-dark-blue:#001a27;--fiata-yellow:#ffb300;--fiata-white:#ffffff;
+  --fiata-top-gradient:linear-gradient(115deg,#001a27 0%,#006f9e 66%,#0088c2 100%);
+}
+html[data-fiata-theme="dark"]{
+  --mid:#001a27;--navy:#001a27;--blue:#0088c2;--cyan:#0088c2;--warn:#ffb300;
+  --fiata-top-gradient:linear-gradient(115deg,#001a27 0%,#006f9e 66%,#0088c2 100%);
+}
+/* Navigation bar and header — dark, mid and light blue. */
+.screen > .ttl,.screen > .phdr,.screen > .events-list-head,
+.screen > .events-clean-head,.events-brand-header,.auth-top{
+  background:var(--fiata-top-gradient);color:#ffffff;
+}
+.home-top{background:linear-gradient(130deg,#001a27 0%,#006f9e 100%);color:#ffffff}
+.prof{background:linear-gradient(145deg,#001a27,#006f9e);color:#ffffff}
+.screen > .bnav.fiata-nav{background:#ffffff;border-top:1px solid #dbeaf1}
+.screen > .bnav.fiata-nav::before{background:#ffffff}
+.screen > .bnav.fiata-nav .bn{color:#5d7887}
+.screen > .bnav.fiata-nav .bn.on,
+.screen > .bnav.fiata-nav .bn.on:not(.bn-network) .bn-label{color:#006f9e}
+.screen > .bnav.fiata-nav .bn.on:not(.bn-network) .bn-icon{
+  background:#e6f4f9;color:#006f9e;
+}
+.screen > .bnav.fiata-nav .bn-network .bn-icon,
+.screen > .bnav.fiata-nav .bn-network.on .bn-icon{
+  background:linear-gradient(145deg,#0088c2,#006f9e);color:#ffffff;
+  box-shadow:0 0 0 4px #ffffff,0 5px 13px rgba(0,111,158,.24)
+}
+.screen > .bnav.fiata-nav .fiata-nav-curve{stroke:#cbdfe9}
+/* Podium ONLY in bottom navigation. No podium icon in speaker cards/profile. */
+.screen > .bnav.fiata-nav .bn[data-p="speakers"] .bn-icon{
+  color:#001a27;background:#ffb300;border-radius:10px;
+  box-shadow:0 2px 8px rgba(255,179,0,.20);
+}
+.screen > .bnav.fiata-nav .bn[data-p="speakers"].on .bn-icon{color:#001a27;background:#ffb300}
+.screen > .bnav.fiata-nav .bn[data-p="speakers"].on .bn-label{color:#006f9e}
+/* Speaker list remains image, name, designation and bio only. */
+.spk .pn{display:block;color:#001a27;font-weight:750}
+.spk .rl{color:#006f9e}
+.spk .vp{color:#0088c2}
+.prof h1{color:#ffffff}
+.prof .rl{color:#e3f4fa}
+/* Home quick access, buttons, highlighted links and promotional sections. */
+.home-actions .home-action-card.primary{
+  background:#006f9e;color:#ffffff;
+}
+.home-actions .home-action-card.primary .action-icon{
+  background:rgba(255,255,255,.18);color:#ffffff
+}
+.home-actions .home-action-card.secondary{
+  background:#ffffff;color:#001a27;border-color:#d9e8f0
+}
+.home-actions .home-action-card.secondary .action-icon{
+  background:#e6f4f9;color:#006f9e
+}
+.home-actions .home-action-card.secondary:last-child .action-icon{
+  background:#ffb300;color:#001a27
+}
+.home-actions .home-action-card.secondary:last-child .action-arrow{
+  color:#b17b00
+}
+.home-section-head h2,.home-menu-copy strong,.gallery-folder-info strong{
+  color:#001a27
+}
+.home-text-action,.gallery-folder-label,.gallery-folder-arrow,
+.home-meeting-pill svg,.profile-settings-heading,.sponsor-category-heading h3{
+  color:#006f9e
+}
+.home-menu-item:nth-child(1) .home-menu-icon{background:#e6f4f9;color:#006f9e}
+.home-menu-item:nth-child(2) .home-menu-icon{background:#dceff7;color:#0088c2}
+.home-menu-item:nth-child(3) .home-menu-icon{background:#fff4d0;color:#805400}
+.home-promo-agenda{background:linear-gradient(145deg,#001a27,#006f9e);color:#ffffff}
+.home-promo-network{background:linear-gradient(145deg,#dceff7,#ffffff);color:#001a27;border:1px solid #a7d7ea}
+.btn.p{background:#006f9e;color:#ffffff;box-shadow:0 5px 14px rgba(0,111,158,.20)}
+.btn.p:hover,.btn.p:focus-visible{background:#0088c2}
+.btn.s{background:#e6f4f9;color:#006f9e}
+.btn.g{background:#ffffff}
+button:focus-visible,a:focus-visible{outline:2px solid #0088c2;outline-offset:2px}
+.t-blue{background:#e6f4f9;color:#006f9e}
+.t-cyan{background:#e2f3fa;color:#0088c2}
+.t-navy{background:#e8eff3;color:#001a27}
+.t-amber{background:#fff4d0;color:#805400}
+/* Gold is a visible supporting brand accent; not a generic text color. */
+.rail-dot.active,.rail-dot[aria-current="true"]{
+  background:#ffb300;box-shadow:0 0 0 2px #ffffff
+}
+.home-feature-label,.home-promo-agenda .home-promo-kicker{color:#ffcf54;opacity:1}
+.home-action-card.primary .action-arrow{color:#ffb300}
+.home-discover-section .home-section-head h2::after{
+  content:"";display:inline-block;background:#ffb300;width:18px;height:3px;
+  vertical-align:middle;border-radius:2px;margin-left:8px
+}
+.sponsor-category-section .sponsor-category-heading{
+  border-left:3px solid #ffb300;padding-left:10px
+}
+/* Selection and status: bright blue selected, amber pending, green available, red unavailable. */
+.agenda-day.is-selected,.meeting-date-tile.is-active{background:#006f9e;color:#ffffff}
+.meeting-date-tile.is-active{border-color:#006f9e;box-shadow:inset 0 -3px 0 #ffb300}
+.agenda-session-card.agenda-now{background:#eaf6fb;border-color:#006f9e}
+.agenda-day:focus-visible,.agenda-session-card:focus-visible{outline-color:#0088c2}
+.st.pending{background:#fff2c5;color:#684600}
+.st.pending i{background:#ffb300}
+.lchip.off{background:#fff1f2;background-image:none;border-color:#fda4af;color:#9f1239;opacity:1}
+.lchip.off small,.lchip.off small i{color:#be123c}
+.lchip.off small i{background:#dc2626}
+.lchip:not(.off):not(.on) small{color:#15803d}
+.lchip.on{background:#006f9e;border-color:#006f9e;color:#ffffff}
+.lchip.on small{color:#ffffff}
+.seg button.on{background:#ffffff;color:#006f9e}
+.profile-language-select-wrap select:focus,
+.search:focus-within,.inp:focus{border-color:#0088c2}
+html[data-fiata-theme="dark"] .home-section-head h2,
+html[data-fiata-theme="dark"] .home-menu-copy strong,
+html[data-fiata-theme="dark"] .gallery-folder-info strong,
+html[data-fiata-theme="dark"] .spk .pn{color:var(--tx)}
+html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav{
+  background:#001a27;border-top:1px solid #32546a
+}
+html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav::before{background:#001a27}
+html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn:not(.on){color:#bdd4df}
+html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn.on{color:#80cae8}
 </style>
 </head>
 <body>
@@ -2259,7 +2388,7 @@ const PV={
    <div class="pad" data-region="list" style="margin-top:6px">${spkList()}</div></div></div>`; },
  speaker(id){ const s=byId(SPEAKERS,id), ses=SESSIONS.filter(x=>(x.sp||[]).includes(id));
    return `<div class="screen">${phdr('Speaker Profile')}<div class="scroll" data-k="sp1">
-   <div class="prof"><span class="speaker-profile-podium"><span class="speaker-podium-icon">${ic('podium',20,2)}</span> Speaker</span>${speakerPortrait(s,96,true)}<h1>${esc(s.n)}</h1><div class="rl">${esc(s.r)} · ${esc(s.c)}</div></div>
+   <div class="prof">${speakerPortrait(s,96,true)}<h1>${esc(s.n)}</h1><div class="rl">${esc(s.r)} · ${esc(s.c)}</div></div>
    <div class="speaker-actions"><button class="btn p" data-a="sheet" data-p="pdf:Speaker profile — ${esc(s.n)}">${ic('fileText',18,2)} View Profile</button></div>
    <div class="prose speaker-bio"><div class="fl" style="display:flex;gap:8px;align-items:center">Biography</div><p>${esc(s.bio)}</p></div>
    ${ses.length?`<section class="sec" style="margin-bottom:28px"><div class="sech"><h3>Sessions</h3></div><div class="glist">${ses.map(x=>`<button class="gi" data-a="sesFromSpk" data-p="${x.id}"><span class="tint t-blue">${ic('calendar',18)}</span><span class="grow"><div class="t">${esc(x.ti)}</div><div class="s">${DAYS[x.d].label} · ${x.t} · ${esc(x.rm)}</div></span><span class="chev">${ic('right',18,2)}</span></button>`).join('')}</div></section>`:''}
@@ -2320,7 +2449,7 @@ PV.agenda=()=>agendaV()
   .replace(navV(),'');
 function spkList(){
   const q=S.q.spk.trim().toLowerCase(), L=SPEAKERS.filter(s=>!q||(s.n+' '+s.c+' '+s.r).toLowerCase().includes(q));
-  return L.length? L.map(s=>`<button class="spk" data-a="push" data-p="speaker:${s.id}">${speakerPortrait(s,56)}<span class="pm"><div class="pn"><span class="speaker-podium-icon" aria-hidden="true">${ic('podium',18,2)}</span>${esc(s.n)}</div><div class="rl">${esc(s.r)}, ${esc(s.c)}</div><div class="bio">${esc(s.bio)}</div><span class="vp">View Profile ${ic('right',14,2.2)}</span></span></button>`).join('')
+  return L.length? L.map(s=>`<button class="spk" data-a="push" data-p="speaker:${s.id}">${speakerPortrait(s,56)}<span class="pm"><div class="pn">${esc(s.n)}</div><div class="rl">${esc(s.r)}, ${esc(s.c)}</div><div class="bio">${esc(s.bio)}</div><span class="vp">View Profile ${ic('right',14,2.2)}</span></span></button>`).join('')
    : `<div class="empty"><div class="eic">${ic('search',22)}</div><h4>No speakers match</h4><p>Try a different name or company.</p></div>`;
 }
 
