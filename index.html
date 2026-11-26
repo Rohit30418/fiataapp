@@ -1498,6 +1498,65 @@ html[data-fiata-theme="dark"] .help-accordion-chevron{background:#203A50;color:#
 @media(min-width:480px){.home-actions .home-action-card{min-height:92px}.home-actions .home-action-card strong{font-size:14px}}
 @media(max-width:340px){.home-actions .home-action-grid{gap:6px}.home-actions .home-action-card{padding:9px 4px}.home-actions .home-action-card strong{font-size:11px}.home-actions .home-action-card .action-arrow{display:none}}
 </style>
+
+<style>
+/* FIATA approved five-color visual refresh, 26 Nov 2026. */
+:root{
+  --mid:#001a27;
+  --navy:#001a27;
+  --blue:#006f9e;
+  --cyan:#0088c2;
+  --warn:#ffb300;
+  --fiata-top-gradient:linear-gradient(115deg,#001a27 0%,#006f9e 64%,#0088c2 100%);
+}
+html[data-fiata-theme="dark"]{
+  --mid:#001a27;
+  --navy:#001a27;
+  --blue:#0088c2;
+  --cyan:#0088c2;
+  --warn:#ffb300;
+  --fiata-top-gradient:linear-gradient(115deg,#001a27 0%,#006f9e 72%,#0088c2 100%);
+}
+.home-top,.home-actions .home-action-card.primary{background:#006f9e}
+.home-top,.home-actions .home-action-card.primary{color:#ffffff}
+.prof{background:linear-gradient(145deg,#001a27,#006f9e)}
+.agenda-day.is-selected{background:#006f9e;color:#ffffff}
+.agenda-day:focus-visible,.agenda-session-card:focus-visible{outline-color:#006f9e}
+.agenda-session-card.agenda-now{border-color:#006f9e;background:#eef8fc}
+.fiata-nav .bn.on,.fiata-nav .bn.on:not(.bn-network) .bn-label,
+.screen > .bnav.fiata-nav .bn.on{color:#006f9e}
+.fiata-nav .bn-network .bn-icon,
+.screen > .bnav.fiata-nav .bn-network .bn-icon{
+  background:linear-gradient(145deg,#0088c2 0%,#006f9e 100%);
+  color:#ffffff;
+  box-shadow:0 0 0 4px #ffffff,0 5px 13px rgba(0,111,158,.23)
+}
+.home-action-card.secondary .action-icon,
+.fiata-nav .bn.on:not(.bn-network) .bn-icon{color:#006f9e;background:#eaf5fa}
+.lchip.off{
+  background:#fff1f2;
+  background-image:none;
+  border-color:#fda4af;
+  color:#9f1239;
+  opacity:1;
+  cursor:not-allowed;
+}
+.lchip.off small,.lchip.off small i{color:#be123c}
+.lchip.off small i{background:#dc2626}
+.lchip:not(.off):not(.on) small{color:#15803d}
+.speaker-podium-icon{
+  width:27px;height:27px;flex:none;border-radius:8px;
+  display:inline-grid;place-items:center;
+  color:#001a27;background:#ffb300;
+}
+.spk .pn{display:flex;align-items:center;gap:8px}
+.speaker-podium-icon .ic{width:18px;height:18px}
+.speaker-profile-podium{display:inline-flex;align-items:center;gap:7px;justify-content:center;margin-bottom:6px;font-size:11px;font-weight:700;color:#ffffff}
+.speaker-profile-podium .speaker-podium-icon{width:30px;height:30px}
+@media(prefers-reduced-motion:reduce){
+  .speaker-podium-icon{transition:none}
+}
+</style>
 </head>
 <body>
 <div class="stage">
@@ -1628,6 +1687,7 @@ const I = {
  shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>',
  layers:'<path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/>',
 };
+I.podium='<circle cx="12" cy="4.5" r="2.6"/><path d="M6.5 13.5v-2.3a5.5 5.5 0 0 1 11 0v2.3M12 10.5v2"/><path d="M2.5 14h19l-2.8 6H5.3L2.5 14Z"/><path d="M7.5 21.5h9"/>';
 const ic=(n,s=20,sw=1.8)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n]||''}</svg>`;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const hash=s=>{let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
@@ -1950,7 +2010,7 @@ function toast(m,kind='ok'){
 const tabbed=(inner)=>`<div class="screen">${inner}${navV()}</div>`;
 function navV(){
   // Each destination appears once; Agenda lives in the Home event menu.
-  const T=[['home','home','Home'],['speakers','mic','Speakers'],['network','users','Network'],['gallery','image','Gallery'],['profile','user','Profile']];
+  const T=[['home','home','Home'],['speakers','podium','Speakers'],['network','users','Network'],['gallery','image','Gallery'],['profile','user','Profile']];
   return `<nav class="bnav fiata-nav" aria-label="Main navigation"><svg class="fiata-nav-curve" viewBox="0 0 120 42" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M0 1 H13 C32 1 28 37 60 37 C92 37 88 1 107 1 H120"/></svg>${T.map(([k,icn,l])=>`<button class="bn ${S.tab===k?'on':''} ${k==='network'?'bn-network':''}" data-a="tab" data-p="${k}" aria-label="${l}" aria-current="${S.tab===k?'page':'false'}"><span class="bn-icon">${ic(icn,k==='network'?25:22,k==='network'?2:1.9)}</span><span class="bn-label">${l}</span></button>`).join('')}</nav>`;
 }
 const phdr=(title,right='',dk=false)=>`<header class="phdr ${dk?'dk':''}"><button class="ibtn" data-a="back" aria-label="Back">${ic('left',24,2)}</button><h2>${dk?'':esc(title)}</h2>${right}</header>`;
@@ -2181,7 +2241,6 @@ function profileV(){
    <section class="sec" style="margin-bottom:28px"><div class="sech"><h3>Account</h3></div><div class="glist">
      <button class="gi" data-a="push" data-p="notifs"><span class="tint t-blue">${ic('bell',19)}</span><span class="grow"><div class="t">Notifications</div><div class="s">Messages & email preferences</div></span><span class="chev">${ic('right',18,2)}</span></button>
      <button class="gi" data-a="confirm" data-p="logout"><span class="tint t-navy">${ic('logout',19)}</span><span class="grow"><div class="t">Logout</div></span><span class="chev">${ic('right',18,2)}</span></button>
-     <button class="gi" data-a="confirm" data-p="delAcc"><span class="tint t-red">${ic('trash',19)}</span><span class="grow"><div class="t" style="color:var(--err)">Delete Account</div></span><span class="chev">${ic('right',18,2)}</span></button>
    </div></section></div>`);
 }
 
@@ -2200,7 +2259,7 @@ const PV={
    <div class="pad" data-region="list" style="margin-top:6px">${spkList()}</div></div></div>`; },
  speaker(id){ const s=byId(SPEAKERS,id), ses=SESSIONS.filter(x=>(x.sp||[]).includes(id));
    return `<div class="screen">${phdr('Speaker Profile')}<div class="scroll" data-k="sp1">
-   <div class="prof">${speakerPortrait(s,96,true)}<h1>${esc(s.n)}</h1><div class="rl">${esc(s.r)} · ${esc(s.c)}</div></div>
+   <div class="prof"><span class="speaker-profile-podium"><span class="speaker-podium-icon">${ic('podium',20,2)}</span> Speaker</span>${speakerPortrait(s,96,true)}<h1>${esc(s.n)}</h1><div class="rl">${esc(s.r)} · ${esc(s.c)}</div></div>
    <div class="speaker-actions"><button class="btn p" data-a="sheet" data-p="pdf:Speaker profile — ${esc(s.n)}">${ic('fileText',18,2)} View Profile</button></div>
    <div class="prose speaker-bio"><div class="fl" style="display:flex;gap:8px;align-items:center">Biography</div><p>${esc(s.bio)}</p></div>
    ${ses.length?`<section class="sec" style="margin-bottom:28px"><div class="sech"><h3>Sessions</h3></div><div class="glist">${ses.map(x=>`<button class="gi" data-a="sesFromSpk" data-p="${x.id}"><span class="tint t-blue">${ic('calendar',18)}</span><span class="grow"><div class="t">${esc(x.ti)}</div><div class="s">${DAYS[x.d].label} · ${x.t} · ${esc(x.rm)}</div></span><span class="chev">${ic('right',18,2)}</span></button>`).join('')}</div></section>`:''}
@@ -2261,7 +2320,7 @@ PV.agenda=()=>agendaV()
   .replace(navV(),'');
 function spkList(){
   const q=S.q.spk.trim().toLowerCase(), L=SPEAKERS.filter(s=>!q||(s.n+' '+s.c+' '+s.r).toLowerCase().includes(q));
-  return L.length? L.map(s=>`<button class="spk" data-a="push" data-p="speaker:${s.id}">${speakerPortrait(s,56)}<span class="pm"><div class="pn">${esc(s.n)}</div><div class="rl">${esc(s.r)}, ${esc(s.c)}</div><div class="bio">${esc(s.bio)}</div><span class="vp">View Profile ${ic('right',14,2.2)}</span></span></button>`).join('')
+  return L.length? L.map(s=>`<button class="spk" data-a="push" data-p="speaker:${s.id}">${speakerPortrait(s,56)}<span class="pm"><div class="pn"><span class="speaker-podium-icon" aria-hidden="true">${ic('podium',18,2)}</span>${esc(s.n)}</div><div class="rl">${esc(s.r)}, ${esc(s.c)}</div><div class="bio">${esc(s.bio)}</div><span class="vp">View Profile ${ic('right',14,2.2)}</span></span></button>`).join('')
    : `<div class="empty"><div class="eic">${ic('search',22)}</div><h4>No speakers match</h4><p>Try a different name or company.</p></div>`;
 }
 
