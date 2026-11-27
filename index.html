@@ -1842,6 +1842,12 @@ html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn-network .bn-icon,htm
 .sponsor-window img{user-select:none;-webkit-user-drag:none}
 .gallery-viewer .vfoot .btn{font-size:13px;padding:12px 8px}
 
+
+/* Persistent app footer: page content scrolls independently of actions and nav. */
+.screen.has-event-nav > .bnav.fiata-nav{flex:0 0 auto;z-index:9}
+.screen.has-event-nav > .foot{flex:0 0 auto;padding-bottom:11px}
+.screen.has-event-nav > .scroll{flex:1 1 0;min-height:0}
+.screen.has-event-nav > .phdr{flex:none}
 </style>
 </head>
 <body>
@@ -2207,6 +2213,15 @@ function render(anim){
   const keep={}; $app.querySelectorAll('[data-k]').forEach(e=>keep[e.dataset.k]=[e.scrollTop,e.scrollLeft]);
   const ae=document.activeElement, fid=ae&&ae.id&&$app.contains(ae)?ae.id:null; let sel=null; try{sel=ae.selectionStart}catch(e){}
   $app.innerHTML=view()+sheetView()+viewerView();
+  // Every event screen, including stacked detail routes, gets exactly one footer.
+  // The pre-event chooser and authentication screen deliberately remain separate.
+  if(S.phase==='app'&&!S.authOpen){
+    const root=$app.querySelector('.screen');
+    if(root){
+      if(!root.querySelector(':scope > nav.bnav'))root.insertAdjacentHTML('beforeend',navV());
+      root.classList.add('has-event-nav');
+    }
+  }
   // Keep page headers visible while the page body scrolls.
   // Pin sponsor logos only on inner app screens, not the event list or Home dashboard.
   if(!S.authOpen && (S.phase==='app'||S.phase==='events')){
@@ -2300,10 +2315,19 @@ function toast(m,kind='ok'){
   clearTimeout(toastT); toastT=setTimeout(()=>el.innerHTML='',2800);
 }
 const tabbed=(inner)=>`<div class="screen">${inner}${navV()}</div>`;
+function activeNavTab(){
+  const detailTabs={speaker:'speakers',speakers:'speakers',request:'network',gallery:'gallery',galleryFolder:'gallery',editProfile:'profile',agenda:'home',about:'home',vote:'home',sponsors:'home',help:'home'};
+  for(let i=S.stack.length-1;i>=0;i--){
+    const route=S.stack[i].n;
+    if(Object.prototype.hasOwnProperty.call(detailTabs,route))return detailTabs[route];
+  }
+  return ['home','speakers','network','gallery','profile'].includes(S.tab)?S.tab:'home';
+}
 function navV(){
+  const selected=activeNavTab();
   // Each destination appears once; Agenda lives in the Home event menu.
   const T=[['home','home','Home'],['speakers','podium','Speakers'],['network','users','Network'],['gallery','image','Gallery'],['profile','user','Profile']];
-  return `<nav class="bnav fiata-nav" aria-label="Main navigation"><svg class="fiata-nav-curve" viewBox="0 0 120 42" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M0 1 H13 C32 1 28 37 60 37 C92 37 88 1 107 1 H120"/></svg>${T.map(([k,icn,l])=>`<button class="bn ${S.tab===k?'on':''} ${k==='network'?'bn-network':''}" data-a="tab" data-p="${k}" aria-label="${l}" aria-current="${S.tab===k?'page':'false'}"><span class="bn-icon">${ic(icn,k==='network'?25:22,k==='network'?2:1.9)}</span><span class="bn-label">${l}</span></button>`).join('')}</nav>`;
+  return `<nav class="bnav fiata-nav" aria-label="Main navigation"><svg class="fiata-nav-curve" viewBox="0 0 120 42" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="M0 1 H13 C32 1 28 37 60 37 C92 37 88 1 107 1 H120"/></svg>${T.map(([k,icn,l])=>`<button class="bn ${selected===k?'on':''} ${k==='network'?'bn-network':''}" data-a="tab" data-p="${k}" aria-label="${l}" aria-current="${selected===k?'page':'false'}"><span class="bn-icon">${ic(icn,k==='network'?25:22,k==='network'?2:1.9)}</span><span class="bn-label">${l}</span></button>`).join('')}</nav>`;
 }
 const phdr=(title,right='',dk=false)=>`<header class="phdr ${dk?'dk':''}"><button class="ibtn" data-a="back" aria-label="Back">${ic('left',24,2)}</button><h2>${dk?'':esc(title)}</h2>${right}</header>`;
 const bell=()=>`<button class="ibtn" data-a="push" data-p="notifs" aria-label="Notifications">${ic('bell',22)}</button>`;
