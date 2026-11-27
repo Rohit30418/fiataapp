@@ -1848,6 +1848,21 @@ html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn-network .bn-icon,htm
 .screen.has-event-nav > .foot{flex:0 0 auto;padding-bottom:11px}
 .screen.has-event-nav > .scroll{flex:1 1 0;min-height:0}
 .screen.has-event-nav > .phdr{flex:none}
+
+/* Long-press bulk photo selection and fixed download bar */
+.gallery-tile{touch-action:pan-y;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
+.gallery-tile img{-webkit-user-drag:none;user-select:none;pointer-events:none}
+.gallery-tile.is-selected{outline:3px solid #0077c8;outline-offset:-3px}
+.gallery-tile.is-selected::after{content:"";position:absolute;inset:0;background:rgba(0,119,200,.13);pointer-events:none}
+.gallery-select-mark{z-index:2;pointer-events:none}
+.gallery-selection-tools{gap:7px;align-items:center}
+.gallery-selection-tools .gallery-count{flex:1;line-height:1.4;min-width:110px}
+.gallery-bulk-bar{display:flex;align-items:center;gap:12px;justify-content:space-between;flex:0 0 auto;padding:10px 14px;background:var(--card);border-top:1px solid var(--bd);z-index:7}
+.gallery-bulk-status{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}
+.gallery-bulk-status strong{font-size:13px;color:var(--tx)}
+.gallery-bulk-status small{font-size:11px;line-height:1.25;color:var(--tx2)}
+.gallery-bulk-bar .btn{flex:0 0 auto;width:auto;min-height:42px;padding:8px 14px;display:flex;align-items:center;gap:7px;font-size:12px}
+.gallery-bulk-bar .btn:disabled{opacity:.5}
 </style>
 </head>
 <body>
@@ -1927,9 +1942,15 @@ const GALLERY=[
 ];
 let galleryMode=null;
 const gallerySelected=new Set();
+let galleryDownloadProgress=null;
 function galleryTools(g,n){
  const active=galleryMode===g;
- return `<div class="gallery-selection-tools"><button class="btn s" data-a="galleryMode" data-p="${g}">${active?'Cancel':'Select photos'}</button>${active?`<button class="btn s" data-a="gallerySelectVisible" data-p="${g}">Select visible</button><button class="btn p" data-a="galleryDownloadSelected" ${gallerySelected.size?'':'disabled'}>${ic('download',16,2)} Download ZIP (${gallerySelected.size})</button><span class="gallery-count">${gallerySelected.size} selected</span>`:''}</div>`;
+ return `<div class="gallery-selection-tools"><button class="btn s" data-a="galleryMode" data-p="${g}">${active?'Cancel selection':'Select photos'}</button>${active?`<button class="btn s" data-a="gallerySelectVisible" data-p="${g}">Select visible</button><button class="btn s" data-a="galleryClear" ${gallerySelected.size?'':'disabled'}>Clear</button>`:'<span class="gallery-count">Press and hold any photo to select multiple.</span>'}</div>`;
+}
+function galleryBulkBar(g){
+ if(galleryMode!==g)return '';
+ const p=galleryDownloadProgress;
+ return `<div class="gallery-bulk-bar" aria-label="Selected photo downloads"><div class="gallery-bulk-status" role="status" aria-live="polite"><strong>${gallerySelected.size} selected</strong><small data-gallery-progress>${p?'Preparing '+p.done+' of '+p.total+' photos…':'Tap photos to select or deselect'}</small></div><button class="btn p" data-a="galleryDownloadSelected" ${!gallerySelected.size||p?'disabled':''}>${ic('download',18,2)} <span>Download ZIP</span></button></div>`;
 }
 const galleryPhoto=(album,index)=>album.base+'Fiata2026_'+(album.start+index)+'.jpg';
 const POLL = { q:'Which topic interests you most for future sessions?', opts:['Digital freight solutions','Sustainable logistics','Trade facilitation'] };
@@ -2621,11 +2642,11 @@ const PV={
      <section class="gallery-album"><div class="gallery-album-head"><div>
        <h3>${esc(g.d)}</h3><p>Photos from the FIATA gallery</p></div><span>${g.k} photos</span></div>${galleryTools(gi,n)}
        <div class="gallery-grid">${Array.from({length:n},(_,i)=>`<button class="gallery-tile ${gallerySelected.has(gi+':'+i)?'is-selected':''}" data-a="${galleryMode===gi?'galleryToggle':'view'}" data-p="${gi}:${i}" ${galleryMode===gi?'aria-pressed="'+gallerySelected.has(gi+':'+i)+'"':''} aria-label="${galleryMode===gi?'Select':'Open'} photo ${i+1} from ${esc(g.d)}">
-         <img src="${galleryPhoto(g,i)}" alt="FIATA 2026 photo ${g.start+i}" loading="lazy" decoding="async" onerror="this.hidden=true;this.parentElement.classList.add('gallery-image-unavailable')">
+         <img src="${galleryPhoto(g,i)}" alt="FIATA 2026 photo ${g.start+i}" draggable="false" loading="lazy" decoding="async" onerror="this.hidden=true;this.parentElement.classList.add('gallery-image-unavailable')">
          <span class="gallery-unavailable">${ic('image',22)} Photo unavailable</span>${galleryMode===gi?`<span class="gallery-select-mark">${gallerySelected.has(gi+':'+i)?ic('check',16,3):''}</span>`:''}</button>`).join('')}</div>
        ${n<g.k?`<div class="gallery-more"><span>Showing ${n} of ${g.k}</span><button class="btn s" data-a="galMore" data-p="${gi}">Load more photos ${ic('down',17,2)}</button></div>`:''}
      </section>
-  </div></div>`;
+  </div>${galleryBulkBar(gi)}</div>`;
  },
 
  notifs(){ return notifV(); },
@@ -3503,10 +3524,43 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&notifAnchor){e.stopImmediatePropagation();closeNotif(true);}},true);
   window.addEventListener('resize',()=>closeNotif());
   const prevRender=render;
-  render=function(anim){closeNotif();const result=prevRender(anim);badgeNotifications();startSponsorRail();return result;};
+  render=function(anim){closeNotif();const route=topS();if(galleryMode!==null&&(route?.n!=='galleryFolder'||Number(route.p)!==galleryMode)){galleryMode=null;gallerySelected.clear();}const result=prevRender(anim);badgeNotifications();startSponsorRail();return result;};
   A.galleryMode=function(p){const g=Number(p);gallerySelected.clear();galleryMode=galleryMode===g?null:g;render();};
   A.galleryToggle=function(p){if(gallerySelected.has(p))gallerySelected.delete(p);else gallerySelected.add(p);render();};
   A.gallerySelectVisible=function(p){const g=Number(p),n=Math.min(GALLERY[g].k,S.galMore[g]||24);for(let i=0;i<n;i++)gallerySelected.add(g+':'+i);render();};
+  A.galleryClear=function(){gallerySelected.clear();render();};
+  let galleryPress=null,suppressGalleryClick=null;
+  function cancelGalleryPress(){if(galleryPress){clearTimeout(galleryPress.timer);galleryPress=null;}}
+  document.addEventListener('pointerdown',e=>{
+    cancelGalleryPress();suppressGalleryClick=null;
+    const tile=e.target.closest('.gallery-tile');
+    if(!tile||!$dev.contains(tile)||!e.isPrimary||e.button!==0||tile.dataset.a!=='view')return;
+    const press={id:e.pointerId,key:tile.dataset.p,x:e.clientX,y:e.clientY,fired:false,timer:0};
+    galleryPress=press;
+    press.timer=setTimeout(()=>{
+      if(galleryPress!==press||!tile.isConnected)return;
+      const [g,i]=press.key.split(':').map(Number),route=topS();
+      if(route?.n!=='galleryFolder'||Number(route.p)!==g||!GALLERY[g]||i<0||i>=GALLERY[g].k)return;
+      press.fired=true;suppressGalleryClick={key:press.key,until:Infinity};
+      galleryMode=g;gallerySelected.clear();gallerySelected.add(press.key);render();
+    },500);
+  },true);
+  document.addEventListener('pointermove',e=>{
+    if(galleryPress&&e.pointerId===galleryPress.id&&!galleryPress.fired&&Math.hypot(e.clientX-galleryPress.x,e.clientY-galleryPress.y)>10)cancelGalleryPress();
+  },{capture:true,passive:true});
+  function endGalleryPress(e){
+    if(!galleryPress||e.pointerId!==galleryPress.id)return;
+    if(galleryPress.fired)suppressGalleryClick={key:galleryPress.key,until:Date.now()+450};
+    cancelGalleryPress();
+  }
+  document.addEventListener('pointerup',endGalleryPress,true);
+  document.addEventListener('pointercancel',endGalleryPress,true);
+  document.addEventListener('click',e=>{
+    const tile=e.target.closest('.gallery-tile');
+    if(tile&&suppressGalleryClick&&tile.dataset.p===suppressGalleryClick.key&&Date.now()<suppressGalleryClick.until){e.preventDefault();e.stopImmediatePropagation();suppressGalleryClick=null;}
+  },true);
+  document.addEventListener('contextmenu',e=>{if(e.target.closest('.gallery-tile'))e.preventDefault();});
+  document.addEventListener('dragstart',e=>{if(e.target.closest('.gallery-tile'))e.preventDefault();});
   const crcTable=Uint32Array.from({length:256},(_,i)=>{let c=i;for(let k=0;k<8;k++)c=c&1?0xedb88320^(c>>>1):c>>>1;return c>>>0;});
   const crc32=bytes=>{let c=0xffffffff;for(const b of bytes)c=crcTable[(c^b)&255]^(c>>>8);return(c^0xffffffff)>>>0;};
   function header(n){const a=new Uint8Array(n),v=new DataView(a.buffer);return {a,u16:(o,x)=>v.setUint16(o,x,true),u32:(o,x)=>v.setUint32(o,x,true)};}
@@ -3522,13 +3576,24 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
   function saveFile(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);}
   async function getPhoto(p){const [g,i]=p.split(':').map(Number),album=GALLERY[g];if(!album||i<0||i>=album.k)throw Error('Invalid photo');const r=await fetch(galleryPhoto(album,i),{mode:'cors',credentials:'omit',signal:typeof AbortSignal!=='undefined'&&AbortSignal.timeout?AbortSignal.timeout(25000):undefined});if(!r.ok)throw Error('Photo unavailable');const bytes=new Uint8Array(await r.arrayBuffer());if(bytes[0]!==255||bytes[1]!==216)throw Error('Invalid JPEG');return {name:'Fiata2026_'+(album.start+i)+'.jpg',bytes};}
   let downloading=false;
-  async function downloadPhotos(keys,archive){if(downloading||!keys.length)return;downloading=true;const files=[],failed=[];try{toast('Preparing '+keys.length+' photo'+(keys.length===1?'':'s')+'…','info');
-    for(const key of keys){try{files.push(await getPhoto(key));}catch(e){failed.push(key);}}
+  function updateBulkProgress(){
+    const bar=$app.querySelector('.gallery-bulk-bar');if(!bar)return;
+    const status=bar.querySelector('[data-gallery-progress]'),btn=bar.querySelector('[data-a="galleryDownloadSelected"]');
+    if(status)status.textContent=galleryDownloadProgress?'Preparing '+galleryDownloadProgress.done+' of '+galleryDownloadProgress.total+' photos…':'Tap photos to select or deselect';
+    if(btn)btn.disabled=downloading||!gallerySelected.size;
+  }
+  async function downloadPhotos(keys,archive){if(downloading||!keys.length)return;downloading=true;const files=[],failed=[];try{
+    if(archive){galleryDownloadProgress={done:0,total:keys.length};updateBulkProgress();}
+    toast('Preparing '+keys.length+' photo'+(keys.length===1?'':'s')+'…','info');
+    const results=new Array(keys.length);let cursor=0;
+    async function worker(){while(cursor<keys.length){const index=cursor++;try{results[index]=await getPhoto(keys[index]);}catch(e){failed.push(keys[index]);}finally{if(archive&&galleryDownloadProgress){galleryDownloadProgress.done++;updateBulkProgress();}}}}
+    await Promise.all(Array.from({length:Math.min(4,keys.length)},worker));
+    files.push(...results.filter(Boolean));
     if(!files.length){toast('Photo download failed. Please contact the gallery administrator.','err');return;}
     if(archive){if(failed.length){const missing=failed.map(k=>{const[g,i]=k.split(':').map(Number);return galleryPhoto(GALLERY[g],i);});files.push({name:'Unavailable-photos.txt',bytes:new TextEncoder().encode(missing.join('\n'))});}saveFile(zip(files),'FIATA-selected-photos.zip');}
     else saveFile(new Blob([files[0].bytes],{type:'image/jpeg'}),files[0].name);
     toast(failed.length?failed.length+' photo(s) could not be downloaded; successful photos saved.':'Download prepared',failed.length?'info':'ok');
-  }catch(e){toast('Could not prepare download. Try fewer photos.','err');}finally{downloading=false;}}
+  }catch(e){toast('Could not prepare download. Try fewer photos.','err');}finally{downloading=false;galleryDownloadProgress=null;updateBulkProgress();}}
   A.galleryDownloadSelected=()=>downloadPhotos([...gallerySelected],true);
   A.galleryDownloadOne=()=>{if(S.viewer)downloadPhotos([S.viewer.join(':')],false);};
   let photoRequest=0;
