@@ -674,6 +674,47 @@ body{font-family:Inter,'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Seg
 .sponsor-logo-name{font-size:11px;color:#466277;font-weight:700;text-align:center;line-height:1.35}
 html[data-fiata-theme="dark"] .sponsor-category-section .partner-logo-card{background:#fff}
 @media(max-width:370px){.gallery-folder-cover{min-width:100px}.gallery-folder-info{padding-left:12px}.gallery-folder-info strong{font-size:13px}}
+
+/* FIATA UX update */
+.screen > .bnav.fiata-nav .bn.on:not(.bn-network) .bn-icon,.screen > .bnav.fiata-nav .bn-network.on .bn-icon,.screen > .bnav.fiata-nav .bn[data-p="speakers"].on .bn-icon{background:#e4f3f9;color:#006f9e;box-shadow:none;background-image:none}
+html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn.on .bn-icon{background:#24495c;color:#d3f2ff;box-shadow:none}
+html[data-fiata-theme="dark"] .screen > .bnav.fiata-nav .bn.on .bn-label{color:#bce8fa}
+.events-list-tabs button.on,html[data-fiata-theme="dark"] .events-list-tabs button.on{background:#ffcf42;background-image:none;border-color:#ffcf42;color:#092c4b;box-shadow:none}
+.sponsor-dock{gap:5px;padding:0 7px}.sponsor-dock-label{font-size:9px}
+.sponsor-window{overflow-x:auto;overflow-y:hidden;mask-image:none;scrollbar-width:none;scroll-snap-type:x proximity;overscroll-behavior-x:contain}
+.sponsor-window::-webkit-scrollbar{display:none}.sponsor-track{animation:none;will-change:auto;transform:none}.sponsor-group{gap:8px;padding:0 2px}
+.source-sponsor-logo{scroll-snap-align:start;text-decoration:none}
+.sponsor-arrow{width:28px;height:34px;flex:none;display:grid;place-items:center;border:1px solid #dce8ef;border-radius:8px;background:#f4f9fc;color:#006f9e}
+.sponsor-arrow:focus-visible,.source-sponsor-logo:focus-visible{outline:2px solid #0077c8;outline-offset:-2px}
+.lchip.off,html[data-fiata-theme="dark"] .lchip.off{background:#fee2e2;background-image:none;border:2px solid #dc2626;color:#991b1b;opacity:1}
+.lchip.off small,html[data-fiata-theme="dark"] .lchip.off small{color:#b91c1c}
+html[data-fiata-theme="dark"] .lchip:not(.off):not(.on){background:#163e32;color:#dbfae8;border-color:#4ade80}
+html[data-fiata-theme="dark"] .lchip:not(.off):not(.on) small{color:#86efac}
+.gallery-selection-tools{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.gallery-selection-tools .btn{min-height:38px;padding:8px 12px;width:auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:12px}
+.gallery-selection-tools .btn:disabled{opacity:.5}.gallery-count{color:var(--tx2);font-size:12px}
+.gallery-tile.is-selected{outline:3px solid #0077c8;outline-offset:-3px}
+.gallery-select-mark{position:absolute;top:7px;right:7px;border:2px solid #fff;background:#365369;border-radius:50%;width:24px;height:24px;display:grid;place-items:center;color:#fff;box-shadow:0 1px 4px #0005}
+.gallery-tile.is-selected .gallery-select-mark{background:#0077c8}
+.gallery-viewer{animation:none;background:#000;isolation:isolate}
+.gallery-viewer .vimg{min-height:0;touch-action:pan-y;background:#000;grid-template:1fr / 1fr}
+.gallery-viewer .vimg img,.gallery-viewer .gallery-large-fallback{grid-area:1/1}
+.gallery-viewer .vimg img[hidden],.gallery-viewer .gallery-large-fallback[hidden]{display:none}
+.gallery-viewer .vfoot{gap:6px;padding-left:10px;padding-right:10px}
+.gallery-viewer .vfoot .btn{font-size:11px;padding:8px 5px;min-width:0;white-space:normal}
+.gallery-viewer .vbar>span{font-size:12px;text-align:center}
+.fiata-notif-bell{position:relative;overflow:visible!important}
+.fiata-notif-count{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;border:1px solid #fff;border-radius:10px;background:#0e9da8;color:white;font-size:10px;display:grid;place-items:center;padding:0 3px;font-weight:700}
+.fiata-notif-panel{position:absolute;z-index:75;width:min(340px,calc(100% - 24px));background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:14px;box-shadow:0 12px 35px #092c4b45;overflow:visible}
+.fiata-notif-panel:before{content:'';position:absolute;top:-7px;left:var(--arrow-x,80%);width:12px;height:12px;background:var(--card);border-left:1px solid var(--bd);border-top:1px solid var(--bd);transform:rotate(45deg)}
+.fiata-notif-head{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--bd)}
+.fiata-notif-head strong{flex:1;font-size:15px}.fiata-notif-head .ibtn{width:30px;height:30px;color:var(--tx)}
+.fiata-notif-number{border-radius:12px;background:#0e9da8;color:#fff;padding:3px 8px;font-size:11px;font-weight:700}
+.fiata-notif-list{overflow:auto;max-height:min(40dvh,320px);overscroll-behavior:contain}
+.fiata-notif-list .ntf{margin:0;padding:12px 10px;border-radius:0;border:0;border-bottom:1px solid var(--bd);background:var(--bg)}
+.fiata-notif-settings{display:flex;flex-wrap:wrap;gap:7px;padding:10px 12px;font-size:11px}
+.fiata-notif-settings button{padding:7px 8px;border-radius:7px;background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
+.fiata-notif-empty{padding:20px 12px;text-align:center;font-size:13px;color:var(--tx2)}
 </style>
 <style>
 /* FIATA home and events-list refresh — 18 November 2026 */
@@ -1846,6 +1887,12 @@ const GALLERY=[
   {d:'FIATA 2026 — Collection 1',k:583,start:711,base:'https://fiata.ngauge.co.in/Files/Gallery/'},
   {d:'FIATA 2026 — Collection 2',k:582,start:1294,base:'https://fiata.ngauge.co.in/Files/Gallery/'}
 ];
+let galleryMode=null;
+const gallerySelected=new Set();
+function galleryTools(g,n){
+ const active=galleryMode===g;
+ return `<div class="gallery-selection-tools"><button class="btn s" data-a="galleryMode" data-p="${g}">${active?'Cancel':'Select photos'}</button>${active?`<button class="btn s" data-a="gallerySelectVisible" data-p="${g}">Select visible</button><button class="btn p" data-a="galleryDownloadSelected" ${gallerySelected.size?'':'disabled'}>${ic('download',16,2)} Download ZIP (${gallerySelected.size})</button><span class="gallery-count">${gallerySelected.size} selected</span>`:''}</div>`;
+}
 const galleryPhoto=(album,index)=>album.base+'Fiata2026_'+(album.start+index)+'.jpg';
 const POLL = { q:'Which topic interests you most for future sessions?', opts:['Digital freight solutions','Sustainable logistics','Trade facilitation'] };
 
@@ -2515,10 +2562,10 @@ const PV={
   const n=Math.min(g.k,S.galMore[gi]||24);
   return `<div class="screen">${phdr(g.d)}<div class="scroll" data-k="gal-folder-${gi}">
      <section class="gallery-album"><div class="gallery-album-head"><div>
-       <h3>${esc(g.d)}</h3><p>Photos from the FIATA gallery</p></div><span>${g.k} photos</span></div>
-       <div class="gallery-grid">${Array.from({length:n},(_,i)=>`<button class="gallery-tile" data-a="view" data-p="${gi}:${i}" aria-label="Open photo ${i+1} from ${esc(g.d)}">
+       <h3>${esc(g.d)}</h3><p>Photos from the FIATA gallery</p></div><span>${g.k} photos</span></div>${galleryTools(gi,n)}
+       <div class="gallery-grid">${Array.from({length:n},(_,i)=>`<button class="gallery-tile ${gallerySelected.has(gi+':'+i)?'is-selected':''}" data-a="${galleryMode===gi?'galleryToggle':'view'}" data-p="${gi}:${i}" ${galleryMode===gi?'aria-pressed="'+gallerySelected.has(gi+':'+i)+'"':''} aria-label="${galleryMode===gi?'Select':'Open'} photo ${i+1} from ${esc(g.d)}">
          <img src="${galleryPhoto(g,i)}" alt="FIATA 2026 photo ${g.start+i}" loading="lazy" decoding="async" onerror="this.hidden=true;this.parentElement.classList.add('gallery-image-unavailable')">
-         <span class="gallery-unavailable">${ic('image',22)} Photo unavailable</span></button>`).join('')}</div>
+         <span class="gallery-unavailable">${ic('image',22)} Photo unavailable</span>${galleryMode===gi?`<span class="gallery-select-mark">${gallerySelected.has(gi+':'+i)?ic('check',16,3):''}</span>`:''}</button>`).join('')}</div>
        ${n<g.k?`<div class="gallery-more"><span>Showing ${n} of ${g.k}</span><button class="btn s" data-a="galMore" data-p="${gi}">Load more photos ${ic('down',17,2)}</button></div>`:''}
      </section>
   </div></div>`;
@@ -2543,7 +2590,7 @@ function requestV(id){
   const formatMeetingTime=t=>{const [h,m]=t.split(':').map(Number);return `${h%12||12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`;};
   const step=(n,t,ok,sub='')=>`<div class="step"><b class="${ok?'ok':''}">${ok?ic('check',13,3):n}</b><h4>${t}</h4><span>${sub}</span></div>`;
   const locs=(arr)=>arr.map(l=>{const un=r.day==null||!r.time?false:!avail(r.day,r.time,l), on=r.loc===l;
-    return `<button class="lchip ${un?'off':''} ${on?'on':''}" ${un?'aria-disabled="true"':''} data-a="loc" data-p="${l}" aria-label="${l}, ${un?'unavailable':'available'}"><b>${l.replace('Meeting ','')}</b><small><i></i>${un?'Unavailable':on?'Selected':'Available'}</small></button>`}).join('');
+    return `<button class="lchip ${un?'off':''} ${on?'on':''}" ${un?'disabled aria-disabled="true"':''} data-a="loc" data-p="${l}" aria-label="${l}, ${un?'unavailable':'available'}"><b>${l.replace('Meeting ','')}</b><small><i></i>${un?'Unavailable':on?'Selected':'Available'}</small></button>`}).join('');
   return `<div class="screen">${phdr('Request Meeting')}<div class="scroll" data-k="req">
    <div class="who">${av(a.n,48)}<div style="flex:1;min-width:0"><div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#7fb0dc;font-weight:700">Meeting with</div><div style="font-weight:700;font-size:17px">${esc(a.n)}</div><div class="pc">${esc(a.c)} · ${esc(a.co)}</div></div></div>
    <section class="meeting-datetime" aria-label="Meeting date and time">
@@ -2571,7 +2618,7 @@ function requestV(id){
    </section>
    ${step(3,'Meeting Location',!!r.loc,'Choose a room or table')}
    ${r.day==null||!r.time? `<div class="hint">${ic('info',16).replace('<svg','<svg style="display:inline;vertical-align:-3px;margin-right:6px"')}Choose a date and time to see available locations</div>`
-     : `<div class="legend"><span><i style="background:#F3FBF6;border:1.5px solid #CFE8D8"></i>Available</span><span><i style="background:#F3F5F8;border:1.5px solid #E4EAF2"></i>Unavailable</span><span><i style="background:var(--blue)"></i>Selected</span></div>
+     : `<div class="legend"><span><i style="background:#F3FBF6;border:1.5px solid #CFE8D8"></i>Available</span><span><i style="background:#fee2e2;border:1.5px solid #dc2626"></i>Unavailable</span><span><i style="background:var(--blue)"></i>Selected</span></div>
        <div class="lgrp"><h5>Rooms</h5><div class="lgrid rooms">${locs(ROOMS)}</div><h5>Tables</h5><div class="lgrid">${locs(TABLES)}</div></div>`}
    ${step(4,'Message',false,'Optional')}
    <div class="pad"><textarea id="rnote" class="inp" data-in="rnote" maxlength="250" placeholder="e.g. I'd like to discuss potential collaboration.">${esc(r.note)}</textarea></div>
@@ -2686,10 +2733,10 @@ function viewerView(){
  return `<div class="viewer gallery-viewer" role="dialog" aria-label="Photo viewer">
   <div class="vbar"><button class="ibtn" data-a="closeViewer" aria-label="Close">${ic('x',24,2)}</button><span>${esc(album.d)} · ${i+1} / ${album.k}</span><span style="width:44px"></span></div>
   <div class="vimg gallery-photo-full"><button class="gallery-view-arrow left" data-a="vNav" data-p="-1" aria-label="Previous photo">${ic('left',24,2)}</button>
-   <img src="${url}" alt="FIATA 2026 photo ${i+1}" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+   <img src="${url}" alt="FIATA 2026 photo ${album.start+i}" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
    <div class="gallery-large-fallback" hidden>Photo could not be loaded</div>
    <button class="gallery-view-arrow right" data-a="vNav" data-p="1" aria-label="Next photo">${ic('right',24,2)}</button></div>
-  <div class="vfoot"><a class="btn" href="${url}" target="_blank" rel="noopener noreferrer">${ic('ext',17,2)} Open original</a>
+  <div class="vfoot"><button class="btn" data-a="galleryDownloadOne">${ic('download',17,2)} Download</button><a class="btn" href="${url}" target="_blank" rel="noopener noreferrer">${ic('ext',17,2)} Open original</a>
   <button class="btn" data-a="share">${ic('share',17,2)} Share</button></div></div>`;
 }
 
@@ -3317,6 +3364,85 @@ const splashT=setTimeout(()=>A.toEvents(),2200);
   A.submitReq=function(){if(Number.isInteger(S.req?.day)&&DAYS[S.req.day])S.meetingDay=S.req.day;return oldSubmitReq();};
   const oldRender=render;
   render=function(anim){loadUser();if(draft&&topS()?.n!=='editProfile'){draft=null;photoRequest++;photoBusy=false;photoError='';}return oldRender(anim);};
+  render();
+})();
+
+(function(){
+  const sponsorLinks={'ParvaSoft Group':'https://parvasoft.eu/en/','TT':'https://www.ttclub.com/','TELE — an Alpega solution':'https://www.teleroute.com/en-en/'};
+  sponsorStripV=function(){
+    const logos=SOURCE_SPONSOR_LOGOS.map(l=>`<a class="source-sponsor-logo" href="${sponsorLinks[l.name]}" target="_blank" rel="noopener noreferrer" aria-label="Visit ${esc(l.name)} website"><img src="${l.image}" alt="${esc(l.name)}"></a>`).join('');
+    return `<aside class="sponsor-dock" aria-label="Event sponsors"><span class="sponsor-dock-label">Sponsors</span><button class="sponsor-arrow" data-a="sponsorMove" data-p="-1" aria-label="Previous sponsors">${ic('left',17,2)}</button><div class="sponsor-window" tabindex="0" aria-label="Sponsor logos" data-k="sponsor-rail"><div class="sponsor-track"><div class="sponsor-group">${logos}</div></div></div><button class="sponsor-arrow" data-a="sponsorMove" data-p="1" aria-label="Next sponsors">${ic('right',17,2)}</button></aside>`;
+  };
+  A.sponsorMove=function(p,el){const rail=el.closest('.sponsor-dock')?.querySelector('.sponsor-window');if(rail)rail.scrollBy({left:Number(p)*Math.max(100,rail.clientWidth*.8),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});};
+  let notifAnchor=null;
+  const notifButtons=()=>Array.from($app.querySelectorAll('[data-a="push"][data-p="notifs"]'));
+  function badgeNotifications(){
+    notifButtons().forEach(b=>{b.setAttribute('aria-haspopup','dialog');b.setAttribute('aria-expanded','false');
+      if(b.matches('.ibtn,.home-tool')){b.classList.add('fiata-notif-bell');if(S.notifs.length&&!b.querySelector('.fiata-notif-count'))b.insertAdjacentHTML('beforeend',`<span class="fiata-notif-count">${Math.min(S.notifs.length,99)}</span>`);}
+    });
+  }
+  function closeNotif(focus=false){$app.querySelector('.fiata-notif-panel')?.remove();if(notifAnchor?.isConnected){notifAnchor.setAttribute('aria-expanded','false');if(focus)notifAnchor.focus();}notifAnchor=null;}
+  function showNotif(b){
+    closeNotif();notifAnchor=b;b.setAttribute('aria-expanded','true');
+    const panel=document.createElement('section');panel.className='fiata-notif-panel';panel.setAttribute('role','dialog');panel.setAttribute('aria-label','Notifications');
+    const ago=t=>{const m=Math.max(0,Math.round((Date.now()-t)/60000));return m<1?'Just now':m<60?m+' min ago':m<1440?Math.floor(m/60)+' h ago':Math.floor(m/1440)+' d ago';};
+    panel.innerHTML=`<div class="fiata-notif-head"><strong>Notifications</strong><span class="fiata-notif-number">${S.notifs.length}</span><button class="ibtn" data-a="notifClose" aria-label="Close notifications">${ic('x',19,2)}</button></div><div class="fiata-notif-list">${S.notifs.map(n=>`<div class="ntf"><span class="tint t-blue">${ic('bell',18)}</span><div class="grow"><p>${esc(n.m)}</p><small>${ago(n.t)}</small></div><button class="ibtn" data-a="notifRemove" data-p="${esc(n.id)}" aria-label="Delete notification">${ic('trash',16)}</button></div>`).join('')||'<p class="fiata-notif-empty">You are all caught up.</p>'}</div><div class="fiata-notif-settings"><button data-a="notifPref" data-p="push" role="switch" aria-checked="${S.prefs.push}">Device alerts: ${S.prefs.push?'On':'Off'}</button><button data-a="notifPref" data-p="email" role="switch" aria-checked="${S.prefs.email}">Email: ${S.prefs.email?'On':'Off'}</button></div>`;
+    $app.appendChild(panel);
+    const app=$app.getBoundingClientRect(),r=b.getBoundingClientRect(),w=panel.offsetWidth,x=Math.max(12,Math.min(app.width-w-12,r.right-app.left-w+18));
+    panel.style.left=x+'px';panel.style.top=Math.max(10,Math.min(r.bottom-app.top+9,app.height-panel.offsetHeight-12))+'px';
+    panel.style.setProperty('--arrow-x',Math.max(14,Math.min(w-22,r.left+r.width/2-app.left-x-6))+'px');
+    panel.querySelector('[data-a="notifClose"]').focus();
+  }
+  const pushAction=A.push;
+  A.push=function(p,el){if(p==='notifs'&&el){if(notifAnchor===el&&$app.querySelector('.fiata-notif-panel'))closeNotif(true);else showNotif(el);return;}return pushAction.call(A,p,el);};
+  A.notifClose=()=>closeNotif(true);
+  A.notifRemove=function(id){S.notifs=S.notifs.filter(n=>n.id!==id);const b=notifAnchor;notifButtons().forEach(n=>n.querySelector('.fiata-notif-count')?.remove());badgeNotifications();if(b?.isConnected)showNotif(b);};
+  A.notifPref=function(k){if(k!=='push'&&k!=='email')return;S.prefs[k]=!S.prefs[k];if(notifAnchor?.isConnected)showNotif(notifAnchor);};
+  document.addEventListener('pointerdown',e=>{if(notifAnchor&&!e.target.closest('.fiata-notif-panel')&&!e.target.closest('[data-a="push"][data-p="notifs"]'))closeNotif();},true);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&notifAnchor){e.stopImmediatePropagation();closeNotif(true);}},true);
+  window.addEventListener('resize',()=>closeNotif());
+  const prevRender=render;
+  render=function(anim){closeNotif();const result=prevRender(anim);badgeNotifications();return result;};
+  A.galleryMode=function(p){const g=Number(p);gallerySelected.clear();galleryMode=galleryMode===g?null:g;render();};
+  A.galleryToggle=function(p){if(gallerySelected.has(p))gallerySelected.delete(p);else gallerySelected.add(p);render();};
+  A.gallerySelectVisible=function(p){const g=Number(p),n=Math.min(GALLERY[g].k,S.galMore[g]||24);for(let i=0;i<n;i++)gallerySelected.add(g+':'+i);render();};
+  const crcTable=Uint32Array.from({length:256},(_,i)=>{let c=i;for(let k=0;k<8;k++)c=c&1?0xedb88320^(c>>>1):c>>>1;return c>>>0;});
+  const crc32=bytes=>{let c=0xffffffff;for(const b of bytes)c=crcTable[(c^b)&255]^(c>>>8);return(c^0xffffffff)>>>0;};
+  function header(n){const a=new Uint8Array(n),v=new DataView(a.buffer);return {a,u16:(o,x)=>v.setUint16(o,x,true),u32:(o,x)=>v.setUint32(o,x,true)};}
+  function zip(files){
+    let offset=0,centralSize=0;const local=[],central=[];
+    for(const file of files){const name=new TextEncoder().encode(file.name),data=file.bytes,crc=crc32(data);
+      if(offset+data.length+30+name.length>0xffffffff)throw Error('ZIP too large');
+      const h=header(30);h.u32(0,0x04034b50);h.u16(4,20);h.u16(6,0x800);h.u16(12,33);h.u32(14,crc);h.u32(18,data.length);h.u32(22,data.length);h.u16(26,name.length);local.push(h.a,name,data);
+      const c=header(46);c.u32(0,0x02014b50);c.u16(4,20);c.u16(6,20);c.u16(8,0x800);c.u16(14,33);c.u32(16,crc);c.u32(20,data.length);c.u32(24,data.length);c.u16(28,name.length);c.u32(42,offset);central.push(c.a,name);centralSize+=46+name.length;offset+=30+name.length+data.length;
+    }
+    const end=header(22);end.u32(0,0x06054b50);end.u16(8,files.length);end.u16(10,files.length);end.u32(12,centralSize);end.u32(16,offset);return new Blob([...local,...central,end.a],{type:'application/zip'});
+  }
+  function saveFile(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);}
+  async function getPhoto(p){const [g,i]=p.split(':').map(Number),album=GALLERY[g];if(!album||i<0||i>=album.k)throw Error('Invalid photo');const r=await fetch(galleryPhoto(album,i),{mode:'cors',credentials:'omit',signal:typeof AbortSignal!=='undefined'&&AbortSignal.timeout?AbortSignal.timeout(25000):undefined});if(!r.ok)throw Error('Photo unavailable');const bytes=new Uint8Array(await r.arrayBuffer());if(bytes[0]!==255||bytes[1]!==216)throw Error('Invalid JPEG');return {name:'Fiata2026_'+(album.start+i)+'.jpg',bytes};}
+  let downloading=false;
+  async function downloadPhotos(keys,archive){if(downloading||!keys.length)return;downloading=true;const files=[],failed=[];try{toast('Preparing '+keys.length+' photo'+(keys.length===1?'':'s')+'…','info');
+    for(const key of keys){try{files.push(await getPhoto(key));}catch(e){failed.push(key);}}
+    if(!files.length){toast('Photo download failed. Use Open original or contact the gallery administrator.','err');return;}
+    if(archive){if(failed.length){const missing=failed.map(k=>{const[g,i]=k.split(':').map(Number);return galleryPhoto(GALLERY[g],i);});files.push({name:'Unavailable-photos.txt',bytes:new TextEncoder().encode(missing.join('\n'))});}saveFile(zip(files),'FIATA-selected-photos.zip');}
+    else saveFile(new Blob([files[0].bytes],{type:'image/jpeg'}),files[0].name);
+    toast(failed.length?failed.length+' photo(s) could not be downloaded; successful photos saved.':'Download prepared',failed.length?'info':'ok');
+  }catch(e){toast('Could not prepare download. Try fewer photos.','err');}finally{downloading=false;}}
+  A.galleryDownloadSelected=()=>downloadPhotos([...gallerySelected],true);
+  A.galleryDownloadOne=()=>{if(S.viewer)downloadPhotos([S.viewer.join(':')],false);};
+  let photoRequest=0;
+  A.vNav=function(p){if(!S.viewer)return;const[g,i]=S.viewer,album=GALLERY[g],next=(i+Number(p)+album.k)%album.k;S.viewer=[g,next];
+    const viewer=$app.querySelector('.gallery-viewer');if(!viewer){render();return;}
+    const img=viewer.querySelector('.gallery-photo-full img'),fallback=viewer.querySelector('.gallery-large-fallback'),count=viewer.querySelector('.vbar>span'),url=galleryPhoto(album,next),token=++photoRequest;
+    count.textContent=album.d+' · '+(next+1)+' / '+album.k;viewer.querySelector('.vfoot a').href=url;
+    const preload=new Image();preload.onload=()=>{if(token!==photoRequest||!viewer.isConnected)return;img.src=url;img.alt='FIATA 2026 photo '+(album.start+next);img.hidden=false;fallback.hidden=true;};preload.onerror=()=>{if(token!==photoRequest||!viewer.isConnected)return;img.hidden=true;fallback.hidden=false;};preload.src=url;
+    const ahead=new Image();ahead.src=galleryPhoto(album,(next+Number(p)+album.k)%album.k);
+  };
+  const oldClose=A.closeViewer;A.closeViewer=function(){photoRequest++;return oldClose();};
+  let swipe=null;
+  document.addEventListener('pointerdown',e=>{if(e.isPrimary&&e.target.closest('.gallery-photo-full')&&!e.target.closest('button'))swipe={id:e.pointerId,x:e.clientX,y:e.clientY};},true);
+  document.addEventListener('pointercancel',()=>{swipe=null;},true);
+  document.addEventListener('pointerup',e=>{if(!swipe||swipe.id!==e.pointerId)return;const dx=e.clientX-swipe.x,dy=e.clientY-swipe.y;swipe=null;if(S.viewer&&Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.4)A.vNav(dx<0?1:-1);},true);
   render();
 })();
 </script>
